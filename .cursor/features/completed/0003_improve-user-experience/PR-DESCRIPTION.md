@@ -7,11 +7,13 @@ This PR dramatically improves the user experience for reading and navigating Rif
 ## Changes
 
 ### Visual Identity & Branding
+
 - **Riftbound Color Palette**: Dark blue (`#102a43`) primary + warm gold (`#f59e0b`) accents
 - **Typography**: Cinzel (display/headers) + Crimson Pro (body text) from Google Fonts
 - **Dark Mode**: Full support from day one using the dark blue palette
 
 ### New Components (6)
+
 1. **TopicCard** - Level 1 topic headers with gold left border, expandable, "Read" button
 2. **RuleListItem** - Compact minimal cards for scanning (level 2+)
 3. **SubRuleDisplay** - Inline nested content with continuation lines (level 3+)
@@ -20,19 +22,23 @@ This PR dramatically improves the user experience for reading and navigating Rif
 6. **RuleLink** - Inline cross-reference links with preview tooltips
 
 ### New Hooks (1)
+
 - **useDarkMode** - Dark mode hook with system preference detection and localStorage persistence
 
 ### Updated Components (4)
+
 - **SectionCard**: Dark blue gradient backgrounds, gold numbers, section-specific icons
 - **Header**: Dark blue background, Cinzel logo, gold accents, dark mode toggle
 - **BottomNav**: Dark blue background, gold active states
 - **Button**: Gold primary variant, ghost-dark for dark backgrounds
 
 ### Page Updates
+
 - **HomePage**: New hero section with gradient background, branded typography, gold CTA button
 - **RuleDetailPage**: Updated with Riftbound typography, gold accents, improved content presentation
 
 ### Architecture Decisions
+
 1. **ADR-001: Content Classification** - Runtime classification of rules as section/topic-header/definition/sub-rule
 2. **ADR-002: Reading Mode** - Dual-mode interface with navigation and document-style reading
 3. **ADR-003: Visual Hierarchy** - Differentiated visual treatment for each rule type
@@ -92,6 +98,7 @@ Feature documentation is in `.cursor/features/active/improve-user-experience/`:
 ### Component Documentation
 
 All new components have comprehensive `.md` documentation files:
+
 - Usage examples
 - Props documentation
 - Accessibility notes

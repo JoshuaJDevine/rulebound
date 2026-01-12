@@ -58,30 +58,36 @@ function highlightQuery(text: string, query: string): string {
 
 export function SearchPage() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const initialQuery = searchParams.get("q") || "";
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlQuery = searchParams.get("q") || "";
 
   const { rulesData, isLoading, error, loadRules, searchRules, getRuleById } =
     useRulesStore();
-  const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [debouncedQuery, setDebouncedQuery] = useState(initialQuery);
+  // Use URL as source of truth, with local state for input value
+  const [inputValue, setInputValue] = useState(urlQuery);
+  const [debouncedQuery, setDebouncedQuery] = useState(urlQuery);
 
-  // Sync search query with URL parameter (when navigating from Header)
+  // Sync input value when URL changes (e.g., when navigating from Header)
+  // This is necessary because URL is the source of truth
   useEffect(() => {
-    const urlQuery = searchParams.get("q") || "";
-    if (urlQuery !== searchQuery) {
-      setSearchQuery(urlQuery);
-    }
-  }, [searchParams]);
+    setInputValue(urlQuery);
+  }, [urlQuery]);
 
-  // Debounce search query
+  // Update URL when input changes (debounced)
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedQuery(searchQuery);
+      if (inputValue !== urlQuery) {
+        if (inputValue) {
+          setSearchParams({ q: inputValue }, { replace: true });
+        } else {
+          setSearchParams({}, { replace: true });
+        }
+      }
+      setDebouncedQuery(inputValue);
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [searchQuery]);
+  }, [inputValue, urlQuery, setSearchParams]);
 
   useEffect(() => {
     if (!rulesData && !isLoading && !error) {
@@ -92,8 +98,9 @@ export function SearchPage() {
   const results = debouncedQuery ? searchRules(debouncedQuery) : [];
 
   const handleClear = () => {
-    setSearchQuery("");
+    setInputValue("");
     setDebouncedQuery("");
+    setSearchParams({}, { replace: true });
   };
 
   if (isLoading) {
@@ -142,8 +149,8 @@ export function SearchPage() {
             </button>
             <div className="flex-1">
               <SearchInput
-                value={searchQuery}
-                onChange={setSearchQuery}
+                value={inputValue}
+                onChange={setInputValue}
                 onClear={handleClear}
                 placeholder="Search all rules..."
               />
