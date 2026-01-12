@@ -1,17 +1,20 @@
 # ADR-005: Accessibility Tooling
 
 ## Status
+
 Accepted
 
 ## Context
 
 Rule Bound has a **non-negotiable requirement**: WCAG 2.1 AA compliance. Accessibility must be:
+
 - Verified during development
 - Tested in CI/CD
 - Monitored in production (or at least pre-deployment)
 - Part of the developer workflow
 
 Key accessibility requirements:
+
 - Screen reader compatibility
 - Keyboard navigation
 - Sufficient color contrast (4.5:1 for normal text, 3:1 for large text)
@@ -21,6 +24,7 @@ Key accessibility requirements:
 - Touch target sizes (44x44px minimum on mobile)
 
 We need tooling that:
+
 1. Catches accessibility issues during development
 2. Runs automated tests in CI
 3. Provides actionable feedback
@@ -30,6 +34,7 @@ We need tooling that:
 ## Options Considered
 
 ### 1. ESLint Plugin (eslint-plugin-jsx-a11y)
+
 - **Pros:**
   - Catches issues at write-time in the editor
   - Fast feedback
@@ -41,6 +46,7 @@ We need tooling that:
   - Some false positives/negatives
 
 ### 2. axe-core (Runtime Testing)
+
 - **Pros:**
   - Industry-standard accessibility engine
   - Comprehensive rule set
@@ -51,6 +57,7 @@ We need tooling that:
   - Needs to be integrated into test suite
 
 ### 3. React Testing Library + jest-axe
+
 - **Pros:**
   - Tests accessibility in component tests
   - Integrates with existing test setup (Vitest)
@@ -59,6 +66,7 @@ We need tooling that:
   - Only runs in tests (not during development)
 
 ### 4. Storybook + a11y addon
+
 - **Pros:**
   - Visual component development
   - Interactive accessibility testing
@@ -69,6 +77,7 @@ We need tooling that:
   - May be overkill for initial setup
 
 ### 5. Manual Testing
+
 - **Pros:**
   - Most comprehensive
   - Catches real user issues
@@ -87,6 +96,7 @@ We will use a **multi-layer approach** combining multiple tools:
 4. **Manual testing guidelines**: For comprehensive validation
 
 **Key reasons:**
+
 1. **Defense in Depth**: Multiple layers catch different types of issues
 2. **Fast Feedback**: ESLint catches issues immediately in editor
 3. **Comprehensive**: Runtime + static analysis covers more ground
@@ -97,6 +107,7 @@ We will use a **multi-layer approach** combining multiple tools:
 ## Consequences
 
 ### Positive
+
 - Accessibility issues caught early (during coding)
 - Automated testing prevents regressions
 - Fast feedback loop in development
@@ -105,11 +116,13 @@ We will use a **multi-layer approach** combining multiple tools:
 - Low performance impact (dev-mode only checks)
 
 ### Negative
+
 - Multiple tools to configure and maintain
 - Some false positives from ESLint rules (can be tuned)
 - Developers need to learn accessibility best practices
 
 ### Neutral
+
 - Will have ESLint rules that must be followed
 - CI pipeline will include accessibility tests
 - Some accessibility issues still require manual testing (e.g., screen reader flow)
@@ -117,6 +130,7 @@ We will use a **multi-layer approach** combining multiple tools:
 ### Implementation Plan
 
 #### 1. ESLint Configuration
+
 ```json
 {
   "extends": ["plugin:jsx-a11y/recommended"],
@@ -134,17 +148,21 @@ We will use a **multi-layer approach** combining multiple tools:
 ```
 
 #### 2. Runtime Development Checks
+
 Install `@axe-core/react` and configure in main app entry (dev mode only):
+
 ```typescript
 if (import.meta.env.DEV) {
-  import('@axe-core/react').then(axe => {
+  import("@axe-core/react").then((axe) => {
     axe.default(React, ReactDOM, 1000);
   });
 }
 ```
 
 #### 3. Automated Testing
+
 Use `vitest-axe` in component tests:
+
 ```typescript
 import { axe, toHaveNoViolations } from 'vitest-axe';
 
@@ -158,7 +176,9 @@ it('should have no accessibility violations', async () => {
 ```
 
 #### 4. Manual Testing Guidelines
+
 Document in project docs:
+
 - Keyboard navigation testing
 - Screen reader testing (NVDA/JAWS/VoiceOver)
 - Color contrast verification
@@ -166,13 +186,17 @@ Document in project docs:
 - Focus management testing
 
 #### 5. CI Integration
+
 Add to pre-push checks:
+
 - ESLint runs (includes jsx-a11y rules)
 - All tests run (includes axe tests)
 - No accessibility violations allowed
 
 ### Accessibility Checklist
+
 Every component must:
+
 - [ ] Pass ESLint jsx-a11y rules
 - [ ] Pass axe automated tests
 - [ ] Have proper ARIA labels where needed
@@ -182,6 +206,7 @@ Every component must:
 - [ ] Have touch targets ≥44x44px on mobile
 
 ### Resources for Developers
+
 - [WCAG 2.1 Quick Reference](https://www.w3.org/WAI/WCAG21/quickref/)
 - [eslint-plugin-jsx-a11y rules](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y)
 - [axe-core rule descriptions](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md)

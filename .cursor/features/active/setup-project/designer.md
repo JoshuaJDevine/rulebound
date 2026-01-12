@@ -21,6 +21,7 @@ This document defines the complete UI/UX design system for Rule Bound - an acces
 All colors meet WCAG 2.1 AA contrast requirements (4.5:1 for normal text, 3:1 for large text).
 
 #### Primary Colors
+
 ```css
 /* Brand Colors */
 primary-50:   #f0f9ff  /* Lightest blue - backgrounds */
@@ -66,46 +67,58 @@ info-700:     #1d4ed8  /* Info interactive */
 
 #### Contrast Ratios (WCAG AA Compliance)
 
-| Combination | Ratio | Pass |
-|-------------|-------|------|
+| Combination               | Ratio  | Pass   |
+| ------------------------- | ------ | ------ |
 | neutral-900 on neutral-50 | 19.3:1 | ✅ AAA |
 | neutral-800 on neutral-50 | 14.8:1 | ✅ AAA |
 | neutral-700 on neutral-50 | 10.4:1 | ✅ AAA |
-| neutral-600 on neutral-50 | 7.9:1 | ✅ AAA |
-| primary-700 on primary-50 | 8.2:1 | ✅ AAA |
-| primary-600 on neutral-50 | 5.1:1 | ✅ AA |
-| success-700 on success-50 | 7.1:1 | ✅ AAA |
-| error-700 on error-50 | 8.9:1 | ✅ AAA |
+| neutral-600 on neutral-50 | 7.9:1  | ✅ AAA |
+| primary-700 on primary-50 | 8.2:1  | ✅ AAA |
+| primary-600 on neutral-50 | 5.1:1  | ✅ AA  |
+| success-700 on success-50 | 7.1:1  | ✅ AAA |
+| error-700 on error-50     | 8.9:1  | ✅ AAA |
 
 ### Typography
 
 #### Font Families
+
 ```css
 /* System font stack for optimal performance and accessibility */
-font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
-           'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 
-           'Segoe UI Emoji', 'Segoe UI Symbol';
+font-sans:
+  system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  Roboto,
+  "Helvetica Neue",
+  Arial,
+  sans-serif,
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Segoe UI Symbol";
 
 /* Monospace for code/references */
-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, 
-           Consolas, 'Liberation Mono', 'Courier New', monospace;
+font-mono:
+  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas,
+  "Liberation Mono", "Courier New", monospace;
 ```
 
 #### Type Scale
 
-| Name | Size (px) | Line Height | Weight | Usage |
-|------|-----------|-------------|--------|-------|
-| xs | 12px (0.75rem) | 1.5 | 400 | Captions, tiny labels |
-| sm | 14px (0.875rem) | 1.5 | 400 | Small text, metadata |
-| base | 16px (1rem) | 1.5 | 400 | Body text (default) |
-| lg | 18px (1.125rem) | 1.5 | 400 | Large body text |
-| xl | 20px (1.25rem) | 1.4 | 600 | Section headings |
-| 2xl | 24px (1.5rem) | 1.3 | 700 | Page sub-headings |
-| 3xl | 30px (1.875rem) | 1.3 | 700 | Page headings |
-| 4xl | 36px (2.25rem) | 1.2 | 800 | Hero text (mobile) |
-| 5xl | 48px (3rem) | 1.1 | 800 | Hero text (desktop) |
+| Name | Size (px)       | Line Height | Weight | Usage                 |
+| ---- | --------------- | ----------- | ------ | --------------------- |
+| xs   | 12px (0.75rem)  | 1.5         | 400    | Captions, tiny labels |
+| sm   | 14px (0.875rem) | 1.5         | 400    | Small text, metadata  |
+| base | 16px (1rem)     | 1.5         | 400    | Body text (default)   |
+| lg   | 18px (1.125rem) | 1.5         | 400    | Large body text       |
+| xl   | 20px (1.25rem)  | 1.4         | 600    | Section headings      |
+| 2xl  | 24px (1.5rem)   | 1.3         | 700    | Page sub-headings     |
+| 3xl  | 30px (1.875rem) | 1.3         | 700    | Page headings         |
+| 4xl  | 36px (2.25rem)  | 1.2         | 800    | Hero text (mobile)    |
+| 5xl  | 48px (3rem)     | 1.1         | 800    | Hero text (desktop)   |
 
 **Accessibility Notes:**
+
 - Base font size is 16px (1rem) - never smaller for body text
 - Line height 1.5 for readability
 - Text must be resizable up to 200% without loss of functionality
@@ -115,19 +128,19 @@ font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco,
 
 Based on Tailwind's default spacing scale (4px base unit):
 
-| Token | Size | Usage |
-|-------|------|-------|
-| 0.5 | 2px | Hairline borders |
-| 1 | 4px | Tight spacing |
-| 2 | 8px | Small spacing |
-| 3 | 12px | Compact spacing |
-| 4 | 16px | Base spacing |
-| 5 | 20px | Medium spacing |
-| 6 | 24px | Large spacing |
-| 8 | 32px | Section spacing |
-| 10 | 40px | Large section spacing |
-| 12 | 48px | XL spacing |
-| 16 | 64px | Hero spacing |
+| Token | Size | Usage                 |
+| ----- | ---- | --------------------- |
+| 0.5   | 2px  | Hairline borders      |
+| 1     | 4px  | Tight spacing         |
+| 2     | 8px  | Small spacing         |
+| 3     | 12px | Compact spacing       |
+| 4     | 16px | Base spacing          |
+| 5     | 20px | Medium spacing        |
+| 6     | 24px | Large spacing         |
+| 8     | 32px | Section spacing       |
+| 10    | 40px | Large section spacing |
+| 12    | 48px | XL spacing            |
+| 16    | 64px | Hero spacing          |
 
 **Touch Target Minimum:** 44x44px (11 spacing units) on mobile
 
@@ -178,6 +191,7 @@ rounded-full: 9999px /* Circular elements */
 ### 1. Browse Rules Flow
 
 **Primary Path:**
+
 ```
 Home Page
   ↓ (tap "Browse Rules" or section card)
@@ -191,12 +205,14 @@ Rules List
 ```
 
 **Key Interactions:**
+
 - **Home → Rules List**: Section cards are large, tappable (min 44x44px)
 - **Rules List**: Scrollable list with search bar at top
 - **Rule Detail**: Full rule content with bookmark button in header
 - **Bookmarking**: Instant feedback with animation + success message
 
 **Accessibility:**
+
 - Skip link to main content
 - Breadcrumb navigation with proper aria-labels
 - Focus management when navigating between views
@@ -205,6 +221,7 @@ Rules List
 ### 2. Search Rules Flow
 
 **Primary Path:**
+
 ```
 Any Page
   ↓ (tap search icon in header)
@@ -216,12 +233,14 @@ Rule Detail
 ```
 
 **Key Interactions:**
+
 - **Search activation**: Search icon in header, always accessible
 - **Search input**: Auto-focus on mobile, clear button visible
 - **Live results**: Debounced (300ms) instant results as you type
 - **No results**: Helpful message with suggestions
 
 **Accessibility:**
+
 - Search input has clear label "Search rules"
 - Results announced to screen readers (aria-live region)
 - Keyboard navigation through results (arrow keys)
@@ -231,6 +250,7 @@ Rule Detail
 ### 3. Bookmark Management Flow
 
 **Primary Path:**
+
 ```
 Any Page
   ↓ (tap bookmarks icon in navigation)
@@ -244,12 +264,14 @@ Bookmark Removed (feedback)
 ```
 
 **Key Interactions:**
+
 - **Access bookmarks**: Bottom nav icon (mobile) or header link (desktop)
 - **Empty state**: Helpful message if no bookmarks yet
 - **Remove bookmark**: Same icon, different state (filled/outlined)
 - **Undo**: Optional undo toast after removing bookmark
 
 **Accessibility:**
+
 - Bookmarks count badge (if any) announced to screen readers
 - Empty state clearly described
 - Remove action confirmed with accessible feedback
@@ -258,6 +280,7 @@ Bookmark Removed (feedback)
 ### 4. Read Rule Detail Flow
 
 **Primary Path:**
+
 ```
 Rule List
   ↓ (tap rule)
@@ -269,6 +292,7 @@ Another Rule Detail
 ```
 
 **Key Interactions:**
+
 - **Rule header**: Title, section, bookmark button
 - **Rule content**: Formatted text, readable typography
 - **Related rules**: Chips/cards linking to related rules
@@ -276,6 +300,7 @@ Another Rule Detail
 - **Share**: Optional share button for future
 
 **Accessibility:**
+
 - Heading hierarchy (h1 for title, h2 for sections)
 - Proper semantic markup for content
 - Related rules are keyboard navigable
@@ -290,17 +315,17 @@ Another Rule Detail
 **Purpose:** Root layout component wrapping all pages with header, main content, and navigation.
 
 **Structure:**
+
 ```tsx
 <div className="min-h-screen flex flex-col bg-neutral-50">
   <Header />
-  <main className="flex-1 pb-20 md:pb-0">
-    {children}
-  </main>
+  <main className="flex-1 pb-20 md:pb-0">{children}</main>
   <BottomNav /> {/* Mobile only */}
 </div>
 ```
 
 **Props:**
+
 ```typescript
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -308,10 +333,12 @@ interface AppLayoutProps {
 ```
 
 **Responsive Behavior:**
+
 - **Mobile**: Bottom navigation (fixed), content padding for nav height
 - **Desktop (md+)**: Header navigation only, no bottom nav
 
 **Accessibility:**
+
 - Skip to main content link (visually hidden, keyboard accessible)
 - Proper landmark regions (`<header>`, `<main>`, `<nav>`)
 - Focus management on route changes
@@ -323,6 +350,7 @@ interface AppLayoutProps {
 **Purpose:** Top navigation bar with logo, search, and primary actions.
 
 **Mobile Layout:**
+
 ```
 ┌─────────────────────────────────┐
 │ [Logo]    [Search] [Bookmarks]  │
@@ -330,6 +358,7 @@ interface AppLayoutProps {
 ```
 
 **Desktop Layout:**
+
 ```
 ┌──────────────────────────────────────────────────┐
 │ [Logo] [Browse] [Bookmarks] [Search......] [🔍] │
@@ -337,6 +366,7 @@ interface AppLayoutProps {
 ```
 
 **Props:**
+
 ```typescript
 interface HeaderProps {
   // No props initially - pulls from context/store
@@ -344,6 +374,7 @@ interface HeaderProps {
 ```
 
 **Styling:**
+
 ```tsx
 <header className="sticky top-0 z-50 bg-white border-b border-neutral-200">
   <div className="container mx-auto px-4 h-14 md:h-16 flex items-center justify-between">
@@ -353,6 +384,7 @@ interface HeaderProps {
 ```
 
 **Accessibility:**
+
 - `<header>` landmark with aria-label="Main navigation"
 - Logo link has accessible text "Rule Bound Home"
 - Search button has aria-label="Search rules"
@@ -365,6 +397,7 @@ interface HeaderProps {
 **Purpose:** Mobile bottom navigation for primary app sections.
 
 **Layout:**
+
 ```
 ┌─────────────────────────────────┐
 │ [Home]  [Browse]  [Bookmarks]   │
@@ -374,11 +407,13 @@ interface HeaderProps {
 ```
 
 **Navigation Items:**
+
 1. **Home**: House icon + "Home" label
-2. **Browse**: Book icon + "Browse" label  
+2. **Browse**: Book icon + "Browse" label
 3. **Bookmarks**: Bookmark icon + "Saved" label
 
 **Props:**
+
 ```typescript
 interface BottomNavProps {
   currentPath: string;
@@ -386,8 +421,9 @@ interface BottomNavProps {
 ```
 
 **Styling:**
+
 ```tsx
-<nav 
+<nav
   className="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 md:hidden"
   aria-label="Primary navigation"
 >
@@ -398,11 +434,13 @@ interface BottomNavProps {
 ```
 
 **States:**
+
 - **Default**: neutral-500 icon + text
 - **Active**: primary-600 icon + text, bolder weight
 - **Pressed**: primary-700 background tint
 
 **Accessibility:**
+
 - `<nav>` landmark
 - Each item is a link (`<a>`) with proper label
 - Current page has aria-current="page"
@@ -418,6 +456,7 @@ interface BottomNavProps {
 **Purpose:** Landing page with hero section and primary navigation to rule sections.
 
 **Layout (Mobile):**
+
 ```
 ┌─────────────────────────────┐
 │ Hero Section                │
@@ -434,6 +473,7 @@ interface BottomNavProps {
 ```
 
 **Props:**
+
 ```typescript
 interface HomePageProps {
   // Pulls data from store
@@ -442,7 +482,7 @@ interface HomePageProps {
 
 **Sections:**
 
-1. **Hero**: 
+1. **Hero**:
    - Large heading (text-3xl md:text-5xl)
    - Subtitle/description
    - Prominent search input
@@ -458,6 +498,7 @@ interface HomePageProps {
    - Quick access to recent rules
 
 **Accessibility:**
+
 - h1 for main heading "Welcome to Rule Bound"
 - Section headings are h2
 - Cards are clickable with proper focus states
@@ -470,6 +511,7 @@ interface HomePageProps {
 **Purpose:** Displays a list of rules, optionally filtered by section.
 
 **Layout (Mobile):**
+
 ```
 ┌─────────────────────────────┐
 │ [< Back]  Combat Rules      │
@@ -490,6 +532,7 @@ interface HomePageProps {
 ```
 
 **Props:**
+
 ```typescript
 interface RulesListPageProps {
   sectionId?: string; // Optional section filter
@@ -497,17 +540,20 @@ interface RulesListPageProps {
 ```
 
 **Components:**
+
 - **Header**: Section title, back button (if filtered)
 - **Search**: Section-scoped search input
 - **List**: Scrollable list of RuleCard components
 - **Empty state**: If no rules match
 
 **Styling:**
+
 - Full-height scrollable container
 - Cards have 4 spacing (16px) between them
 - Touch targets for cards and bookmark buttons meet 44px minimum
 
 **Accessibility:**
+
 - Page title in h1 (e.g., "Combat Rules")
 - Search input properly labeled
 - List uses semantic `<ul>` and `<li>`
@@ -521,6 +567,7 @@ interface RulesListPageProps {
 **Purpose:** Full display of a single rule with content, references, and actions.
 
 **Layout (Mobile):**
+
 ```
 ┌─────────────────────────────┐
 │ [< Back to Combat]          │
@@ -545,6 +592,7 @@ interface RulesListPageProps {
 ```
 
 **Props:**
+
 ```typescript
 interface RuleDetailPageProps {
   ruleId: string;
@@ -573,6 +621,7 @@ interface RuleDetailPageProps {
    - Tags (future)
 
 **Styling:**
+
 ```tsx
 <div className="container mx-auto px-4 py-6 max-w-3xl">
   <BackButton />
@@ -585,16 +634,17 @@ interface RuleDetailPageProps {
     </div>
     <BookmarkButton ruleId={rule.id} size="lg" />
   </div>
-  
+
   <div className="prose prose-neutral max-w-none">
     {/* Rendered rule content */}
   </div>
-  
+
   {/* Related rules, metadata */}
 </div>
 ```
 
 **Accessibility:**
+
 - h1 for rule title
 - Breadcrumb with proper aria-label
 - Prose styling maintains proper heading hierarchy
@@ -608,6 +658,7 @@ interface RuleDetailPageProps {
 **Purpose:** Display user's bookmarked rules.
 
 **Layout (Mobile):**
+
 ```
 ┌─────────────────────────────┐
 │ Bookmarks              [⚙]  │
@@ -626,6 +677,7 @@ interface RuleDetailPageProps {
 ```
 
 **Props:**
+
 ```typescript
 interface BookmarksPageProps {
   // Pulls bookmarks from store
@@ -635,28 +687,30 @@ interface BookmarksPageProps {
 **States:**
 
 1. **Has Bookmarks**: List of bookmarked rules with metadata
-2. **Empty State**: 
+2. **Empty State**:
    - Icon + message "No bookmarks yet"
    - CTA: "Browse rules to bookmark your favorites"
 
 **Sorting Options** (future):
+
 - Most recent first (default)
 - Alphabetical
 - By section
 
 **Styling:**
+
 ```tsx
 <div className="container mx-auto px-4 py-6">
   <div className="flex items-center justify-between mb-6">
     <h1 className="text-2xl font-bold">Bookmarks</h1>
     <button aria-label="Bookmark settings">⚙</button>
   </div>
-  
+
   {bookmarks.length === 0 ? (
     <EmptyState />
   ) : (
     <ul className="space-y-4">
-      {bookmarks.map(bookmark => (
+      {bookmarks.map((bookmark) => (
         <RuleCard key={bookmark.ruleId} {...bookmark} />
       ))}
     </ul>
@@ -665,6 +719,7 @@ interface BookmarksPageProps {
 ```
 
 **Accessibility:**
+
 - h1 "Bookmarks"
 - Empty state clearly communicated to screen readers
 - Each bookmark card is keyboard navigable
@@ -677,6 +732,7 @@ interface BookmarksPageProps {
 **Purpose:** Full-featured search interface with results.
 
 **Layout (Mobile):**
+
 ```
 ┌─────────────────────────────┐
 │ [<]  [Search input...] [x]  │
@@ -699,6 +755,7 @@ interface BookmarksPageProps {
 ```
 
 **Props:**
+
 ```typescript
 interface SearchPageProps {
   initialQuery?: string;
@@ -713,44 +770,41 @@ interface SearchPageProps {
 4. **No Results**: Helpful message with suggestions
 
 **Search Features:**
+
 - **Live search**: Results update as you type (debounced 300ms)
 - **Highlighting**: Search terms highlighted in results
 - **Sorting**: By relevance (default) or alphabetical
 - **Filters**: By section (future)
 
 **Styling:**
+
 ```tsx
 <div className="min-h-screen flex flex-col">
-  <SearchHeader 
-    query={query}
-    onQueryChange={setQuery}
-    onClear={clearSearch}
-  />
-  
+  <SearchHeader query={query} onQueryChange={setQuery} onClear={clearSearch} />
+
   <div className="flex-1 container mx-auto px-4 py-6">
     {isSearching && <LoadingSpinner />}
-    
+
     {results.length > 0 && (
       <>
         <p className="text-sm text-neutral-600 mb-4">
           {results.length} results for "{query}"
         </p>
         <ul className="space-y-4">
-          {results.map(result => (
+          {results.map((result) => (
             <SearchResultCard key={result.rule.id} result={result} />
           ))}
         </ul>
       </>
     )}
-    
-    {results.length === 0 && query && (
-      <NoResults query={query} />
-    )}
+
+    {results.length === 0 && query && <NoResults query={query} />}
   </div>
 </div>
 ```
 
 **Accessibility:**
+
 - Search input auto-focused on page load (mobile)
 - Results count announced to screen readers (aria-live)
 - Each result keyboard navigable
@@ -768,54 +822,59 @@ interface SearchPageProps {
 **Variants:**
 
 1. **Primary**: Main CTAs
+
    ```tsx
-   <button className="bg-primary-600 text-white hover:bg-primary-700 
+   <button className="bg-primary-600 text-white hover:bg-primary-700
                       focus:ring-4 focus:ring-primary-500/50">
    ```
 
 2. **Secondary**: Alternative actions
+
    ```tsx
-   <button className="bg-neutral-200 text-neutral-900 hover:bg-neutral-300 
+   <button className="bg-neutral-200 text-neutral-900 hover:bg-neutral-300
                       focus:ring-4 focus:ring-neutral-500/50">
    ```
 
 3. **Ghost**: Subtle actions
+
    ```tsx
-   <button className="bg-transparent text-primary-600 hover:bg-primary-50 
+   <button className="bg-transparent text-primary-600 hover:bg-primary-50
                       focus:ring-4 focus:ring-primary-500/50">
    ```
 
 4. **Danger**: Destructive actions
    ```tsx
-   <button className="bg-error-600 text-white hover:bg-error-700 
+   <button className="bg-error-600 text-white hover:bg-error-700
                       focus:ring-4 focus:ring-error-500/50">
    ```
 
 **Sizes:**
 
-| Size | Height | Padding X | Font Size | Use Case |
-|------|--------|-----------|-----------|----------|
-| sm | 36px | 12px | 14px | Compact spaces |
-| md | 44px | 16px | 16px | Default (mobile) |
-| lg | 48px | 24px | 18px | Primary CTAs |
+| Size | Height | Padding X | Font Size | Use Case         |
+| ---- | ------ | --------- | --------- | ---------------- |
+| sm   | 36px   | 12px      | 14px      | Compact spaces   |
+| md   | 44px   | 16px      | 16px      | Default (mobile) |
+| lg   | 48px   | 24px      | 18px      | Primary CTAs     |
 
 **Props:**
+
 ```typescript
 interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "primary" | "secondary" | "ghost" | "danger";
+  size?: "sm" | "md" | "lg";
   fullWidth?: boolean;
   disabled?: boolean;
   loading?: boolean;
   icon?: React.ReactNode;
   children: React.ReactNode;
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
   ariaLabel?: string;
 }
 ```
 
 **States:**
+
 - **Default**: Base styling
 - **Hover**: Darker background (desktop only)
 - **Focus**: Visible ring (3px, primary color, 2px offset)
@@ -824,6 +883,7 @@ interface ButtonProps {
 - **Loading**: Spinner replaces text, disabled
 
 **Accessibility:**
+
 - Minimum touch target 44x44px
 - Focus ring always visible (WCAG 2.4.7)
 - Disabled state communicated via aria-disabled
@@ -837,9 +897,12 @@ interface ButtonProps {
 **Purpose:** Container for grouped content (rules, sections, etc.).
 
 **Base Card:**
+
 ```tsx
-<div className="bg-white rounded-lg border border-neutral-200 p-4 
-                hover:shadow-md transition-shadow">
+<div
+  className="bg-white rounded-lg border border-neutral-200 p-4 
+                hover:shadow-md transition-shadow"
+>
   {children}
 </div>
 ```
@@ -847,10 +910,11 @@ interface ButtonProps {
 **Variants:**
 
 1. **Interactive Card** (clickable):
+
    ```tsx
-   <button 
-     className="w-full bg-white rounded-lg border border-neutral-200 p-4 
-                text-left hover:shadow-md hover:border-primary-300 
+   <button
+     className="w-full bg-white rounded-lg border border-neutral-200 p-4
+                text-left hover:shadow-md hover:border-primary-300
                 focus:ring-4 focus:ring-primary-500/50 transition-all"
    >
    ```
@@ -861,10 +925,11 @@ interface ButtonProps {
    ```
 
 **Props:**
+
 ```typescript
 interface CardProps {
-  variant?: 'default' | 'interactive' | 'elevated';
-  padding?: 'sm' | 'md' | 'lg';
+  variant?: "default" | "interactive" | "elevated";
+  padding?: "sm" | "md" | "lg";
   children: React.ReactNode;
   onClick?: () => void;
   ariaLabel?: string;
@@ -872,6 +937,7 @@ interface CardProps {
 ```
 
 **Accessibility:**
+
 - Interactive cards are `<button>` or `<a>` elements
 - Proper focus states
 - aria-label for cards without text content
@@ -884,6 +950,7 @@ interface CardProps {
 **Purpose:** Displays a rule in list views with preview.
 
 **Layout:**
+
 ```
 ┌─────────────────────────────────┐
 │ Rule Title               [🔖]   │
@@ -894,6 +961,7 @@ interface CardProps {
 ```
 
 **Props:**
+
 ```typescript
 interface RuleCardProps {
   rule: Rule;
@@ -906,6 +974,7 @@ interface RuleCardProps {
 ```
 
 **Styling:**
+
 ```tsx
 <button
   className="w-full bg-white rounded-lg border border-neutral-200 p-4 
@@ -914,23 +983,19 @@ interface RuleCardProps {
   onClick={handleCardClick}
 >
   <div className="flex items-start justify-between gap-4 mb-2">
-    <h3 className="text-lg font-semibold text-neutral-900">
-      {rule.title}
-    </h3>
-    <BookmarkButton 
+    <h3 className="text-lg font-semibold text-neutral-900">{rule.title}</h3>
+    <BookmarkButton
       ruleId={rule.id}
       isBookmarked={isBookmarked}
       size="sm"
       onClick={handleBookmark}
     />
   </div>
-  
+
   {showPreview && (
-    <p className="text-sm text-neutral-600 line-clamp-2 mb-2">
-      {rule.content}
-    </p>
+    <p className="text-sm text-neutral-600 line-clamp-2 mb-2">{rule.content}</p>
   )}
-  
+
   <div className="flex items-center gap-2 text-xs text-neutral-500">
     {showSection && <span>{rule.section}</span>}
     {showTimestamp && (
@@ -944,6 +1009,7 @@ interface RuleCardProps {
 ```
 
 **Accessibility:**
+
 - Card is keyboard navigable
 - Bookmark button is separate from card click (event.stopPropagation)
 - Title is h3 for proper heading hierarchy
@@ -964,29 +1030,31 @@ interface RuleCardProps {
 4. **Adding**: Brief animation (scale + fade)
 
 **Props:**
+
 ```typescript
 interface BookmarkButtonProps {
   ruleId: string;
   isBookmarked?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   showLabel?: boolean;
   onToggle?: (ruleId: string, isBookmarked: boolean) => void;
 }
 ```
 
 **Styling:**
+
 ```tsx
 <button
   className={cn(
     "inline-flex items-center justify-center rounded-md",
     "transition-all hover:scale-110 focus:ring-4",
     "focus:ring-primary-500/50 focus:outline-none",
-    size === 'sm' && "h-11 w-11", // 44px minimum
-    size === 'md' && "h-12 w-12",
-    size === 'lg' && "h-14 w-14",
-    isBookmarked 
-      ? "text-primary-600 hover:text-primary-700" 
-      : "text-neutral-400 hover:text-neutral-600"
+    size === "sm" && "h-11 w-11", // 44px minimum
+    size === "md" && "h-12 w-12",
+    size === "lg" && "h-14 w-14",
+    isBookmarked
+      ? "text-primary-600 hover:text-primary-700"
+      : "text-neutral-400 hover:text-neutral-600",
   )}
   onClick={handleToggle}
   aria-label={isBookmarked ? "Remove bookmark" : "Bookmark this rule"}
@@ -1002,15 +1070,22 @@ interface BookmarkButtonProps {
 ```
 
 **Animation:**
+
 ```css
 /* When bookmark is added */
 @keyframes bookmark-added {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 ```
 
 **Accessibility:**
+
 - Minimum touch target: 44x44px (all sizes)
 - aria-label describes action ("Bookmark this rule" / "Remove bookmark")
 - aria-pressed indicates toggle state
@@ -1024,6 +1099,7 @@ interface BookmarkButtonProps {
 **Purpose:** Text input for searching rules.
 
 **Layout (Mobile):**
+
 ```
 ┌─────────────────────────────────┐
 │ [🔍] Search rules...       [x]  │
@@ -1031,6 +1107,7 @@ interface BookmarkButtonProps {
 ```
 
 **Props:**
+
 ```typescript
 interface SearchInputProps {
   value: string;
@@ -1044,12 +1121,13 @@ interface SearchInputProps {
 ```
 
 **Styling:**
+
 ```tsx
 <div className="relative">
   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
     <SearchIcon className="h-5 w-5" />
   </div>
-  
+
   <input
     type="search"
     className="w-full h-12 pl-12 pr-12 rounded-lg border border-neutral-300
@@ -1061,7 +1139,7 @@ interface SearchInputProps {
     onChange={(e) => onChange(e.target.value)}
     aria-label="Search rules"
   />
-  
+
   {value && (
     <button
       className="absolute right-4 top-1/2 -translate-y-1/2 
@@ -1077,6 +1155,7 @@ interface SearchInputProps {
 ```
 
 **Accessibility:**
+
 - Proper label (aria-label or associated `<label>`)
 - Focus ring visible
 - Clear button keyboard accessible
@@ -1095,36 +1174,41 @@ interface SearchInputProps {
 2. **Page**: Centered spinner for page loading
 
 **Props:**
+
 ```typescript
 interface LoadingSpinnerProps {
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'inline' | 'page';
+  size?: "sm" | "md" | "lg";
+  variant?: "inline" | "page";
   label?: string;
 }
 ```
 
 **Styling:**
+
 ```tsx
-<div 
+<div
   className={cn(
     "flex items-center justify-center",
-    variant === 'page' && "min-h-screen"
+    variant === "page" && "min-h-screen",
   )}
   role="status"
   aria-live="polite"
   aria-label={label || "Loading"}
 >
-  <div className={cn(
-    "animate-spin rounded-full border-4 border-neutral-200 border-t-primary-600",
-    size === 'sm' && "h-6 w-6",
-    size === 'md' && "h-10 w-10",
-    size === 'lg' && "h-16 w-16"
-  )} />
+  <div
+    className={cn(
+      "animate-spin rounded-full border-4 border-neutral-200 border-t-primary-600",
+      size === "sm" && "h-6 w-6",
+      size === "md" && "h-10 w-10",
+      size === "lg" && "h-16 w-16",
+    )}
+  />
   <span className="sr-only">{label || "Loading"}</span>
 </div>
 ```
 
 **Accessibility:**
+
 - role="status" indicates dynamic update
 - aria-live="polite" announces to screen readers
 - Visible label or sr-only text describes what's loading
@@ -1137,6 +1221,7 @@ interface LoadingSpinnerProps {
 **Purpose:** Communicates when no content is available.
 
 **Layout:**
+
 ```
 ┌─────────────────────────────┐
 │                             │
@@ -1153,6 +1238,7 @@ interface LoadingSpinnerProps {
 ```
 
 **Props:**
+
 ```typescript
 interface EmptyStateProps {
   icon: React.ReactNode;
@@ -1166,20 +1252,17 @@ interface EmptyStateProps {
 ```
 
 **Styling:**
+
 ```tsx
 <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
   <div className="text-6xl mb-4" aria-hidden="true">
     {icon}
   </div>
-  
-  <h2 className="text-xl font-semibold text-neutral-900 mb-2">
-    {title}
-  </h2>
-  
-  <p className="text-neutral-600 mb-6 max-w-sm">
-    {description}
-  </p>
-  
+
+  <h2 className="text-xl font-semibold text-neutral-900 mb-2">{title}</h2>
+
+  <p className="text-neutral-600 mb-6 max-w-sm">{description}</p>
+
   {action && (
     <Button variant="primary" onClick={action.onClick}>
       {action.label}
@@ -1189,6 +1272,7 @@ interface EmptyStateProps {
 ```
 
 **Accessibility:**
+
 - Proper heading hierarchy (h2 for title)
 - Icon is decorative (aria-hidden)
 - Clear, descriptive text
@@ -1201,11 +1285,13 @@ interface EmptyStateProps {
 **Purpose:** Shows current location in hierarchy and enables navigation.
 
 **Layout:**
+
 ```
 Home > Combat > Basic Attacks
 ```
 
 **Props:**
+
 ```typescript
 interface BreadcrumbProps {
   items: Array<{
@@ -1217,6 +1303,7 @@ interface BreadcrumbProps {
 ```
 
 **Styling:**
+
 ```tsx
 <nav aria-label="Breadcrumb">
   <ol className="flex items-center flex-wrap gap-2 text-sm">
@@ -1228,7 +1315,7 @@ interface BreadcrumbProps {
           </span>
         )}
         {item.href ? (
-          <a 
+          <a
             href={item.href}
             className="text-primary-600 hover:text-primary-700 
                        hover:underline focus:ring-2 focus:ring-primary-500/50
@@ -1237,9 +1324,7 @@ interface BreadcrumbProps {
             {item.label}
           </a>
         ) : (
-          <span className="text-neutral-900 font-medium">
-            {item.label}
-          </span>
+          <span className="text-neutral-900 font-medium">{item.label}</span>
         )}
       </li>
     ))}
@@ -1248,6 +1333,7 @@ interface BreadcrumbProps {
 ```
 
 **Accessibility:**
+
 - `<nav>` with aria-label="Breadcrumb"
 - Ordered list (`<ol>`) for semantic structure
 - Separator is decorative (aria-hidden)
@@ -1261,6 +1347,7 @@ interface BreadcrumbProps {
 **Purpose:** Navigational card to browse rules by section.
 
 **Layout:**
+
 ```
 ┌─────────────────────────────┐
 │         [⚔️]                │
@@ -1271,6 +1358,7 @@ interface BreadcrumbProps {
 ```
 
 **Props:**
+
 ```typescript
 interface SectionCardProps {
   section: Section;
@@ -1280,6 +1368,7 @@ interface SectionCardProps {
 ```
 
 **Styling:**
+
 ```tsx
 <button
   className="w-full bg-gradient-to-br from-primary-50 to-white 
@@ -1293,18 +1382,17 @@ interface SectionCardProps {
   <div className="text-4xl mb-3" aria-hidden="true">
     {icon}
   </div>
-  
+
   <h3 className="text-lg font-semibold text-neutral-900 mb-1">
     {section.title}
   </h3>
-  
-  <p className="text-sm text-neutral-600">
-    {section.rules.length} rules
-  </p>
+
+  <p className="text-sm text-neutral-600">{section.rules.length} rules</p>
 </button>
 ```
 
 **Accessibility:**
+
 - Interactive card is `<button>`
 - Icon is decorative (aria-hidden)
 - aria-label provides full context
@@ -1325,10 +1413,11 @@ interface SectionCardProps {
 3. **Selected**: Active filter state
 
 **Props:**
+
 ```typescript
 interface ChipProps {
   label: string;
-  variant?: 'default' | 'interactive' | 'selected';
+  variant?: "default" | "interactive" | "selected";
   icon?: React.ReactNode;
   onRemove?: () => void;
   onClick?: () => void;
@@ -1336,14 +1425,17 @@ interface ChipProps {
 ```
 
 **Styling:**
+
 ```tsx
 <button
   className={cn(
     "inline-flex items-center gap-2 px-3 h-11 rounded-full text-sm",
     "border transition-all focus:ring-2 focus:ring-primary-500/50",
-    variant === 'default' && "bg-neutral-100 border-neutral-200 text-neutral-700",
-    variant === 'interactive' && "bg-white border-neutral-300 text-neutral-900 hover:border-primary-500",
-    variant === 'selected' && "bg-primary-600 border-primary-600 text-white"
+    variant === "default" &&
+      "bg-neutral-100 border-neutral-200 text-neutral-700",
+    variant === "interactive" &&
+      "bg-white border-neutral-300 text-neutral-900 hover:border-primary-500",
+    variant === "selected" && "bg-primary-600 border-primary-600 text-white",
   )}
   onClick={onClick}
   aria-label={label}
@@ -1366,6 +1458,7 @@ interface ChipProps {
 ```
 
 **Accessibility:**
+
 - Minimum height 44px
 - Interactive chips are buttons with proper labels
 - Remove action has separate click handler
@@ -1381,6 +1474,7 @@ interface ChipProps {
 **Purpose:** Display error states to users.
 
 **Props:**
+
 ```typescript
 interface ErrorMessageProps {
   title: string;
@@ -1390,8 +1484,9 @@ interface ErrorMessageProps {
 ```
 
 **Styling:**
+
 ```tsx
-<div 
+<div
   className="bg-error-50 border border-error-200 rounded-lg p-4"
   role="alert"
   aria-live="assertive"
@@ -1400,24 +1495,15 @@ interface ErrorMessageProps {
     <div className="flex-shrink-0 text-error-600">
       <AlertIcon className="h-5 w-5" />
     </div>
-    
+
     <div className="flex-1">
-      <h3 className="text-sm font-semibold text-error-900 mb-1">
-        {title}
-      </h3>
-      <p className="text-sm text-error-700">
-        {message}
-      </p>
+      <h3 className="text-sm font-semibold text-error-900 mb-1">{title}</h3>
+      <p className="text-sm text-error-700">{message}</p>
     </div>
   </div>
-  
+
   {retry && (
-    <Button 
-      variant="secondary" 
-      size="sm" 
-      onClick={retry}
-      className="mt-4"
-    >
+    <Button variant="secondary" size="sm" onClick={retry} className="mt-4">
       Try Again
     </Button>
   )}
@@ -1425,6 +1511,7 @@ interface ErrorMessageProps {
 ```
 
 **Accessibility:**
+
 - role="alert" ensures immediate announcement
 - aria-live="assertive" for critical errors
 - Color not sole indicator (icon + text)
@@ -1438,6 +1525,7 @@ interface ErrorMessageProps {
 **Purpose:** Allow keyboard users to skip to main content.
 
 **Props:**
+
 ```typescript
 interface SkipLinkProps {
   targetId: string;
@@ -1446,6 +1534,7 @@ interface SkipLinkProps {
 ```
 
 **Styling:**
+
 ```tsx
 <a
   href={`#${targetId}`}
@@ -1458,12 +1547,14 @@ interface SkipLinkProps {
 ```
 
 **Behavior:**
+
 - Hidden by default (sr-only)
 - Visible when focused with Tab key
 - Positioned at top-left when visible
 - Clicking scrolls to target and focuses it
 
 **Accessibility:**
+
 - WCAG 2.4.1 requirement
 - Must be first focusable element
 - Target must have id and tabindex="-1"
@@ -1476,17 +1567,18 @@ interface SkipLinkProps {
 
 All interactive elements must be keyboard accessible:
 
-| Element | Key | Action |
-|---------|-----|--------|
-| Links/Buttons | Enter, Space | Activate |
-| Search Input | Escape | Clear and close |
-| Search Results | Arrow Up/Down | Navigate results |
-| Search Results | Enter | Select result |
-| Modal | Escape | Close modal |
-| Tabs | Arrow Left/Right | Switch tabs |
-| List Items | Tab | Navigate items |
+| Element        | Key              | Action           |
+| -------------- | ---------------- | ---------------- |
+| Links/Buttons  | Enter, Space     | Activate         |
+| Search Input   | Escape           | Clear and close  |
+| Search Results | Arrow Up/Down    | Navigate results |
+| Search Results | Enter            | Select result    |
+| Modal          | Escape           | Close modal      |
+| Tabs           | Arrow Left/Right | Switch tabs      |
+| List Items     | Tab              | Navigate items   |
 
 **Focus Management:**
+
 - Visible focus indicator (3px ring, 2px offset)
 - Logical tab order (follows visual flow)
 - No keyboard traps
@@ -1496,37 +1588,38 @@ All interactive elements must be keyboard accessible:
 ### Screen Reader Support
 
 **ARIA Landmarks:**
+
 ```html
 <header role="banner">
-<nav role="navigation" aria-label="Main navigation">
-<main role="main" id="main-content">
-<footer role="contentinfo">
+  <nav role="navigation" aria-label="Main navigation">
+    <main role="main" id="main-content">
+      <footer role="contentinfo"></footer>
+    </main>
+  </nav>
+</header>
 ```
 
 **ARIA Live Regions:**
+
 ```html
 <!-- Search results count -->
-<div aria-live="polite" aria-atomic="true">
-  12 results for "combat"
-</div>
+<div aria-live="polite" aria-atomic="true">12 results for "combat"</div>
 
 <!-- Errors -->
-<div role="alert" aria-live="assertive">
-  Error loading rules
-</div>
+<div role="alert" aria-live="assertive">Error loading rules</div>
 
 <!-- Loading states -->
-<div role="status" aria-live="polite">
-  Loading...
-</div>
+<div role="status" aria-live="polite">Loading...</div>
 ```
 
 **ARIA Labels:**
+
 - Icon-only buttons: `aria-label="Bookmark this rule"`
 - Complex widgets: `aria-labelledby` referencing visible label
 - Dynamic content: `aria-describedby` for additional context
 
 **ARIA States:**
+
 - Toggle buttons: `aria-pressed="true|false"`
 - Expandable sections: `aria-expanded="true|false"`
 - Current page: `aria-current="page"`
@@ -1536,13 +1629,14 @@ All interactive elements must be keyboard accessible:
 
 All text must meet WCAG AA contrast ratios:
 
-| Text Size | Minimum Ratio | Examples |
-|-----------|---------------|----------|
-| Small (< 18px) | 4.5:1 | neutral-600 on neutral-50 (7.9:1 ✅) |
-| Large (≥ 18px or ≥ 14px bold) | 3:1 | neutral-500 on neutral-50 (5.1:1 ✅) |
-| UI Components | 3:1 | Border, icon, focus ring |
+| Text Size                     | Minimum Ratio | Examples                             |
+| ----------------------------- | ------------- | ------------------------------------ |
+| Small (< 18px)                | 4.5:1         | neutral-600 on neutral-50 (7.9:1 ✅) |
+| Large (≥ 18px or ≥ 14px bold) | 3:1           | neutral-500 on neutral-50 (5.1:1 ✅) |
+| UI Components                 | 3:1           | Border, icon, focus ring             |
 
 **Do NOT rely on color alone:**
+
 - Use icons + text for states
 - Use labels + color for categories
 - Provide text alternatives
@@ -1550,6 +1644,7 @@ All text must meet WCAG AA contrast ratios:
 ### Touch Targets
 
 All interactive elements on mobile:
+
 - **Minimum**: 44x44px (WCAG 2.5.5 Level AAA)
 - **Recommended**: 48x48px
 - **Adequate spacing**: 8px between targets
@@ -1560,21 +1655,22 @@ All interactive elements on mobile:
 /* Default focus ring */
 .focus-visible {
   outline: none;
-  box-shadow: 
+  box-shadow:
     0 0 0 2px white,
-    0 0 0 5px theme('colors.primary.500');
+    0 0 0 5px theme("colors.primary.500");
 }
 
 /* Alternative focus ring (on dark backgrounds) */
 .focus-visible-inverse {
   outline: none;
-  box-shadow: 
-    0 0 0 2px theme('colors.primary.900'),
+  box-shadow:
+    0 0 0 2px theme("colors.primary.900"),
     0 0 0 5px white;
 }
 ```
 
 **Requirements:**
+
 - Focus indicator visible on ALL focusable elements
 - Minimum 3px thickness
 - Sufficient contrast with background (3:1)
@@ -1583,12 +1679,14 @@ All interactive elements on mobile:
 ### Responsive Text
 
 Text must be resizable up to 200% without:
+
 - Loss of content
 - Loss of functionality
 - Overlapping text
 - Horizontal scrolling (width only)
 
 **Implementation:**
+
 - Use relative units (rem, em, %)
 - Test at 200% zoom in browser
 - No fixed pixel widths on text containers
@@ -1599,7 +1697,9 @@ Respect `prefers-reduced-motion`:
 
 ```css
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -1608,6 +1708,7 @@ Respect `prefers-reduced-motion`:
 ```
 
 **Guidelines:**
+
 - No auto-playing videos
 - Animations are optional enhancements
 - Essential information not conveyed by animation alone
@@ -1619,12 +1720,14 @@ Respect `prefers-reduced-motion`:
 **Decision:** Design and build for mobile screens first, then enhance for larger screens.
 
 **Rationale:**
+
 - Primary use case is quick reference on phone during game sessions
 - Forces prioritization of essential features
 - Easier to scale up than scale down
 - Tailwind CSS is mobile-first by default
 
 **Implementation:**
+
 - Default styles target < 640px
 - Use `md:` prefix for tablet optimizations (768px+)
 - Use `lg:` prefix for desktop optimizations (1024px+)
@@ -1634,12 +1737,14 @@ Respect `prefers-reduced-motion`:
 **Decision:** Use bottom tab bar for primary navigation on mobile.
 
 **Rationale:**
+
 - Easily reachable with thumb on large phones
 - Standard pattern in mobile apps (user familiarity)
 - Keeps navigation persistent and visible
 - Clearly communicates primary sections
 
 **Alternatives Considered:**
+
 - Hamburger menu: Hides navigation, extra tap required
 - Top tabs: Hard to reach on large phones
 
@@ -1648,6 +1753,7 @@ Respect `prefers-reduced-motion`:
 **Decision:** Use cards as primary container for content.
 
 **Rationale:**
+
 - Clear visual grouping
 - Tapable areas are obvious
 - Works well on any screen size
@@ -1659,6 +1765,7 @@ Respect `prefers-reduced-motion`:
 **Decision:** Use a restrained color palette focused on blues and neutrals.
 
 **Rationale:**
+
 - Accessibility: Easier to maintain contrast ratios
 - Professional appearance for reference material
 - Blue is associated with trust and clarity
@@ -1670,6 +1777,7 @@ Respect `prefers-reduced-motion`:
 **Decision:** Prominent search in header, dedicated search page.
 
 **Rationale:**
+
 - Key use case: "I need to look up X rule quickly"
 - Faster than navigating hierarchy for known rules
 - Search bar always visible (no extra tap)
@@ -1680,6 +1788,7 @@ Respect `prefers-reduced-motion`:
 **Decision:** Show preview text in lists, full content on detail pages.
 
 **Rationale:**
+
 - Reduces cognitive load
 - Faster scanning in lists
 - Full content available when needed
@@ -1691,6 +1800,7 @@ Respect `prefers-reduced-motion`:
 **Decision:** Light mode only for initial release.
 
 **Rationale:**
+
 - Faster initial development
 - Simpler to ensure accessibility compliance
 - Can add dark mode later without redesigning
@@ -1703,6 +1813,7 @@ Respect `prefers-reduced-motion`:
 **Decision:** Use system fonts instead of custom web fonts.
 
 **Rationale:**
+
 - Performance: No font download
 - Accessibility: Users' preferred reading font
 - Cross-platform: Looks native on every OS
@@ -1714,6 +1825,7 @@ Respect `prefers-reduced-motion`:
 ### Mobile (< 640px) - Default
 
 **Layout:**
+
 - Single column
 - Full-width cards
 - Bottom navigation
@@ -1721,15 +1833,18 @@ Respect `prefers-reduced-motion`:
 - Touch-optimized (48px targets)
 
 **Typography:**
+
 - text-base (16px) for body
 - text-2xl (24px) for h1
 - text-lg (18px) for h2
 
 **Spacing:**
+
 - px-4 (16px) container padding
 - space-y-4 (16px) between cards
 
 **Navigation:**
+
 - Bottom nav (3 items)
 - Collapsed search in header
 
@@ -1738,20 +1853,24 @@ Respect `prefers-reduced-motion`:
 ### Tablet (640px - 1024px) - `md:`
 
 **Layout:**
+
 - 2 column grid for cards
 - Wider containers (max-w-4xl)
 - Bottom nav still visible
 - Slight spacing increase
 
 **Typography:**
+
 - text-3xl (30px) for h1
 - text-xl (20px) for h2
 
 **Spacing:**
+
 - px-6 (24px) container padding
 - space-y-6 (24px) between sections
 
 **Navigation:**
+
 - Bottom nav or transition to header nav
 - Search bar expands
 
@@ -1760,21 +1879,25 @@ Respect `prefers-reduced-motion`:
 ### Desktop (1024px+) - `lg:`
 
 **Layout:**
+
 - 3 column grid for cards
 - Max container width (max-w-7xl)
 - Header navigation only (no bottom nav)
 - Sidebar for filters (future)
 
 **Typography:**
+
 - text-5xl (48px) for hero
 - text-4xl (36px) for h1
 - text-2xl (24px) for h2
 
 **Spacing:**
+
 - px-8 (32px) container padding
 - space-y-8 (32px) between sections
 
 **Navigation:**
+
 - Horizontal nav in header
 - Full search bar always visible
 - Hover states enabled
@@ -1824,6 +1947,7 @@ The **Project Setup** design specifications are complete. The UI/UX foundation f
 ### Design System Summary
 
 **Visual Foundation:**
+
 - Color palette: Blue primary (primary-600) + neutral grays
 - All colors WCAG AA compliant (4.5:1+ contrast)
 - Typography: System font stack, 16px base size, 1.5 line height
@@ -1831,6 +1955,7 @@ The **Project Setup** design specifications are complete. The UI/UX foundation f
 - Touch targets: 44px minimum on mobile
 
 **Responsive Strategy:**
+
 - Mobile-first approach (< 640px default)
 - Tablet optimizations at 768px (`md:`)
 - Desktop optimizations at 1024px (`lg:`)
@@ -1839,34 +1964,19 @@ The **Project Setup** design specifications are complete. The UI/UX foundation f
 ### Component Architecture
 
 **Layout Components (3):**
+
 1. `AppLayout`: Root layout wrapper
 2. `Header`: Top navigation with search
 3. `BottomNav`: Mobile bottom tab bar
 
-**Page Components (5):**
-4. `HomePage`: Hero + section cards
-5. `RulesListPage`: Filterable list of rules
-6. `RuleDetailPage`: Full rule content
-7. `BookmarksPage`: User's saved rules
-8. `SearchPage`: Search interface + results
+**Page Components (5):** 4. `HomePage`: Hero + section cards 5. `RulesListPage`: Filterable list of rules 6. `RuleDetailPage`: Full rule content 7. `BookmarksPage`: User's saved rules 8. `SearchPage`: Search interface + results
 
-**UI Components (12):**
-9. `Button`: Primary interactive element (4 variants)
-10. `Card`: Content container (3 variants)
-11. `RuleCard`: Rule preview in lists
-12. `BookmarkButton`: Toggle bookmark state
-13. `SearchInput`: Search text field
-14. `LoadingSpinner`: Loading states
-15. `EmptyState`: No content messaging
-16. `Breadcrumb`: Navigation path
-17. `SectionCard`: Section navigation cards
-18. `Chip`: Tags, filters, related items
-19. `ErrorMessage`: Error states
-20. `SkipLink`: Accessibility skip to content
+**UI Components (12):** 9. `Button`: Primary interactive element (4 variants) 10. `Card`: Content container (3 variants) 11. `RuleCard`: Rule preview in lists 12. `BookmarkButton`: Toggle bookmark state 13. `SearchInput`: Search text field 14. `LoadingSpinner`: Loading states 15. `EmptyState`: No content messaging 16. `Breadcrumb`: Navigation path 17. `SectionCard`: Section navigation cards 18. `Chip`: Tags, filters, related items 19. `ErrorMessage`: Error states 20. `SkipLink`: Accessibility skip to content
 
 ### Accessibility Requirements
 
 **Must implement:**
+
 - Keyboard navigation for all interactive elements
 - Focus indicators (3px ring, 2px offset, primary-500 color)
 - ARIA labels for icon-only buttons
@@ -1878,6 +1988,7 @@ The **Project Setup** design specifications are complete. The UI/UX foundation f
 - Screen reader announcements for state changes
 
 **Testing required:**
+
 - ESLint jsx-a11y rules must pass
 - vitest-axe tests must pass
 - Keyboard-only navigation functional
@@ -1886,43 +1997,40 @@ The **Project Setup** design specifications are complete. The UI/UX foundation f
 ### Implementation Priority
 
 **Phase 1 (Foundation):**
+
 1. Set up Tailwind config with design tokens
 2. Implement layout components (AppLayout, Header, BottomNav)
 3. Implement basic UI components (Button, Card, LoadingSpinner, ErrorMessage)
 4. Set up routing with React Router
 
-**Phase 2 (Core Features):**
-5. Implement HomePage with section navigation
-6. Implement RulesListPage with rule cards
-7. Implement RuleDetailPage with content display
-8. Implement basic search functionality
+**Phase 2 (Core Features):** 5. Implement HomePage with section navigation 6. Implement RulesListPage with rule cards 7. Implement RuleDetailPage with content display 8. Implement basic search functionality
 
-**Phase 3 (User Features):**
-9. Implement BookmarksPage
-10. Implement SearchPage with full search
-11. Implement bookmark functionality
-12. Polish animations and transitions
+**Phase 3 (User Features):** 9. Implement BookmarksPage 10. Implement SearchPage with full search 11. Implement bookmark functionality 12. Polish animations and transitions
 
 ### Key Implementation Notes
 
 **Tailwind Configuration:**
+
 - Extend default theme with custom colors
 - Configure font family (system stack)
 - Enable focus-visible plugin
 - Configure container max-widths
 
 **Accessibility Setup:**
+
 - Install and configure eslint-plugin-jsx-a11y
 - Set up @axe-core/react for dev mode
 - Add vitest-axe for component tests
 - Create SkipLink as first element in AppLayout
 
 **State Management:**
+
 - Use Zustand for rules, bookmarks, preferences
 - Use Context for theme, UI state (mobile menu, modals)
 - localStorage for persisting bookmarks and preferences
 
 **Code Organization:**
+
 - Follow ADR-006 project structure
 - Colocate components with tests and docs
 - Use index.ts for clean exports
@@ -1931,6 +2039,7 @@ The **Project Setup** design specifications are complete. The UI/UX foundation f
 ### Design Resources
 
 All design specifications are in this document:
+
 - **Design System**: Colors, typography, spacing, breakpoints
 - **User Flows**: Browse, search, bookmark, read
 - **Component Specs**: All 20 components with props, styling, accessibility
@@ -1939,6 +2048,7 @@ All design specifications are in this document:
 ### Architecture References
 
 Implementation must follow architecture decisions:
+
 - [architect.md](./architect.md): Full system architecture
 - [ADR-001](./adr/ADR-001-build-tool-selection.md): Vite setup
 - [ADR-002](./adr/ADR-002-routing-solution.md): React Router
@@ -1950,6 +2060,7 @@ Implementation must follow architecture decisions:
 ### Success Criteria
 
 Implementation is complete when:
+
 - All 20 components implemented with TypeScript
 - Design system tokens in Tailwind config
 - Mobile-first responsive on all breakpoints

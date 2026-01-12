@@ -1,17 +1,20 @@
 # ADR-004: State Management
 
 ## Status
+
 Accepted
 
 ## Context
 
 Rule Bound is a rules reference application that needs to manage:
+
 - **Rules Content**: Data from the Riftbound Core Rules PDF
 - **UI State**: Navigation, search, filters, bookmarks
 - **User Preferences**: Theme, font size, favorites
 - **Application State**: Loading states, errors, current view
 
 As a reference application (not a complex SaaS), the state management needs are relatively straightforward:
+
 - Mostly read-heavy operations (displaying rules)
 - Some local state (search, filters, preferences)
 - No complex server synchronization
@@ -21,6 +24,7 @@ As a reference application (not a complex SaaS), the state management needs are 
 ## Options Considered
 
 ### 1. React Context + Hooks (Built-in)
+
 - **Pros:**
   - No additional dependencies
   - Simple, built into React
@@ -34,6 +38,7 @@ As a reference application (not a complex SaaS), the state management needs are 
   - No middleware system
 
 ### 2. Zustand
+
 - **Pros:**
   - Minimal boilerplate
   - Excellent TypeScript support
@@ -48,6 +53,7 @@ As a reference application (not a complex SaaS), the state management needs are 
   - Less prescriptive than Redux
 
 ### 3. Redux Toolkit
+
 - **Pros:**
   - Industry standard
   - Excellent DevTools
@@ -61,6 +67,7 @@ As a reference application (not a complex SaaS), the state management needs are 
   - Steeper learning curve
 
 ### 4. Jotai / Recoil
+
 - **Pros:**
   - Atomic state management
   - Flexible and powerful
@@ -73,10 +80,12 @@ As a reference application (not a complex SaaS), the state management needs are 
 ## Decision
 
 We will use a **hybrid approach**:
+
 1. **React Context + Hooks** for simple, localized state (UI state, theme)
 2. **Zustand** for global application state (rules data, user preferences, bookmarks)
 
 **Key reasons:**
+
 1. **Pragmatic**: Use built-in tools where they suffice, add Zustand only where needed
 2. **Performance**: Zustand won't trigger unnecessary re-renders
 3. **Simple**: Minimal boilerplate, easy to understand
@@ -89,6 +98,7 @@ We will use a **hybrid approach**:
 ## Consequences
 
 ### Positive
+
 - Simple, maintainable state management
 - Good performance on mobile (minimal re-renders)
 - Easy to persist user preferences
@@ -98,28 +108,33 @@ We will use a **hybrid approach**:
 - Flexible: can use Context for simple cases, Zustand for complex
 
 ### Negative
+
 - Need to decide when to use Context vs Zustand (documentation will clarify)
 - Slightly less prescriptive than Redux (need to establish patterns)
 
 ### Neutral
+
 - Will have multiple state management approaches (but clearly separated)
 - Developers need to learn both Context and Zustand (both are simple)
 
 ### Implementation Guidelines
 
 #### Use React Context + Hooks for:
+
 - Theme/dark mode toggle
 - UI-only state (modals, dropdowns, temporary form state)
 - State that's only needed in a small component tree
 - State that doesn't change frequently
 
 Example:
+
 ```typescript
 // ThemeContext for dark mode toggle
 const ThemeContext = createContext<ThemeContextType | null>(null);
 ```
 
 #### Use Zustand for:
+
 - Rules content data
 - User bookmarks/favorites
 - User preferences (font size, accessibility settings)
@@ -128,6 +143,7 @@ const ThemeContext = createContext<ThemeContextType | null>(null);
 - State that's accessed by many components
 
 Example:
+
 ```typescript
 // Store for rules data and user preferences
 interface RulesStore {
@@ -141,11 +157,13 @@ const useRulesStore = create<RulesStore>((set) => ({...}));
 ```
 
 #### Persistence Strategy
+
 - Use Zustand's `persist` middleware for user preferences
 - Store in localStorage with versioning
 - Implement migration strategy for schema changes
 
 #### Performance Considerations
+
 - Use Zustand's selector pattern to avoid unnecessary re-renders
 - Keep state normalized (avoid deeply nested structures)
 - Use immer middleware for easier immutable updates

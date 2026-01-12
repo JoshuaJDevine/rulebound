@@ -3,7 +3,7 @@
  * Text input for searching rules with clear functionality
  */
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 export interface SearchInputProps {
   value: string;
@@ -20,16 +20,21 @@ export function SearchInput({
   value,
   onChange,
   onClear,
-  placeholder = 'Search rules...',
+  placeholder = "Search rules...",
   autoFocus = false,
   disabled = false,
-  ariaLabel = 'Search rules',
+  ariaLabel = "Search rules",
   className,
 }: SearchInputProps) {
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn("relative", className)}>
       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="h-5 w-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -57,7 +62,12 @@ export function SearchInput({
           aria-label="Clear search"
           type="button"
         >
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"

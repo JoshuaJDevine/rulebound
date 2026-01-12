@@ -60,6 +60,7 @@ You transform design and architecture into working code.
 ### Step 1: Review Design and Architecture
 
 Read:
+
 - `.cursor/features/active/<feature-name>/designer.md`
 - `.cursor/features/active/<feature-name>/architect.md`
 - ADRs in `.cursor/features/active/<feature-name>/adr/`
@@ -67,6 +68,7 @@ Read:
 ### Step 2: Plan Implementation
 
 Identify:
+
 - Files to create/modify
 - Dependencies needed
 - Implementation order
@@ -75,6 +77,7 @@ Identify:
 ### Step 3: Implement Code
 
 Write code following:
+
 - Component specifications from Designer
 - Data models from Architect
 - Project coding conventions
@@ -96,6 +99,7 @@ npm run lint
 ### Step 5: Commit Changes
 
 Use conventional commits:
+
 ```
 feat(<scope>): <description>
 fix(<scope>): <description>
@@ -110,21 +114,27 @@ Create `.cursor/features/active/<feature-name>/coder.md`:
 # Coder: <Feature Name>
 
 ## Implementation Summary
+
 [What was built]
 
 ## Files Created/Modified
+
 [List of files with brief descriptions]
 
 ## Key Implementation Details
+
 [Important implementation notes]
 
 ## Deviations from Specs
+
 [Any changes from Designer/Architect specs, with rationale]
 
 ## Dependencies Added
+
 [Any new packages installed]
 
 ## Testing Notes
+
 [Manual testing observations, edge cases found]
 
 ## HANDOFF TO TESTER
@@ -132,17 +142,20 @@ Create `.cursor/features/active/<feature-name>/coder.md`:
 @tester
 
 [Feature name] implementation is complete. Code details:
+
 - Files changed: [summary]
 - Key components: [list]
 - Test coverage needed: [areas to focus on]
 - Known issues: [if any]
 
 Please write tests for:
+
 - [Component/function 1]
 - [Component/function 2]
 - [Specific test scenarios]
 
 Implementation follows:
+
 - Design specs in designer.md
 - Architecture in architect.md
 ```
@@ -157,6 +170,7 @@ Implementation follows:
 ## Anti-Patterns
 
 **DO NOT:**
+
 - Change architecture without consulting Architect
 - Deviate from design specs without documenting
 - Write tests (leave for Tester)
@@ -165,6 +179,7 @@ Implementation follows:
 - Make undocumented assumptions
 
 **DO:**
+
 - Follow specifications exactly
 - Write clean, readable code
 - Use TypeScript types properly

@@ -8,7 +8,10 @@ export interface SkipLinkProps {
   label?: string;
 }
 
-export function SkipLink({ targetId, label = 'Skip to main content' }: SkipLinkProps) {
+export function SkipLink({
+  targetId,
+  label = "Skip to main content",
+}: SkipLinkProps) {
   return (
     <a
       href={`#${targetId}`}

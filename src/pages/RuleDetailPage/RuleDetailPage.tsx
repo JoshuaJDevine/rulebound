@@ -3,16 +3,23 @@
  * Full display of a single rule with content, references, and actions
  */
 
-import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useRulesStore } from '@/store/rulesStore';
-import { BookmarkButton } from '@/components/common';
-import { Breadcrumb, LoadingSpinner, ErrorMessage, Chip, Button } from '@/components/ui';
+import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useRulesStore } from "@/store/rulesStore";
+import { BookmarkButton } from "@/components/common";
+import {
+  Breadcrumb,
+  LoadingSpinner,
+  ErrorMessage,
+  Chip,
+  Button,
+} from "@/components/ui";
 
 export function RuleDetailPage() {
   const { ruleId } = useParams<{ ruleId: string }>();
   const navigate = useNavigate();
-  const { rules, isLoading, error, loadRules, addToRecentlyViewed } = useRulesStore();
+  const { rules, isLoading, error, loadRules, addToRecentlyViewed } =
+    useRulesStore();
 
   useEffect(() => {
     if (rules.length === 0 && !isLoading && !error) {
@@ -26,9 +33,9 @@ export function RuleDetailPage() {
     }
   }, [ruleId, addToRecentlyViewed]);
 
-  const rule = rules.find(r => r.id === ruleId);
+  const rule = rules.find((r) => r.id === ruleId);
   const relatedRules = rule
-    ? rules.filter(r => rule.references.includes(r.id))
+    ? rules.filter((r) => rule.references.includes(r.id))
     : [];
 
   if (isLoading) {
@@ -40,7 +47,10 @@ export function RuleDetailPage() {
       <div className="container mx-auto px-4 py-8">
         <ErrorMessage
           title="Failed to load rule"
-          message={error.message || 'An error occurred while loading the rule. Please try again.'}
+          message={
+            error.message ||
+            "An error occurred while loading the rule. Please try again."
+          }
           retry={loadRules}
         />
       </div>
@@ -56,7 +66,7 @@ export function RuleDetailPage() {
         />
         <Button
           variant="primary"
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
           className="mt-4"
         >
           Go to Home
@@ -66,8 +76,11 @@ export function RuleDetailPage() {
   }
 
   const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    { label: rule.section, href: `/rules?section=${rule.section.toLowerCase().replace(/\s+/g, '-')}` },
+    { label: "Home", href: "/" },
+    {
+      label: rule.section,
+      href: `/rules?section=${rule.section.toLowerCase().replace(/\s+/g, "-")}`,
+    },
     { label: rule.title },
   ];
 
@@ -79,8 +92,18 @@ export function RuleDetailPage() {
         onClick={() => navigate(-1)}
         className="mb-4"
         icon={
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         }
       >

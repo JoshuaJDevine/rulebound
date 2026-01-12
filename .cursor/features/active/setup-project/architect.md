@@ -18,45 +18,51 @@ This document defines the complete technical architecture for Rule Bound - an ac
 
 All architectural decisions have been documented in ADRs:
 
-| ADR | Decision | Status |
-|-----|----------|--------|
-| [ADR-001](./adr/ADR-001-build-tool-selection.md) | Build Tool Selection (Vite) | ✅ Accepted |
-| [ADR-002](./adr/ADR-002-routing-solution.md) | Routing Solution (React Router v6) | ✅ Accepted |
-| [ADR-003](./adr/ADR-003-styling-approach.md) | Styling Approach (Tailwind CSS) | ✅ Accepted |
-| [ADR-004](./adr/ADR-004-state-management.md) | State Management (Context + Zustand) | ✅ Accepted |
-| [ADR-005](./adr/ADR-005-accessibility-tooling.md) | Accessibility Tooling (Multi-layer) | ✅ Accepted |
-| [ADR-006](./adr/ADR-006-project-structure.md) | Project Structure (Hybrid Layer-Based) | ✅ Accepted |
+| ADR                                               | Decision                               | Status      |
+| ------------------------------------------------- | -------------------------------------- | ----------- |
+| [ADR-001](./adr/ADR-001-build-tool-selection.md)  | Build Tool Selection (Vite)            | ✅ Accepted |
+| [ADR-002](./adr/ADR-002-routing-solution.md)      | Routing Solution (React Router v6)     | ✅ Accepted |
+| [ADR-003](./adr/ADR-003-styling-approach.md)      | Styling Approach (Tailwind CSS)        | ✅ Accepted |
+| [ADR-004](./adr/ADR-004-state-management.md)      | State Management (Context + Zustand)   | ✅ Accepted |
+| [ADR-005](./adr/ADR-005-accessibility-tooling.md) | Accessibility Tooling (Multi-layer)    | ✅ Accepted |
+| [ADR-006](./adr/ADR-006-project-structure.md)     | Project Structure (Hybrid Layer-Based) | ✅ Accepted |
 
 ## System Design
 
 ### Technology Stack
 
 **Core:**
+
 - **React 18+**: UI framework
 - **TypeScript 5+**: Type safety
 - **Vite**: Build tool and dev server
 - **React Router v6**: Client-side routing
 
 **Styling:**
+
 - **Tailwind CSS**: Utility-first CSS framework
 - **@tailwindcss/forms**: Accessible form styling
 - **@tailwindcss/typography**: Rich text content styling
 
 **State Management:**
+
 - **React Context + Hooks**: UI state, theme
 - **Zustand**: Global app state, user preferences
 
 **Accessibility:**
+
 - **eslint-plugin-jsx-a11y**: Development linting
 - **@axe-core/react**: Runtime accessibility checks (dev mode)
 - **vitest-axe**: Automated accessibility testing
 
 **Testing:**
+
 - **Vitest**: Test runner
 - **React Testing Library**: Component testing
 - **@vitest/coverage-c8**: Code coverage
 
 **Code Quality:**
+
 - **ESLint**: Linting
 - **Prettier**: Code formatting
 - **TypeScript**: Type checking
@@ -133,14 +139,14 @@ App
 ```typescript
 // Rule represents a single rule from the Riftbound Core Rules
 interface Rule {
-  id: string;                    // Unique identifier
-  title: string;                 // Rule title
-  section: string;               // Major section (e.g., "Combat", "Character Creation")
-  subsection?: string;           // Optional subsection
-  content: string;               // Rule text content (markdown)
-  tags: string[];                // Searchable tags
-  references: string[];          // IDs of related rules
-  pageNumber?: number;           // PDF page reference
+  id: string; // Unique identifier
+  title: string; // Rule title
+  section: string; // Major section (e.g., "Combat", "Character Creation")
+  subsection?: string; // Optional subsection
+  content: string; // Rule text content (markdown)
+  tags: string[]; // Searchable tags
+  references: string[]; // IDs of related rules
+  pageNumber?: number; // PDF page reference
 }
 
 // Section groups rules hierarchically
@@ -148,39 +154,39 @@ interface Section {
   id: string;
   title: string;
   description: string;
-  icon?: string;                 // Icon identifier for UI
-  rules: string[];               // Array of rule IDs
-  subsections?: Section[];       // Nested sections
+  icon?: string; // Icon identifier for UI
+  rules: string[]; // Array of rule IDs
+  subsections?: Section[]; // Nested sections
 }
 
 // Bookmark represents a user's saved rule
 interface Bookmark {
   ruleId: string;
-  timestamp: number;             // When bookmarked
-  notes?: string;                // Optional user notes
+  timestamp: number; // When bookmarked
+  notes?: string; // Optional user notes
 }
 
 // User preferences
 interface UserPreferences {
-  theme: 'light' | 'dark';
-  fontSize: 'small' | 'medium' | 'large';
+  theme: "light" | "dark";
+  fontSize: "small" | "medium" | "large";
   highContrast: boolean;
   reducedMotion: boolean;
   bookmarks: Bookmark[];
-  recentlyViewed: string[];      // Rule IDs, most recent first
+  recentlyViewed: string[]; // Rule IDs, most recent first
 }
 
 // Search result
 interface SearchResult {
   rule: Rule;
-  score: number;                 // Relevance score
-  matches: SearchMatch[];        // Where the search term matched
+  score: number; // Relevance score
+  matches: SearchMatch[]; // Where the search term matched
 }
 
 interface SearchMatch {
-  field: 'title' | 'content' | 'tags';
-  snippet: string;               // Text snippet with match
-  position: number;              // Character position
+  field: "title" | "content" | "tags";
+  snippet: string; // Text snippet with match
+  position: number; // Character position
 }
 ```
 
@@ -194,11 +200,11 @@ interface RulesStore {
   sections: Section[];
   isLoading: boolean;
   error: Error | null;
-  
+
   // User data
   bookmarks: Bookmark[];
   preferences: UserPreferences;
-  
+
   // Actions
   loadRules: () => Promise<void>;
   addBookmark: (ruleId: string, notes?: string) => void;
@@ -209,7 +215,7 @@ interface RulesStore {
 
 // Context for theme
 interface ThemeContextType {
-  theme: 'light' | 'dark';
+  theme: "light" | "dark";
   toggleTheme: () => void;
 }
 
@@ -237,12 +243,12 @@ interface DataService {
    * Returns parsed rules array
    */
   loadRules(): Promise<Rule[]>;
-  
+
   /**
    * Load section hierarchy
    */
   loadSections(): Promise<Section[]>;
-  
+
   /**
    * Search rules by query
    */
@@ -259,12 +265,12 @@ interface StorageService {
    * Save user preferences to localStorage
    */
   savePreferences(prefs: UserPreferences): void;
-  
+
   /**
    * Load user preferences from localStorage
    */
   loadPreferences(): UserPreferences | null;
-  
+
   /**
    * Clear all stored data
    */
@@ -275,18 +281,21 @@ interface StorageService {
 ## Technology Choices
 
 ### Why Vite?
+
 - Extremely fast dev server (native ES modules)
 - Optimized production builds
 - Excellent TypeScript support
 - Modern, well-maintained
 
 ### Why React Router v6?
+
 - Industry standard
 - Built-in accessibility features
 - Code splitting support
 - Strong TypeScript support
 
 ### Why Tailwind CSS?
+
 - Mobile-first responsive design by default
 - Built-in accessibility utilities
 - Highly performant (PurgeCSS)
@@ -294,11 +303,13 @@ interface StorageService {
 - Rapid development
 
 ### Why Zustand + Context?
+
 - Zustand: Minimal boilerplate, great performance, small bundle
 - Context: Built-in, perfect for simple UI state
 - Hybrid approach: Use the right tool for the job
 
 ### Why Multi-Layer Accessibility?
+
 - Defense in depth: catch issues at multiple stages
 - Fast feedback: ESLint catches issues immediately
 - Comprehensive: static + runtime + automated tests
@@ -358,6 +369,7 @@ See [ADR-006](./adr/ADR-006-project-structure.md) for detailed structure decisio
 ### Documentation Requirements
 
 Every `.ts`/`.tsx` file needs:
+
 - **Source file**: The code itself
 - **Test file**: `.spec.ts(x)` with comprehensive tests
 - **Doc file**: `.md` with usage examples and API docs
@@ -465,6 +477,7 @@ Must meet all Level A and AA criteria:
 ### Extensibility
 
 The architecture supports future additions:
+
 - Additional data sources (API, PDF parsing)
 - More complex state (Redux if needed)
 - Server-side rendering (Vite SSR)
@@ -527,6 +540,7 @@ The **Project Setup** feature has been architected. The technical foundation for
 ### Architecture Details
 
 All architectural decisions are documented in ADRs:
+
 - [ADR-001: Build Tool Selection](./adr/ADR-001-build-tool-selection.md)
 - [ADR-002: Routing Solution](./adr/ADR-002-routing-solution.md)
 - [ADR-003: Styling Approach](./adr/ADR-003-styling-approach.md)
@@ -580,6 +594,7 @@ Please proceed with UI/UX design and feature specifications based on this archit
 ### Data Models Available
 
 The following TypeScript interfaces are defined and available:
+
 - `Rule`: Individual rule entries
 - `Section`: Hierarchical rule organization
 - `Bookmark`: User-saved rules

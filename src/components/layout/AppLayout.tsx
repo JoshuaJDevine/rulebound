@@ -3,9 +3,9 @@
  * Root layout component wrapping all pages with header, main content, and navigation
  */
 
-import { SkipLink } from '@/components/ui';
-import { Header } from './Header';
-import { BottomNav } from './BottomNav';
+import { SkipLink } from "@/components/ui";
+import { Header } from "./Header";
+import { BottomNav } from "./BottomNav";
 
 export interface AppLayoutProps {
   children: React.ReactNode;

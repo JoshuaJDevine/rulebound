@@ -15,14 +15,14 @@
 
 ## Agent Documents
 
-| Agent | Document | Status |
-|-------|----------|--------|
-| Architect | [architect.md](./architect.md) | ✅ Complete |
-| Designer | [designer.md](./designer.md) | ✅ Complete |
-| Coder | [coder.md](./coder.md) | Pending |
-| Tester | [tester.md](./tester.md) | Pending |
-| Documentor | [documentor.md](./documentor.md) | Pending |
-| Closer | [closer.md](./closer.md) | Pending |
+| Agent      | Document                         | Status      |
+| ---------- | -------------------------------- | ----------- |
+| Architect  | [architect.md](./architect.md)   | ✅ Complete |
+| Designer   | [designer.md](./designer.md)     | ✅ Complete |
+| Coder      | [coder.md](./coder.md)           | Pending     |
+| Tester     | [tester.md](./tester.md)         | Pending     |
+| Documentor | [documentor.md](./documentor.md) | Pending     |
+| Closer     | [closer.md](./closer.md)         | Pending     |
 
 ## Architecture Summary
 

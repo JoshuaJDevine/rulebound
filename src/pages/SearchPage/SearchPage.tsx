@@ -3,17 +3,17 @@
  * Full-featured search interface with results
  */
 
-import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useRulesStore } from '@/store/rulesStore';
-import { SearchInput, LoadingSpinner, ErrorMessage } from '@/components/ui';
-import { RuleCard, EmptyState } from '@/components/common';
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useRulesStore } from "@/store/rulesStore";
+import { SearchInput, LoadingSpinner, ErrorMessage } from "@/components/ui";
+import { RuleCard, EmptyState } from "@/components/common";
 
 export function SearchPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const initialQuery = searchParams.get('q') || '';
-  
+  const initialQuery = searchParams.get("q") || "";
+
   const { rules, isLoading, error, loadRules, searchRules } = useRulesStore();
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [debouncedQuery, setDebouncedQuery] = useState(initialQuery);
@@ -36,8 +36,8 @@ export function SearchPage() {
   const results = debouncedQuery ? searchRules(debouncedQuery) : [];
 
   const handleClear = () => {
-    setSearchQuery('');
-    setDebouncedQuery('');
+    setSearchQuery("");
+    setDebouncedQuery("");
   };
 
   if (isLoading) {
@@ -49,7 +49,10 @@ export function SearchPage() {
       <div className="container mx-auto px-4 py-8">
         <ErrorMessage
           title="Failed to load rules"
-          message={error.message || 'An error occurred while loading the rules. Please try again.'}
+          message={
+            error.message ||
+            "An error occurred while loading the rules. Please try again."
+          }
           retry={loadRules}
         />
       </div>
@@ -67,8 +70,18 @@ export function SearchPage() {
               onClick={() => navigate(-1)}
               aria-label="Go back"
             >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                className="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
             </button>
             <div className="flex-1">
@@ -103,7 +116,8 @@ export function SearchPage() {
               aria-live="polite"
               aria-atomic="true"
             >
-              {results.length} {results.length === 1 ? 'result' : 'results'} for "{debouncedQuery}"
+              {results.length} {results.length === 1 ? "result" : "results"} for
+              "{debouncedQuery}"
             </p>
             <ul className="space-y-4">
               {results.map(({ rule }) => (
@@ -122,8 +136,8 @@ export function SearchPage() {
             title="No results found"
             description={`No rules match "${debouncedQuery}". Try a different search term or browse all rules.`}
             action={{
-              label: 'Browse All Rules',
-              onClick: () => navigate('/rules'),
+              label: "Browse All Rules",
+              onClick: () => navigate("/rules"),
             }}
           />
         )}

@@ -3,18 +3,23 @@
  * Mobile bottom navigation for primary app sections
  */
 
-import { Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 export function BottomNav() {
   const location = useLocation();
 
   const navItems = [
     {
-      path: '/',
-      label: 'Home',
+      path: "/",
+      label: "Home",
       icon: (
-        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -25,10 +30,15 @@ export function BottomNav() {
       ),
     },
     {
-      path: '/rules',
-      label: 'Browse',
+      path: "/rules",
+      label: "Browse",
       icon: (
-        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -39,10 +49,15 @@ export function BottomNav() {
       ),
     },
     {
-      path: '/bookmarks',
-      label: 'Saved',
+      path: "/bookmarks",
+      label: "Saved",
       icon: (
-        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -62,18 +77,18 @@ export function BottomNav() {
       <div className="grid grid-cols-3 h-16">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
-          
+
           return (
             <Link
               key={item.path}
               to={item.path}
               className={cn(
-                'flex flex-col items-center justify-center gap-1 transition-colors focus:outline-none focus:ring-4 focus:ring-primary-500/50',
+                "flex flex-col items-center justify-center gap-1 transition-colors focus:outline-none focus:ring-4 focus:ring-primary-500/50",
                 isActive
-                  ? 'text-primary-600 font-semibold'
-                  : 'text-neutral-500 hover:text-neutral-700'
+                  ? "text-primary-600 font-semibold"
+                  : "text-neutral-500 hover:text-neutral-700",
               )}
-              aria-current={isActive ? 'page' : undefined}
+              aria-current={isActive ? "page" : undefined}
             >
               <span aria-hidden="true">{item.icon}</span>
               <span className="text-xs">{item.label}</span>

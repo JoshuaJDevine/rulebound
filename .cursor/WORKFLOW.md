@@ -45,42 +45,54 @@ This document describes the 6-agent cascade workflow for developing features in 
 ## Agent Roles
 
 ### 1. Architect (@architect)
+
 **First in the chain** - Designs system architecture before any feature work begins.
+
 - Creates Architecture Decision Records (ADRs)
 - Defines data models and system boundaries
 - Makes technology choices
 - Documents system architecture
 
 ### 2. Designer (@designer)
+
 **Second** - Creates UI/UX specifications based on architecture.
+
 - Designs user flows and interactions
 - Specifies component structure
 - Documents accessibility requirements
 - Creates design specifications
 
 ### 3. Coder (@coder)
+
 **Third** - Implements the code following architecture and design.
+
 - Writes TypeScript/React code
 - Follows specifications exactly
 - Commits code with conventional commits
 - Validates implementation
 
 ### 4. Tester (@tester)
+
 **Fourth** - Ensures code quality through testing.
+
 - Writes comprehensive test suites
 - Validates test coverage (80%+ target)
 - Tests accessibility
 - Documents test results
 
 ### 5. Documentor (@documentor)
+
 **Fifth** - Creates documentation for maintainability.
+
 - Creates `.md` file for every code file
 - Includes usage examples
 - Documents APIs and interfaces
 - Links related documentation
 
 ### 6. Closer (@closer)
+
 **Final** - Validates everything and creates the PR.
+
 - Runs pre-push checks
 - Verifies all artifacts exist
 - Creates GitHub issues for gaps
@@ -95,6 +107,7 @@ npm run feature:start
 ```
 
 This will:
+
 - Checkout main and pull latest
 - Create a feature branch (`feature/<name>`)
 - Initialize the feature folder structure
@@ -300,6 +313,7 @@ Rule Bound is an accessible, easy-to-use web interface for the Riftbound Core Ru
 ### Agent Can't Proceed
 
 Check blockers in the agent's personality file. Common issues:
+
 - Missing previous agent's handoff document
 - Pre-requisites not met
 - Quality checks failing
@@ -307,6 +321,7 @@ Check blockers in the agent's personality file. Common issues:
 ### Pre-Push Checks Fail
 
 Run checks individually to identify issues:
+
 ```bash
 npm run type-check
 npm run lint
@@ -317,6 +332,7 @@ npm run docs:validate
 ### Missing Documentation
 
 Use the issue creator:
+
 ```bash
 npm run create-issue -- --type=docs --file=src/component.ts
 ```

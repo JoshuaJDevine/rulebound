@@ -3,13 +3,13 @@
  * Top navigation bar with logo, search, and primary actions
  */
 
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { SearchInput } from '@/components/ui';
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { SearchInput } from "@/components/ui";
 
 export function Header() {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (value: string) => {
     setSearchQuery(value);
@@ -19,11 +19,14 @@ export function Header() {
   };
 
   const handleClear = () => {
-    setSearchQuery('');
+    setSearchQuery("");
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-neutral-200" role="banner">
+    <header
+      className="sticky top-0 z-50 bg-white border-b border-neutral-200"
+      role="banner"
+    >
       <div className="container mx-auto px-4 h-14 md:h-16 flex items-center justify-between gap-4">
         {/* Logo */}
         <Link
@@ -35,7 +38,10 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-4" aria-label="Main navigation">
+        <nav
+          className="hidden md:flex items-center gap-4"
+          aria-label="Main navigation"
+        >
           <Link
             to="/rules"
             className="text-neutral-700 hover:text-neutral-900 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-500/50 rounded px-2 py-1"
@@ -62,10 +68,15 @@ export function Header() {
         {/* Mobile search icon */}
         <button
           className="md:hidden h-10 w-10 flex items-center justify-center text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500/50 rounded"
-          onClick={() => navigate('/search')}
+          onClick={() => navigate("/search")}
           aria-label="Search rules"
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -81,7 +92,12 @@ export function Header() {
           className="md:hidden h-10 w-10 flex items-center justify-center text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500/50 rounded"
           aria-label="Bookmarks"
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"

@@ -89,6 +89,7 @@ npm run pre-push
 ```
 
 This runs:
+
 - Branch name validation
 - TypeScript type checking
 - ESLint
@@ -99,6 +100,7 @@ This runs:
 ### Step 3: Fix Any Critical Issues
 
 If pre-push checks fail:
+
 - Fix critical issues (type errors, lint errors, test failures)
 - For non-critical issues (formatting, docs), create GitHub issues
 
@@ -168,6 +170,7 @@ PR Description Template:
 ## Documentation
 
 Feature documentation is in `.cursor/features/active/<feature-name>/`:
+
 - Architecture: [architect.md](./.cursor/features/active/<feature-name>/architect.md)
 - Design: [designer.md](./.cursor/features/active/<feature-name>/designer.md)
 - Implementation: [coder.md](./.cursor/features/active/<feature-name>/coder.md)
@@ -233,6 +236,7 @@ After PR is merged, run: `npm run feature:complete`
 ## Anti-Patterns
 
 **DO NOT:**
+
 - Skip pre-push checks
 - Create PR without all artifacts
 - Ignore quality issues
@@ -240,6 +244,7 @@ After PR is merged, run: `npm run feature:complete`
 - Skip creating issues for gaps
 
 **DO:**
+
 - Validate everything thoroughly
 - Create clear, detailed PRs
 - Handle gaps with GitHub issues

@@ -1,1 +1,1 @@
-export { RuleDetailPage } from './RuleDetailPage';
+export { RuleDetailPage } from "./RuleDetailPage";
