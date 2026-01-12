@@ -1,0 +1,108 @@
+{
+  "sections": [
+    {
+      "id": "character-creation",
+      "title": "Character Creation",
+      "description": "Rules for creating your character",
+      "icon": "🧙",
+      "rules": ["char-basics", "char-attributes", "char-skills"]
+    },
+    {
+      "id": "combat",
+      "title": "Combat",
+      "description": "Rules for combat encounters",
+      "icon": "⚔️",
+      "rules": ["combat-basics", "combat-attacks", "combat-defense"]
+    },
+    {
+      "id": "magic",
+      "title": "Magic",
+      "description": "Spellcasting and magical abilities",
+      "icon": "✨",
+      "rules": ["magic-basics", "magic-spells", "magic-components"]
+    }
+  ],
+  "rules": [
+    {
+      "id": "char-basics",
+      "title": "Character Basics",
+      "section": "Character Creation",
+      "content": "Your character is defined by their attributes, skills, and background. Start by choosing a concept and then distribute your attribute points.",
+      "tags": ["character", "creation", "basics"],
+      "references": ["char-attributes", "char-skills"],
+      "pageNumber": 10
+    },
+    {
+      "id": "char-attributes",
+      "title": "Character Attributes",
+      "section": "Character Creation",
+      "content": "Attributes represent your character's innate capabilities. The six primary attributes are: Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma. You have 27 points to distribute among these attributes.",
+      "tags": ["character", "attributes", "stats"],
+      "references": ["char-basics"],
+      "pageNumber": 12
+    },
+    {
+      "id": "char-skills",
+      "title": "Character Skills",
+      "section": "Character Creation",
+      "content": "Skills represent trained abilities. Choose 4 skills from the list to be proficient in. Your skill bonus is your proficiency bonus plus the relevant attribute modifier.",
+      "tags": ["character", "skills", "proficiency"],
+      "references": ["char-basics", "char-attributes"],
+      "pageNumber": 15
+    },
+    {
+      "id": "combat-basics",
+      "title": "Combat Basics",
+      "section": "Combat",
+      "content": "Combat is resolved in rounds. Each round, every participant gets one turn in initiative order. On your turn, you can move up to your speed and take one action.",
+      "tags": ["combat", "initiative", "actions"],
+      "references": ["combat-attacks", "combat-defense"],
+      "pageNumber": 30
+    },
+    {
+      "id": "combat-attacks",
+      "title": "Making Attacks",
+      "section": "Combat",
+      "content": "To make an attack, roll 1d20 and add your attack bonus. If the result meets or exceeds the target's defense, your attack hits. Roll damage dice and add your damage bonus.",
+      "tags": ["combat", "attack", "damage"],
+      "references": ["combat-basics"],
+      "pageNumber": 32
+    },
+    {
+      "id": "combat-defense",
+      "title": "Defense",
+      "section": "Combat",
+      "content": "Your defense value is 10 plus your Dexterity modifier plus your armor bonus. This is the number attackers must meet or exceed to hit you.",
+      "tags": ["combat", "defense", "armor"],
+      "references": ["combat-basics"],
+      "pageNumber": 34
+    },
+    {
+      "id": "magic-basics",
+      "title": "Magic Basics",
+      "section": "Magic",
+      "content": "Magic is powered by spell slots. Each spell has a level from 1 to 9. To cast a spell, you must expend a spell slot of the spell's level or higher.",
+      "tags": ["magic", "spells", "casting"],
+      "references": ["magic-spells", "magic-components"],
+      "pageNumber": 50
+    },
+    {
+      "id": "magic-spells",
+      "title": "Learning Spells",
+      "section": "Magic",
+      "content": "Spellcasters learn spells based on their class. Wizards learn from study, Clerics receive them through prayer, and Sorcerers know them innately.",
+      "tags": ["magic", "spells", "learning"],
+      "references": ["magic-basics"],
+      "pageNumber": 52
+    },
+    {
+      "id": "magic-components",
+      "title": "Spell Components",
+      "section": "Magic",
+      "content": "Most spells require verbal (V), somatic (S), or material (M) components. You must be able to speak for verbal components, have a free hand for somatic components, and possess the materials for material components.",
+      "tags": ["magic", "components", "materials"],
+      "references": ["magic-basics"],
+      "pageNumber": 54
+    }
+  ]
+}
