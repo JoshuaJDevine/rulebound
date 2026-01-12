@@ -63,15 +63,16 @@ feat: initial project setup with React, TypeScript, and accessibility tooling
 
 **ADRs:** 6 Architecture Decision Records created
 
-## Issues to Create Manually
+## Issues Created
 
-GitHub CLI (`gh`) is not installed, so the following issues should be created manually:
+Successfully created 3 GitHub issues:
 
-### Issue 1: Fix RuleCard Nested Button Accessibility Violation
+### Issue #1: Fix RuleCard Nested Button Accessibility Violation
 
+**URL:** https://github.com/JoshuaJDevine/rulebound/issues/1  
 **Type:** Technical Debt  
 **Title:** `chore: Fix RuleCard nested button accessibility violation`  
-**Labels:** `tech-debt`, `accessibility`, `high-priority`
+**Status:** ✅ Created
 
 **Description:**
 
@@ -108,11 +109,12 @@ RuleCard is a button that contains BookmarkButton (also a button), creating nest
 - [ ] Accessibility tests with vitest-axe pass
 ```
 
-### Issue 2: Add Page-Level Integration Tests
+### Issue #4: Add Page-Level Integration Tests
 
+**URL:** https://github.com/JoshuaJDevine/rulebound/issues/4  
 **Type:** Testing  
 **Title:** `test: Add page-level integration tests`  
-**Labels:** `testing`, `enhancement`
+**Status:** ✅ Created
 
 **Description:**
 
@@ -151,11 +153,12 @@ Add integration tests for all page components:
 Follow the testing patterns in `.cursor/agents/tester.md`
 ```
 
-### Issue 3: Add E2E Tests
+### Issue #3: Add E2E Tests
 
+**URL:** https://github.com/JoshuaJDevine/rulebound/issues/3  
 **Type:** Enhancement  
 **Title:** `test: Add end-to-end tests with Playwright`  
-**Labels:** `testing`, `enhancement`, `future`
+**Status:** ✅ Created
 
 **Description:**
 
