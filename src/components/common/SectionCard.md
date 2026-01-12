@@ -2,26 +2,33 @@
 
 ## Purpose
 
-The SectionCard component provides a navigational card for browsing rules by section in the Rule Bound application. It displays a section's icon, title, and rule count in an attractive gradient card design. The component serves as an entry point for users to explore rules within a specific category or section, making the application's content structure immediately discoverable from the home page.
+The SectionCard component displays top-level sections (level 0) in a prominent, scannable format, typically used on the home page for primary navigation. It provides an entry point for users to explore rules within a specific section, featuring the section number (large and prominent), title, optional content description, and child count. The component uses a centered layout with elevated styling to make sections visually distinct from regular rule cards.
 
 ## Usage
 
 ```tsx
 import { SectionCard } from '@/components/common';
 
-// Basic usage
+// Basic usage with default variant
 <SectionCard
   section={section}
   onClick={(sectionId) => navigate(`/rules/${sectionId}`)}
 />
 
-// In a grid layout
-<div className="grid grid-cols-2 gap-4">
+// Featured variant for emphasis
+<SectionCard
+  section={featuredSection}
+  variant="featured"
+  onClick={(sectionId) => navigate(`/rules/${sectionId}`)}
+/>
+
+// Grid layout on home page
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   {sections.map(section => (
     <SectionCard
       key={section.id}
       section={section}
-      onClick={handleSectionClick}
+      onClick={(sectionId) => navigate(`/rules/${sectionId}`)}
     />
   ))}
 </div>
@@ -29,197 +36,89 @@ import { SectionCard } from '@/components/common';
 
 ## Props / Parameters
 
-| Name      | Type                        | Required | Description                        |
-| --------- | --------------------------- | -------- | ---------------------------------- |
-| section   | Section                     | Yes      | Section object to display          |
-| onClick   | (sectionId: string) => void | Yes      | Click handler receiving section ID |
-| className | string                      | No       | Additional CSS classes             |
+| Name      | Type                        | Required | Default   | Description                                               |
+| --------- | --------------------------- | -------- | --------- | --------------------------------------------------------- |
+| section   | RuleSection                 | Yes      | -         | Rule section object to display (must have `level: 0`)     |
+| onClick   | (sectionId: string) => void | Yes      | -         | Click handler called with section ID when card is clicked |
+| variant   | "default" \| "featured"     | No       | "default" | Visual variant affecting size, padding, and gradient      |
+| className | string                      | No       | -         | Additional CSS classes to apply to card container         |
 
-### Section Type
+### RuleSection Type
+
+The component uses the unified `RuleSection` interface (see [ADR-001: Hierarchical Data Model](../../../.cursor/features/active/update-rules-and-project-strucutre/adr/ADR-001-hierarchical-data-model.md)):
 
 ```typescript
-interface Section {
-  id: string;
-  title: string;
-  icon?: string; // Emoji or icon component
-  rules: Rule[]; // Array of rules in this section
+interface RuleSection {
+  id: string; // Unique identifier (e.g., "000", "100")
+  number: string; // Original section number (e.g., "000.", "100.")
+  title: string; // Section title
+  content: string; // Full text content (used for description)
+  level: number; // Must be 0 for sections
+  parentId?: string; // Usually undefined for top-level sections
+  children: string[]; // IDs of child rules
+  crossRefs: string[]; // IDs of referenced rules
+  version: string; // Version number (e.g., "1.2")
 }
 ```
 
+**Note**: The component is designed specifically for level 0 sections. Using it with rules at other levels will still work but may not display correctly.
+
 ## Returns
 
-An interactive, visually distinctive card for navigating to a section's rules.
+An interactive, visually prominent card element for navigating to a section's rules, featuring large section number, title, description, and child count.
+
+## Variants
+
+### default (Default)
+
+Standard section card for grid layouts:
+
+- Background: White (bg-white)
+- Padding: p-6 md:p-8
+- Section number: text-4xl, text-primary-600
+- Title: text-xl md:text-2xl
+- Shadow: shadow-lg on hover:shadow-2xl
+- Scale: hover:scale-102 (2% larger on hover)
+
+### featured
+
+Emphasized section card for featured/promoted content:
+
+- Background: Gradient (from-primary-100 via-primary-50 to-white)
+- Padding: p-8 md:p-10 (larger)
+- Section number: text-5xl md:text-6xl, text-primary-700 (larger and darker)
+- Title: text-2xl md:text-3xl (larger)
+- Shadow: shadow-xl on hover:shadow-2xl (stronger)
+- Scale: hover:scale-105 (5% larger on hover)
+- Border: border-primary-300 (colored border)
 
 ## Examples
 
 ```tsx
 // Example 1: Basic section card
-<SectionCard
-  section={{
-    id: 'combat',
-    title: 'Combat',
-    icon: '⚔️',
-    rules: combatRules
-  }}
-  onClick={(id) => navigate(`/rules/${id}`)}
-/>
-
-// Example 2: Grid of sections
-function SectionGrid({ sections }) {
+function SectionCardExample() {
+  const { getTopLevelSections } = useRulesStore();
   const navigate = useNavigate();
+  const sections = getTopLevelSections();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {sections.map(section => (
-        <SectionCard
-          key={section.id}
-          section={section}
-          onClick={(id) => navigate(`/rules/${id}`)}
-        />
-      ))}
-    </div>
+    <SectionCard
+      section={sections[0]}
+      onClick={(id) => navigate(`/rules/${id}`)}
+    />
   );
 }
 
-// Example 3: Featured sections on home page
+// Example 2: Grid of sections on home page
 function HomePage() {
-  const { sections } = useRulesStore();
-
-  return (
-    <div>
-      <h1>Browse Rule Sections</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-        {sections.map(section => (
-          <SectionCard
-            key={section.id}
-            section={section}
-            onClick={(id) => navigate(`/sections/${id}`)}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// Example 4: Custom styled card
-<SectionCard
-  section={section}
-  onClick={handleClick}
-  className="hover:scale-105"
-/>
-
-// Example 5: Section with many rules
-<SectionCard
-  section={{
-    id: 'spells',
-    title: 'Spells',
-    icon: '✨',
-    rules: [...] // 150 rules
-  }}
-  onClick={viewSection}
-/>
-// Displays: "150 rules"
-```
-
-## Accessibility
-
-- **Semantic HTML**: Proper `<button>` element with `type="button"`
-- **ARIA Attributes**:
-  - `aria-label` provides full context: "Browse {section title} ({count} rules)"
-  - Example: "Browse Combat (23 rules)"
-- **Keyboard Navigation**:
-  - Tab to focus card
-  - Enter or Space to activate
-  - Full keyboard accessibility
-- **Focus Indicators**:
-  - 4px focus ring with primary color at 50% opacity
-  - High contrast against card background
-  - Clear visual indication
-- **Touch Targets**:
-  - Minimum height: 120px (min-h-[120px]) ✅
-  - Full width card (w-full)
-  - Large, easy-to-tap target
-- **Icon Semantics**:
-  - Icon marked with `aria-hidden="true"` (decorative)
-  - Information conveyed through text title and aria-label
-- **Text Contrast**:
-  - Title: Neutral-900 on light background (excellent contrast)
-  - Count: Neutral-600 on light background (good contrast)
-- **Visual Feedback**:
-  - Shadow increase on hover (hover:shadow-lg)
-  - Border color change (hover:border-primary-300)
-  - Smooth transitions
-
-## Visual Design
-
-### Layout Structure
-
-```
-┌───────────────────────────┐
-│                           │
-│           🎲              │
-│                           │
-│      Dice Rolling         │
-│        12 rules           │
-│                           │
-└───────────────────────────┘
-```
-
-### Styling
-
-- Background: Gradient from primary-50 to white (bg-gradient-to-br from-primary-50 to-white)
-- Border: 1px neutral-200, changes to primary-300 on hover
-- Border radius: 12px (rounded-xl) - more rounded than standard cards
-- Padding: 24px (p-6)
-- Minimum height: 120px (min-h-[120px])
-- Width: Full width (w-full)
-- Text alignment: Center (text-center)
-
-### Typography
-
-- Icon: 36px (text-4xl)
-- Title: 18px, semibold (text-lg font-semibold), neutral-900
-- Count: 14px (text-sm), neutral-600
-
-### Spacing
-
-- Icon to title: 12px (mb-3)
-- Title to count: 4px (mb-1)
-- Flexbox: Column, centered (flex flex-col items-center justify-center)
-
-### Hover State
-
-- Shadow: Large shadow (shadow-lg)
-- Border: Primary-300
-- Transition: All properties with smooth animation
-
-### Gradient Background
-
-The subtle gradient creates visual interest:
-
-- From: Primary-50 (light blue tint) at top-left
-- To: White at bottom-right
-- Direction: Bottom-right (to-br)
-- Effect: Gentle, professional elevation
-
-## Design Patterns
-
-### Home Page Section Grid
-
-```tsx
-function HomePage() {
-  const { sections, isLoading } = useRulesStore();
+  const { getTopLevelSections } = useRulesStore();
   const navigate = useNavigate();
-
-  if (isLoading) {
-    return <LoadingSpinner variant="page" />;
-  }
+  const sections = getTopLevelSections();
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Browse by Section</h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sections.map((section) => (
           <SectionCard
             key={section.id}
@@ -231,44 +130,78 @@ function HomePage() {
     </div>
   );
 }
-```
 
-### Responsive Grid
-
-```tsx
-// Mobile: 1 column
-// Tablet: 2 columns
-// Desktop: 3 columns
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-  {sections.map((section) => (
-    <SectionCard key={section.id} section={section} onClick={handleClick} />
-  ))}
-</div>
-```
-
-### Section Navigation
-
-```tsx
-function SectionNavigation() {
+// Example 3: Featured section for first/promoted section
+function FeaturedSections() {
+  const { getTopLevelSections } = useRulesStore();
   const navigate = useNavigate();
-  const { sections } = useRulesStore();
-
-  const handleSectionClick = useCallback(
-    (sectionId: string) => {
-      navigate(`/rules?section=${sectionId}`);
-    },
-    [navigate],
-  );
+  const sections = getTopLevelSections();
+  const featuredSection = sections[0];
+  const otherSections = sections.slice(1);
 
   return (
-    <div className="space-y-4">
-      <h2>Quick Navigation</h2>
-      <div className="grid grid-cols-2 gap-4">
-        {sections.slice(0, 4).map((section) => (
+    <div className="space-y-6">
+      {/* Featured section */}
+      {featuredSection && (
+        <SectionCard
+          section={featuredSection}
+          variant="featured"
+          onClick={(id) => navigate(`/rules/${id}`)}
+        />
+      )}
+
+      {/* Other sections in grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {otherSections.map((section) => (
           <SectionCard
             key={section.id}
             section={section}
-            onClick={handleSectionClick}
+            onClick={(id) => navigate(`/rules/${id}`)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Example 4: Section navigation with child count
+function SectionNavigation() {
+  const { getTopLevelSections } = useRulesStore();
+  const navigate = useNavigate();
+  const sections = getTopLevelSections();
+
+  return (
+    <nav>
+      <h2>Quick Navigation</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {sections.map((section) => (
+          <SectionCard
+            key={section.id}
+            section={section}
+            onClick={(id) => navigate(`/rules/${id}`)}
+          />
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+// Example 5: Responsive grid with different variants
+function ResponsiveSectionGrid() {
+  const { getTopLevelSections } = useRulesStore();
+  const navigate = useNavigate();
+  const sections = getTopLevelSections();
+
+  return (
+    <div className="space-y-8">
+      {/* Large featured section on mobile, grid on desktop */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {sections.map((section, index) => (
+          <SectionCard
+            key={section.id}
+            section={section}
+            variant={index === 0 ? "featured" : "default"}
+            onClick={(id) => navigate(`/rules/${id}`)}
           />
         ))}
       </div>
@@ -277,22 +210,168 @@ function SectionNavigation() {
 }
 ```
 
-### Empty Section Handling
+## Accessibility
+
+The SectionCard component is designed to meet WCAG 2.1 AA accessibility standards:
+
+### Keyboard Navigation
+
+- **Tab**: Focus moves to the card button
+- **Enter**: Activates the card (triggers `onClick`)
+- **Focus Management**: 4px focus ring with primary-500 color and 2px offset
+
+### Screen Reader Support
+
+- **Semantic HTML**: Uses `<button>` element for proper navigation
+- **ARIA Labels**: Announces section number, title, and child count
+  ```tsx
+  aria-label={`Section ${section.number} ${section.title}, contains ${childCount} ${childCount === 1 ? "rule" : "rules"}`}
+  ```
+- **Icon Accessibility**: SVG icons are hidden from screen readers (`aria-hidden="true"`)
+
+### Visual Feedback
+
+- **Focus Indicators**: 4px focus ring with primary-500 color, 2px offset
+- **Hover States**: Shadow increase and scale transformation (2% default, 5% featured)
+- **Active States**: Slight scale reduction for tactile feedback
+
+### Color Contrast
+
+- All text meets WCAG 2.1 AA contrast requirements (4.5:1 minimum)
+- Section numbers (primary-600/700) maintain sufficient contrast
+- Background and text combinations tested and validated
+
+### Touch Targets
+
+- Full card is tappable (w-full on button)
+- Adequate padding provides comfortable touch targets
+- Minimum size requirements met for mobile devices
+
+## Visual Design
+
+### Layout Structure
+
+```
+┌─────────────────────────────────────────┐
+│                                         │
+│           100.                           │  ← Large section number (text-4xl)
+│                                         │
+│          Combat                          │  ← Section title (text-xl/2xl, bold)
+│                                         │
+│   Rules for combat encounters and        │  ← Description (3 lines max, truncated)
+│   battle mechanics...                    │
+│                                         │
+│   📋 24 rules                            │  ← Child count with icon
+│                                         │
+└─────────────────────────────────────────┘
+  ↑ Centered layout
+  ↑ Elevated shadow (shadow-lg)
+  ↑ Hover: shadow-2xl + scale
+  ↑ Focus: ring-4 ring-primary-500
+```
+
+### Styling Details
+
+**Container:**
+
+- Background: White (default) or gradient (featured)
+- Border: 1px neutral-200 (default) or primary-300 (featured)
+- Border radius: 12px (rounded-xl)
+- Padding: p-6 md:p-8 (default) or p-8 md:p-10 (featured)
+- Width: Full width (w-full)
+- Text alignment: Center (text-center)
+- Transition: All properties for smooth hover/focus
+
+**Typography:**
+
+- Section Number: font-mono, font-extrabold, text-4xl (default) or text-5xl md:text-6xl (featured), primary-600 (default) or primary-700 (featured)
+- Title: font-bold, text-xl md:text-2xl (default) or text-2xl md:text-3xl (featured), text-neutral-900
+- Description: text-sm (default) or text-base (featured), text-neutral-600, line-clamp-3, max-w-md (default) or max-w-lg (featured)
+- Child Count: text-sm, text-neutral-500
+
+**Spacing:**
+
+- Number to title: mb-3
+- Title to description: mb-3
+- Description to count: mb-4
+- Overall padding: Variant-dependent (p-6 md:p-8 or p-8 md:p-10)
+
+**Visual Hierarchy:**
+
+- Section numbers are the largest text on the home page
+- Centered layout creates visual prominence
+- Elevated shadows indicate clickability
+- Featured variant uses gradient background for emphasis
+
+### Gradient Background (Featured Variant)
+
+The featured variant uses a subtle gradient:
+
+- From: primary-100 (top-left)
+- Via: primary-50 (middle)
+- To: white (bottom-right)
+- Direction: Bottom-right (to-br)
+- Effect: Gentle elevation and visual interest
+
+## Child Count Display
+
+The component displays the number of child rules with proper pluralization:
+
+- **0 rules**: "0 rules"
+- **1 rule**: "1 rule" (singular)
+- **2+ rules**: "24 rules" (plural)
+
+The count is displayed with a document icon (📋) and uses the `children` array from the `RuleSection` interface.
 
 ```tsx
-function SectionGrid({ sections }) {
-  if (sections.length === 0) {
-    return (
-      <EmptyState
-        icon="📚"
-        title="No Sections Available"
-        description="Rule sections will appear here."
-      />
-    );
-  }
+{
+  childCount;
+}
+{
+  childCount === 1 ? "rule" : "rules";
+}
+```
+
+## Content Description
+
+The component displays a truncated version of the section's content as a description:
+
+- **Truncation**: Content is truncated to 200 characters with "..." appended
+- **Line Clamp**: Description is limited to 3 lines using `line-clamp-3`
+- **Conditional Display**: Description is only shown if:
+  - Content exists
+  - Content is different from the title
+  - Content is not empty
+
+The description provides context about the section's content without overwhelming the card design.
+
+## Performance Considerations
+
+### Grid Performance
+
+When rendering many section cards:
+
+- Grid layout performs well for typical section counts (5-20 sections)
+- No virtualization needed (unlike rule lists which can have 100+ items)
+- Consider lazy loading if adding images to sections in the future
+
+### Memoization
+
+Consider memoizing the onClick handler if rendering many cards:
+
+```tsx
+function SectionGrid({ sections }: { sections: RuleSection[] }) {
+  const navigate = useNavigate();
+
+  const handleClick = useCallback(
+    (sectionId: string) => {
+      navigate(`/rules/${sectionId}`);
+    },
+    [navigate],
+  );
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {sections.map((section) => (
         <SectionCard key={section.id} section={section} onClick={handleClick} />
       ))}
@@ -301,66 +380,10 @@ function SectionGrid({ sections }) {
 }
 ```
 
-## Rule Count Display
-
-The component displays a grammatically correct rule count:
-
-- 0 rules: "0 rules"
-- 1 rule: "1 rule" (singular)
-- 2+ rules: "23 rules" (plural)
-
-```tsx
-<p className="text-sm text-neutral-600">
-  {section.rules.length} {section.rules.length === 1 ? "rule" : "rules"}
-</p>
-```
-
-## Icon Guidelines
-
-### Recommended Icon Styles
-
-- **Emojis**: ⚔️, 🎲, ✨, 📜, 🛡️, 🗡️
-- **Size**: Large enough to be visible (text-4xl = 36px)
-- **Relevance**: Choose icons that represent the section content
-- **Consistency**: Use similar style (all emoji or all icon library)
-
-### Icon Best Practices
-
-```tsx
-const sectionIcons = {
-  combat: "⚔️",
-  magic: "✨",
-  equipment: "🛡️",
-  character: "🧙",
-  dice: "🎲",
-  rules: "📜",
-};
-```
-
-## Performance Considerations
-
-### Grid Performance
-
-When rendering many section cards:
-
-- Grid layout performs well for typical section counts (5-20)
-- No virtualization needed (unlike rule lists)
-- Consider lazy loading section images if added
-
-### Memoization
-
-```tsx
-const SectionCard = memo(({ section, onClick, className }) => {
-  // Component implementation
-});
-```
-
 ## Related
 
-- [RuleCard](./RuleCard.md) - Related component for individual rules
-- [EmptyState](./EmptyState.md) - Shown when no sections available
-- [Card](../ui/Card.md) - Base card component
-- [HomePage](../../pages/HomePage/HomePage.md) - Primary use case
-- [RulesListPage](../../pages/RulesListPage/RulesListPage.md) - Section-filtered view
-- [rulesStore](../../store/rulesStore.md) - Provides section data
-- [ADR-006: Project Structure](../../../.cursor/features/active/setup-project/adr/ADR-006-project-structure.md)
+- [RuleCard](./RuleCard.md) - Related component for individual rules (levels 1+)
+- [HomePage](../../pages/HomePage/HomePage.tsx) - Primary use case for section cards
+- [rulesStore](../../store/rulesStore.md) - Provides sections via `getTopLevelSections()` selector
+- [ADR-001: Hierarchical Data Model](../../../.cursor/features/active/update-rules-and-project-strucutre/adr/ADR-001-hierarchical-data-model.md) - Unified RuleSection type design
+- [Designer Specs](../../../.cursor/features/active/update-rules-and-project-strucutre/designer.md) - Complete visual design specification

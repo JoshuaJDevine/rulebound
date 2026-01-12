@@ -11,13 +11,16 @@ import { LoadingSpinner, ErrorMessage } from "@/components/ui";
 
 export function HomePage() {
   const navigate = useNavigate();
-  const { sections, rules, isLoading, error, loadRules } = useRulesStore();
+  const { rulesData, isLoading, error, loadRules, getTopLevelSections } =
+    useRulesStore();
+
+  const topLevelSections = getTopLevelSections();
 
   useEffect(() => {
-    if (rules.length === 0 && !isLoading && !error) {
+    if (!rulesData && !isLoading && !error) {
       loadRules();
     }
-  }, [rules.length, isLoading, error, loadRules]);
+  }, [rulesData, isLoading, error, loadRules]);
 
   if (isLoading) {
     return <LoadingSpinner variant="page" label="Loading rules..." />;
@@ -49,25 +52,30 @@ export function HomePage() {
           Your accessible, easy-to-use reference for the Riftbound Core Rules.
           Find any rule quickly and bookmark your favorites.
         </p>
+        {rulesData && (
+          <p className="text-sm text-neutral-500">
+            Version {rulesData.version} • Last updated {rulesData.lastUpdated}
+          </p>
+        )}
       </section>
 
-      {/* Popular Sections */}
+      {/* Top-Level Sections */}
       <section>
         <h2 className="text-2xl font-bold text-neutral-900 mb-6">
           Browse by Section
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section) => (
+          {topLevelSections.map((section) => (
             <SectionCard
               key={section.id}
               section={section}
-              onClick={(sectionId) => navigate(`/rules?section=${sectionId}`)}
+              onClick={(sectionId) => navigate(`/rules/${sectionId}`)}
             />
           ))}
         </div>
       </section>
 
-      {sections.length === 0 && !isLoading && (
+      {topLevelSections.length === 0 && !isLoading && (
         <div className="text-center py-12">
           <p className="text-neutral-600">
             No sections available. Please check back later.
