@@ -70,15 +70,11 @@ Fixed test expectations to match new Riftbound branding:
 
 ## Pull Request
 
-- **PR Description**: [PR-DESCRIPTION.md](./PR-DESCRIPTION.md)
-- **Status**: Ready for creation
+- **PR Number**: #9
+- **PR URL**: https://github.com/JoshuaJDevine/rulebound/pull/9
+- **Status**: Created and ready for review
 - **Branch**: `feature/improve-user-experience`
-
-### PR Creation Steps
-
-1. Commit all changes (if not already committed)
-2. Push branch: `git push -u origin feature/improve-user-experience`
-3. Create PR on GitHub using PR-DESCRIPTION.md as the body
+- **Base Branch**: `main`
 
 ## Issues Created
 
