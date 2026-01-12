@@ -1,5 +1,7 @@
 # Rule Bound
 
+![CI](https://github.com/JoshuaJDevine/rulebound/actions/workflows/ci.yml/badge.svg)
+
 An accessible, easy-to-use, and wonderfully designed web interface for the Riftbound Core Rules RPG. Rule Bound serves as both a comprehensive reference and an interactive learning tool to help people understand and master the game.
 
 ## Overview
@@ -20,6 +22,8 @@ Rule Bound transforms the Riftbound Core Rules into a modern, accessible web exp
 - **TypeScript** - Type-safe development
 - **Vite** - Build tool and dev server
 - **Vitest** - Testing framework
+- **Netlify** - Hosting and deployment
+- **GitHub Actions** - CI pipeline
 
 ## Development Workflow
 
@@ -110,6 +114,43 @@ rulebound/
 ├── scripts/                 # Workflow scripts
 ├── src/                     # Source code (to be created)
 └── package.json
+```
+
+## CI/CD Pipeline
+
+### Continuous Integration (GitHub Actions)
+
+Every push and pull request to `main` triggers the CI pipeline:
+
+1. **Lint** - ESLint code quality checks
+2. **Type Check** - TypeScript type validation
+3. **Test** - Vitest test suite execution
+4. **Build** - Production build verification
+
+All checks must pass before merging to `main`.
+
+### Deployment (Netlify)
+
+| Environment | URL | Trigger |
+|-------------|-----|---------|
+| Development | `localhost:5173` | `npm run dev` |
+| Preview | `deploy-preview-{num}--rulebound.netlify.app` | PR opened/updated |
+| Production | `rulebound.netlify.app` | Merge to main |
+
+### Environment Variables
+
+Environment variables are injected at build time by Vite. Variables must be prefixed with `VITE_` to be exposed to the client.
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VITE_APP_NAME` | Application name | `Rule Bound` |
+| `VITE_DEPLOY_CONTEXT` | Deployment environment | Set by Netlify |
+
+To set up local environment variables:
+
+```bash
+# Create local .env file (gitignored)
+echo "VITE_APP_NAME=Rule Bound" > .env
 ```
 
 ## Code Quality Standards
