@@ -14,7 +14,10 @@ interface RuleViewerProps {
   className?: string;
 }
 
-function buildBreadcrumb(rule: RuleSection, rulesMap: Map<string, RuleSection>): Array<{ label: string; href: string }> {
+function buildBreadcrumb(
+  rule: RuleSection,
+  rulesMap: Map<string, RuleSection>,
+): Array<{ label: string; href: string }> {
   const breadcrumb: Array<{ label: string; href: string }> = [
     { label: "Home", href: "/" },
   ];
@@ -43,10 +46,15 @@ function buildBreadcrumb(rule: RuleSection, rulesMap: Map<string, RuleSection>):
   return breadcrumb;
 }
 
-function renderContent(content: string, rulesMap: Map<string, RuleSection>, navigate: (path: string) => void): React.ReactNode {
+function renderContent(
+  content: string,
+  rulesMap: Map<string, RuleSection>,
+  navigate: (path: string) => void,
+): React.ReactNode {
   // Replace "See rule X.Y" with clickable links
-  const pattern = /(?:See\s+)?rule\s+(\d{3}(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?)\./gi;
-  
+  const pattern =
+    /(?:See\s+)?rule\s+(\d{3}(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?)\./gi;
+
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
   let match;
@@ -71,7 +79,7 @@ function renderContent(content: string, rulesMap: Map<string, RuleSection>, navi
           aria-label={`Go to rule ${ruleNumber}`}
         >
           {linkText}
-        </button>
+        </button>,
       );
     } else {
       parts.push(<span key={match.index}>{linkText}</span>);
@@ -95,7 +103,7 @@ export function RuleViewer({
 }: RuleViewerProps) {
   const navigate = useNavigate();
   const breadcrumb = buildBreadcrumb(rule, rulesMap);
-  
+
   const children = rule.children
     .map((id) => rulesMap.get(id))
     .filter((r): r is RuleSection => r !== undefined);
@@ -120,7 +128,9 @@ export function RuleViewer({
       {/* Rule Header */}
       <div>
         <div className="flex items-baseline gap-3 mb-2">
-          <span className="text-sm font-mono text-neutral-500">{rule.number}</span>
+          <span className="text-sm font-mono text-neutral-500">
+            {rule.number}
+          </span>
           <h1 className="text-2xl font-bold text-neutral-900">{rule.title}</h1>
         </div>
         {parent && (

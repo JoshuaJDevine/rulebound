@@ -9,12 +9,12 @@ import { RuleCard, EmptyState } from "@/components/common";
 
 export function BookmarksPage() {
   const navigate = useNavigate();
-  const { rules, bookmarks } = useRulesStore();
+  const { bookmarks, getRuleById } = useRulesStore();
 
   // Get bookmarked rules with timestamps
   const bookmarkedRules = bookmarks
     .map((bookmark) => ({
-      rule: rules.find((r) => r.id === bookmark.ruleId),
+      rule: getRuleById(bookmark.ruleId),
       timestamp: bookmark.timestamp,
     }))
     .filter((item) => item.rule !== undefined)
@@ -33,7 +33,7 @@ export function BookmarksPage() {
           description="Browse rules and tap the bookmark icon to save your favorites here."
           action={{
             label: "Browse Rules",
-            onClick: () => navigate("/rules"),
+            onClick: () => navigate("/"),
           }}
         />
       ) : (
@@ -41,13 +41,14 @@ export function BookmarksPage() {
           {bookmarkedRules.map(
             ({ rule, timestamp }) =>
               rule && (
-                <li key={rule.id}>
+                <li key={rule.id} className="relative">
                   <RuleCard
                     rule={rule}
-                    showTimestamp
-                    timestamp={timestamp}
                     onClick={() => navigate(`/rules/${rule.id}`)}
                   />
+                  <div className="mt-2 text-xs text-neutral-500">
+                    Bookmarked: {new Date(timestamp).toLocaleDateString()}
+                  </div>
                 </li>
               ),
           )}

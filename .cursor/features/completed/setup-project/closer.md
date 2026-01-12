@@ -52,14 +52,14 @@ feat: initial project setup with React, TypeScript, and accessibility tooling
 
 ## Agent Artifacts Verified
 
-| Agent       | Document        | Status      |
-| ----------- | --------------- | ----------- |
-| Architect   | architect.md    | ✅ Complete |
-| Designer    | designer.md     | ✅ Complete |
-| Coder       | coder.md        | ✅ Complete |
-| Tester      | tester.md       | ✅ Complete |
-| Documentor  | documentor.md   | ✅ Complete |
-| Closer      | closer.md       | ✅ Complete |
+| Agent      | Document      | Status      |
+| ---------- | ------------- | ----------- |
+| Architect  | architect.md  | ✅ Complete |
+| Designer   | designer.md   | ✅ Complete |
+| Coder      | coder.md      | ✅ Complete |
+| Tester     | tester.md     | ✅ Complete |
+| Documentor | documentor.md | ✅ Complete |
+| Closer     | closer.md     | ✅ Complete |
 
 **ADRs:** 6 Architecture Decision Records created
 
@@ -196,13 +196,13 @@ Current test suite covers unit and component tests. Adding E2E tests would provi
 
 ### Coverage by Module
 
-| Module              | Statements | Branch | Functions | Lines  |
-| ------------------- | ---------- | ------ | --------- | ------ |
-| UI Components       | 100%       | 96.96% | 100%      | 100%   |
-| Common Components   | 93.67%     | 96.29% | 85.71%    | 93.67% |
-| Layout Components   | 95.92%     | 92.3%  | 85.71%    | 95.92% |
-| Utilities           | 100%       | 100%   | 100%      | 100%   |
-| Store (Zustand)     | 100%       | 93.54% | 100%      | 100%   |
+| Module            | Statements | Branch | Functions | Lines  |
+| ----------------- | ---------- | ------ | --------- | ------ |
+| UI Components     | 100%       | 96.96% | 100%      | 100%   |
+| Common Components | 93.67%     | 96.29% | 85.71%    | 93.67% |
+| Layout Components | 95.92%     | 92.3%  | 85.71%    | 95.92% |
+| Utilities         | 100%       | 100%   | 100%      | 100%   |
+| Store (Zustand)   | 100%       | 93.54% | 100%      | 100%   |
 
 ### Accessibility Compliance
 

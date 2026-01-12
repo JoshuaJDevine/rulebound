@@ -1,5 +1,6 @@
 /**
  * Tests for SectionCard component
+ * Updated for hierarchical RuleSection data model
  */
 
 import { describe, it, expect, vi } from "vitest";
@@ -7,50 +8,82 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { SectionCard } from "./SectionCard";
-import type { Section } from "@/types";
+import type { RuleSection } from "@/types";
 
 describe("SectionCard", () => {
-  const mockSection: Section = {
-    id: "combat",
+  const mockSection: RuleSection = {
+    id: "100",
+    number: "100.",
     title: "Combat",
-    description: "Rules for combat encounters",
-    icon: "⚔️",
-    rules: ["rule-1", "rule-2", "rule-3"],
+    content: "Rules for combat encounters and battle mechanics.",
+    level: 0,
+    children: ["100.1", "100.2", "100.3"],
+    crossRefs: [],
+    version: "1.2",
   };
 
   describe("Rendering", () => {
+    it("should render section number", () => {
+      const handleClick = vi.fn();
+      render(<SectionCard section={mockSection} onClick={handleClick} />);
+      expect(screen.getByText("100.")).toBeInTheDocument();
+    });
+
     it("should render section title", () => {
       const handleClick = vi.fn();
       render(<SectionCard section={mockSection} onClick={handleClick} />);
       expect(screen.getByText("Combat")).toBeInTheDocument();
     });
 
-    it("should render rule count (plural)", () => {
+    it("should render child count (plural)", () => {
       const handleClick = vi.fn();
       render(<SectionCard section={mockSection} onClick={handleClick} />);
       expect(screen.getByText("3 rules")).toBeInTheDocument();
     });
 
-    it("should render rule count (singular)", () => {
+    it("should render child count (singular)", () => {
       const handleClick = vi.fn();
-      const singleRuleSection = { ...mockSection, rules: ["rule-1"] };
-      render(<SectionCard section={singleRuleSection} onClick={handleClick} />);
+      const singleChild: RuleSection = { ...mockSection, children: ["100.1"] };
+      render(<SectionCard section={singleChild} onClick={handleClick} />);
       expect(screen.getByText("1 rule")).toBeInTheDocument();
     });
 
-    it("should render icon when provided", () => {
+    it("should handle zero children", () => {
       const handleClick = vi.fn();
-      render(<SectionCard section={mockSection} onClick={handleClick} />);
-      expect(screen.getByText("⚔️")).toBeInTheDocument();
+      const emptySection: RuleSection = { ...mockSection, children: [] };
+      render(<SectionCard section={emptySection} onClick={handleClick} />);
+      expect(screen.getByText("0 rules")).toBeInTheDocument();
     });
 
-    it("should not render icon wrapper when icon is not provided", () => {
+    it("should render content description when available", () => {
       const handleClick = vi.fn();
-      const sectionWithoutIcon = { ...mockSection, icon: undefined };
-      render(
-        <SectionCard section={sectionWithoutIcon} onClick={handleClick} />,
-      );
-      expect(screen.queryByText("⚔️")).not.toBeInTheDocument();
+      render(<SectionCard section={mockSection} onClick={handleClick} />);
+      expect(
+        screen.getByText(/Rules for combat encounters/),
+      ).toBeInTheDocument();
+    });
+
+    it("should truncate long descriptions", () => {
+      const handleClick = vi.fn();
+      const longContent: RuleSection = {
+        ...mockSection,
+        content: "A".repeat(300),
+      };
+      render(<SectionCard section={longContent} onClick={handleClick} />);
+      const description = screen.getByText(/A+\.\.\./);
+      expect(description.textContent?.length).toBeLessThanOrEqual(203); // 200 + "..."
+    });
+
+    it("should not render description when content equals title", () => {
+      const handleClick = vi.fn();
+      const noDesc: RuleSection = {
+        ...mockSection,
+        content: mockSection.title,
+      };
+      render(<SectionCard section={noDesc} onClick={handleClick} />);
+      // Should only have one instance of "Combat" (the title)
+      const combatTexts = screen.getAllByText("Combat");
+      expect(combatTexts).toHaveLength(1);
     });
 
     it("should render as button", () => {
@@ -58,12 +91,57 @@ describe("SectionCard", () => {
       render(<SectionCard section={mockSection} onClick={handleClick} />);
       expect(screen.getByRole("button")).toBeInTheDocument();
     });
+  });
 
-    it("should handle zero rules", () => {
+  describe("Variants", () => {
+    it("should render default variant", () => {
       const handleClick = vi.fn();
-      const emptySection = { ...mockSection, rules: [] };
-      render(<SectionCard section={emptySection} onClick={handleClick} />);
-      expect(screen.getByText("0 rules")).toBeInTheDocument();
+      const { container } = render(
+        <SectionCard section={mockSection} onClick={handleClick} />,
+      );
+      const button = container.querySelector("button");
+      expect(button).toHaveClass("bg-white");
+      expect(button).toHaveClass("p-6");
+    });
+
+    it("should render featured variant with gradient", () => {
+      const handleClick = vi.fn();
+      const { container } = render(
+        <SectionCard
+          section={mockSection}
+          onClick={handleClick}
+          variant="featured"
+        />,
+      );
+      const button = container.querySelector("button");
+      expect(button).toHaveClass("bg-gradient-to-br");
+      expect(button).toHaveClass("from-primary-100");
+    });
+
+    it("should have larger padding in featured variant", () => {
+      const handleClick = vi.fn();
+      const { container } = render(
+        <SectionCard
+          section={mockSection}
+          onClick={handleClick}
+          variant="featured"
+        />,
+      );
+      const button = container.querySelector("button");
+      expect(button).toHaveClass("p-8");
+    });
+
+    it("should have larger text in featured variant", () => {
+      const handleClick = vi.fn();
+      render(
+        <SectionCard
+          section={mockSection}
+          onClick={handleClick}
+          variant="featured"
+        />,
+      );
+      const number = screen.getByText("100.");
+      expect(number).toHaveClass("text-5xl");
     });
   });
 
@@ -75,11 +153,11 @@ describe("SectionCard", () => {
       render(<SectionCard section={mockSection} onClick={handleClick} />);
 
       await user.click(screen.getByRole("button"));
-      expect(handleClick).toHaveBeenCalledWith("combat");
+      expect(handleClick).toHaveBeenCalledWith("100");
       expect(handleClick).toHaveBeenCalledTimes(1);
     });
 
-    it("should be keyboard accessible", async () => {
+    it("should be keyboard accessible with Enter key", async () => {
       const user = userEvent.setup();
       const handleClick = vi.fn();
 
@@ -90,21 +168,11 @@ describe("SectionCard", () => {
       expect(button).toHaveFocus();
 
       await user.keyboard("{Enter}");
-      expect(handleClick).toHaveBeenCalledWith("combat");
+      expect(handleClick).toHaveBeenCalledWith("100");
     });
   });
 
   describe("Styling", () => {
-    it("should have gradient background", () => {
-      const handleClick = vi.fn();
-      const { container } = render(
-        <SectionCard section={mockSection} onClick={handleClick} />,
-      );
-      const button = container.querySelector("button");
-      expect(button).toHaveClass("bg-gradient-to-br");
-      expect(button).toHaveClass("from-primary-50");
-    });
-
     it("should have rounded corners", () => {
       const handleClick = vi.fn();
       const { container } = render(
@@ -120,8 +188,7 @@ describe("SectionCard", () => {
         <SectionCard section={mockSection} onClick={handleClick} />,
       );
       const button = container.querySelector("button");
-      expect(button).toHaveClass("hover:shadow-lg");
-      expect(button).toHaveClass("hover:border-primary-300");
+      expect(button).toHaveClass("hover:shadow-2xl");
     });
 
     it("should be centered", () => {
@@ -131,17 +198,15 @@ describe("SectionCard", () => {
       );
       const button = container.querySelector("button");
       expect(button).toHaveClass("text-center");
-      expect(button).toHaveClass("items-center");
-      expect(button).toHaveClass("justify-center");
     });
 
-    it("should have minimum height", () => {
+    it("should have transition effects", () => {
       const handleClick = vi.fn();
       const { container } = render(
         <SectionCard section={mockSection} onClick={handleClick} />,
       );
       const button = container.querySelector("button");
-      expect(button).toHaveClass("min-h-[120px]");
+      expect(button).toHaveClass("transition-all");
     });
   });
 
@@ -150,18 +215,30 @@ describe("SectionCard", () => {
       const handleClick = vi.fn();
       render(<SectionCard section={mockSection} onClick={handleClick} />);
       expect(
-        screen.getByRole("button", { name: "Browse Combat (3 rules)" }),
+        screen.getByRole("button", {
+          name: "Section 100. Combat, contains 3 rules",
+        }),
       ).toBeInTheDocument();
     });
 
-    it("should hide icon from screen readers", () => {
+    it("should have aria-label with singular rule count", () => {
+      const handleClick = vi.fn();
+      const singleChild: RuleSection = { ...mockSection, children: ["100.1"] };
+      render(<SectionCard section={singleChild} onClick={handleClick} />);
+      expect(
+        screen.getByRole("button", {
+          name: "Section 100. Combat, contains 1 rule",
+        }),
+      ).toBeInTheDocument();
+    });
+
+    it("should hide SVG icons from screen readers", () => {
       const handleClick = vi.fn();
       const { container } = render(
         <SectionCard section={mockSection} onClick={handleClick} />,
       );
-      const iconWrapper = container.querySelector('[aria-hidden="true"]');
-      expect(iconWrapper).toBeInTheDocument();
-      expect(iconWrapper).toHaveTextContent("⚔️");
+      const icon = container.querySelector('svg[aria-hidden="true"]');
+      expect(icon).toBeInTheDocument();
     });
 
     it("should have proper heading hierarchy", () => {
@@ -232,43 +309,45 @@ describe("SectionCard", () => {
   describe("Edge cases", () => {
     it("should handle very long section titles", () => {
       const handleClick = vi.fn();
-      const longTitleSection = {
+      const longTitle: RuleSection = {
         ...mockSection,
-        title: "Very Long Section Title That Might Need Wrapping",
+        title:
+          "Very Long Section Title That Might Need Wrapping In The Display",
       };
-      render(<SectionCard section={longTitleSection} onClick={handleClick} />);
+      render(<SectionCard section={longTitle} onClick={handleClick} />);
       expect(
-        screen.getByText("Very Long Section Title That Might Need Wrapping"),
+        screen.getByText(
+          "Very Long Section Title That Might Need Wrapping In The Display",
+        ),
       ).toBeInTheDocument();
     });
 
-    it("should handle large rule counts", () => {
+    it("should handle large child counts", () => {
       const handleClick = vi.fn();
-      const manyRulesSection = {
+      const manyChildren: RuleSection = {
         ...mockSection,
-        rules: Array.from({ length: 100 }, (_, i) => `rule-${i}`),
+        children: Array.from({ length: 100 }, (_, i) => `100.${i}`),
       };
-      render(<SectionCard section={manyRulesSection} onClick={handleClick} />);
+      render(<SectionCard section={manyChildren} onClick={handleClick} />);
       expect(screen.getByText("100 rules")).toBeInTheDocument();
     });
 
-    it("should handle sections with subsections", () => {
+    it("should handle section with empty content", () => {
       const handleClick = vi.fn();
-      const sectionWithSubsections: Section = {
+      const noContent: RuleSection = {
         ...mockSection,
-        subsections: [
-          {
-            id: "melee",
-            title: "Melee",
-            description: "Melee combat",
-            rules: ["rule-4"],
-          },
-        ],
+        content: "",
       };
-      render(
-        <SectionCard section={sectionWithSubsections} onClick={handleClick} />,
-      );
+      render(<SectionCard section={noContent} onClick={handleClick} />);
       expect(screen.getByText("Combat")).toBeInTheDocument();
+    });
+
+    it("should apply correct styles for level 0 sections", () => {
+      const handleClick = vi.fn();
+      render(<SectionCard section={mockSection} onClick={handleClick} />);
+      const number = screen.getByText("100.");
+      expect(number).toHaveClass("font-extrabold");
+      expect(number).toHaveClass("text-4xl");
     });
   });
 });

@@ -12,13 +12,13 @@ import type { RuleSection, RulesData } from "../../types/index.js";
  */
 export function detectRuleLevel(line: string): number {
   const trimmed = line.trim();
-  
+
   // Section: 000., 100., 200., etc. (exactly 3 digits)
   if (/^\d{3}\.\s/.test(trimmed)) {
     // Check if it's NOT followed by more numbers (i.e., not 103.1)
-      const match = trimmed.match(/^(\d{3})\.\s/);
-      if (match) {
-        // Check if next part is a number - if so, it's level 1
+    const match = trimmed.match(/^(\d{3})\.\s/);
+    if (match) {
+      // Check if next part is a number - if so, it's level 1
       const rest = trimmed.substring(match[0].length);
       if (/^\d/.test(rest)) {
         return 1; // It's like "103.1" - level 1
@@ -30,7 +30,7 @@ export function detectRuleLevel(line: string): number {
       return 0; // Top-level section
     }
   }
-  
+
   // Rule: 103.1., 103.2., etc. (3 digits + . + number + .)
   if (/^\d{3}\.\d+\.\s/.test(trimmed)) {
     // Check if it has more parts
@@ -40,7 +40,7 @@ export function detectRuleLevel(line: string): number {
     }
     return 1; // 103.1. - rule level
   }
-  
+
   // Detail: 103.1.a., 103.1.b., etc.
   if (/^\d{3}\.\d+\.[a-z]\.\s/.test(trimmed)) {
     // Check if it has number after
@@ -50,7 +50,7 @@ export function detectRuleLevel(line: string): number {
     }
     return 2; // 103.1.a. - detail
   }
-  
+
   // Sub-detail: 103.1.b.1., 103.1.b.2., etc.
   if (/^\d{3}\.\d+\.[a-z]\.\d+\.\s/.test(trimmed)) {
     // Check if it has letter after
@@ -60,12 +60,12 @@ export function detectRuleLevel(line: string): number {
     }
     return 3; // 103.1.b.1. - sub-detail
   }
-  
+
   // Even deeper: 103.1.b.1.a., etc.
   if (/^\d{3}\.\d+\.[a-z]\.\d+\.[a-z]\.\s/.test(trimmed)) {
     return 4;
   }
-  
+
   return -1; // Not a rule line
 }
 
@@ -75,7 +75,9 @@ export function detectRuleLevel(line: string): number {
 export function extractRuleNumber(line: string): string | null {
   const trimmed = line.trim();
   // Match: 3 digits, optionally followed by .number, .letter, .number, .letter, .number
-  const match = trimmed.match(/^(\d{3}(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?)\.\s/);
+  const match = trimmed.match(
+    /^(\d{3}(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?)\.\s/,
+  );
   if (match) {
     return match[1];
   }
@@ -88,7 +90,9 @@ export function extractRuleNumber(line: string): string | null {
 export function extractRuleContent(line: string): string {
   const trimmed = line.trim();
   // Remove the rule number prefix
-  const match = trimmed.match(/^\d{3}(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?\.\s(.+)$/);
+  const match = trimmed.match(
+    /^\d{3}(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?\.\s(.+)$/,
+  );
   if (match) {
     return match[1].trim();
   }
@@ -101,8 +105,9 @@ export function extractRuleContent(line: string): string {
 export function extractCrossReferences(content: string): string[] {
   const crossRefs: string[] = [];
   // Pattern: "See rule 346." or "See rule 346. Playing Cards" or just "rule 346."
-  const pattern = /(?:See\s+)?rule\s+(\d{3}(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?)\./gi;
-  
+  const pattern =
+    /(?:See\s+)?rule\s+(\d{3}(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?(?:\.[a-z])?(?:\.\d+)?)\./gi;
+
   let match;
   while ((match = pattern.exec(content)) !== null) {
     const refId = match[1];
@@ -122,7 +127,7 @@ export function findParentId(
   numberToId: Map<string, string>,
 ): string | undefined {
   const parts = ruleNumber.split(".");
-  
+
   // Remove last segment and try to find parent
   for (let i = parts.length - 1; i >= 1; i--) {
     const parentNumber = parts.slice(0, i).join(".");
@@ -130,7 +135,7 @@ export function findParentId(
       return numberToId.get(parentNumber);
     }
   }
-  
+
   return undefined;
 }
 
@@ -172,7 +177,11 @@ export function parseRulesFile(filePath: string): RulesData {
     }
 
     // Skip header lines
-    if (i < 3 && (line.startsWith("Riftbound Core Rules") || line.startsWith("Last Updated"))) {
+    if (
+      i < 3 &&
+      (line.startsWith("Riftbound Core Rules") ||
+        line.startsWith("Last Updated"))
+    ) {
       continue;
     }
 

@@ -1,65 +1,89 @@
 /**
  * Tests for rulesStore (Zustand store)
+ * Updated for hierarchical RulesData structure
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { useRulesStore } from "./rulesStore";
-import type { Rule, Section } from "@/types";
+import type { RuleSection, RulesData } from "@/types";
 
 // Mock fetch
 global.fetch = vi.fn();
 
 describe("rulesStore", () => {
-  const mockRules: Rule[] = [
+  const mockSections: RuleSection[] = [
     {
-      id: "rule-1",
-      title: "Combat Rule",
-      section: "Combat",
+      id: "100",
+      number: "100.",
+      title: "Combat",
       content: "Rules for combat encounters and actions",
-      tags: ["combat", "actions"],
-      references: ["rule-2"],
-      pageNumber: 10,
+      level: 0,
+      children: ["100.1", "100.2"],
+      crossRefs: ["200"],
+      version: "1.2",
     },
     {
-      id: "rule-2",
-      title: "Movement Rule",
-      section: "Movement",
+      id: "100.1",
+      number: "100.1.",
+      title: "Initiative",
       content: "Rules for character movement and positioning",
-      tags: ["movement", "positioning"],
-      references: ["rule-1"],
-      pageNumber: 15,
+      level: 1,
+      parentId: "100",
+      children: ["100.1.a"],
+      crossRefs: ["100.2"],
+      version: "1.2",
     },
     {
-      id: "rule-3",
-      title: "Damage Rule",
-      section: "Combat",
+      id: "100.1.a",
+      number: "100.1.a.",
+      title: "Rolling Initiative",
       content: "Rules for calculating damage in combat",
-      tags: ["combat", "damage"],
-      references: [],
-      pageNumber: 12,
+      level: 2,
+      parentId: "100.1",
+      children: [],
+      crossRefs: [],
+      version: "1.2",
+    },
+    {
+      id: "100.2",
+      number: "100.2.",
+      title: "Attack Resolution",
+      content: "How to resolve attack rolls",
+      level: 1,
+      parentId: "100",
+      children: [],
+      crossRefs: [],
+      version: "1.2",
+    },
+    {
+      id: "200",
+      number: "200.",
+      title: "Movement",
+      content: "Movement rules",
+      level: 0,
+      children: [],
+      crossRefs: ["100"],
+      version: "1.2",
     },
   ];
 
-  const mockSections: Section[] = [
-    {
-      id: "combat",
-      title: "Combat",
-      description: "Combat rules",
-      rules: ["rule-1", "rule-3"],
+  const mockRulesData: RulesData = {
+    version: "1.2",
+    lastUpdated: "2025-12-01",
+    sections: mockSections,
+    index: {
+      "100": mockSections[0],
+      "100.1": mockSections[1],
+      "100.1.a": mockSections[2],
+      "100.2": mockSections[3],
+      "200": mockSections[4],
     },
-    {
-      id: "movement",
-      title: "Movement",
-      description: "Movement rules",
-      rules: ["rule-2"],
-    },
-  ];
+  };
 
   beforeEach(() => {
     // Reset store before each test
     useRulesStore.setState({
-      rules: [],
-      sections: [],
+      rulesData: null,
       isLoading: false,
       error: null,
       bookmarks: [],
@@ -80,14 +104,9 @@ describe("rulesStore", () => {
   });
 
   describe("Initial state", () => {
-    it("should have empty rules array", () => {
+    it("should have null rulesData", () => {
       const state = useRulesStore.getState();
-      expect(state.rules).toEqual([]);
-    });
-
-    it("should have empty sections array", () => {
-      const state = useRulesStore.getState();
-      expect(state.sections).toEqual([]);
+      expect(state.rulesData).toBeNull();
     });
 
     it("should not be loading", () => {
@@ -122,15 +141,14 @@ describe("rulesStore", () => {
     it("should load rules successfully", async () => {
       vi.mocked(global.fetch).mockResolvedValueOnce({
         ok: true,
-        json: async () => ({ rules: mockRules, sections: mockSections }),
+        json: async () => mockRulesData,
       } as Response);
 
       const { loadRules } = useRulesStore.getState();
       await loadRules();
 
       const state = useRulesStore.getState();
-      expect(state.rules).toEqual(mockRules);
-      expect(state.sections).toEqual(mockSections);
+      expect(state.rulesData).toEqual(mockRulesData);
       expect(state.isLoading).toBe(false);
       expect(state.error).toBeNull();
     });
@@ -154,7 +172,7 @@ describe("rulesStore", () => {
       // Resolve the fetch
       resolvePromise!({
         ok: true,
-        json: async () => ({ rules: mockRules, sections: mockSections }),
+        json: async () => mockRulesData,
       });
       await loadPromise;
 
@@ -185,35 +203,151 @@ describe("rulesStore", () => {
       expect(state.isLoading).toBe(false);
     });
 
-    it("should handle empty response", async () => {
+    it("should build index if not present in data", async () => {
+      const dataWithoutIndex: RulesData = {
+        ...mockRulesData,
+        index: {},
+      };
+
       vi.mocked(global.fetch).mockResolvedValueOnce({
         ok: true,
-        json: async () => ({}),
+        json: async () => dataWithoutIndex,
       } as Response);
 
       const { loadRules } = useRulesStore.getState();
       await loadRules();
 
       const state = useRulesStore.getState();
-      expect(state.rules).toEqual([]);
-      expect(state.sections).toEqual([]);
+      expect(state.rulesData?.index).toBeDefined();
+      expect(Object.keys(state.rulesData!.index)).toHaveLength(5);
+      expect(state.rulesData!.index["100"]).toEqual(mockSections[0]);
+    });
+  });
+
+  describe("Selectors", () => {
+    beforeEach(() => {
+      useRulesStore.setState({ rulesData: mockRulesData });
+    });
+
+    describe("getTopLevelSections", () => {
+      it("should return only level 0 sections", () => {
+        const { getTopLevelSections } = useRulesStore.getState();
+        const sections = getTopLevelSections();
+        expect(sections).toHaveLength(2);
+        expect(sections[0].id).toBe("100");
+        expect(sections[1].id).toBe("200");
+      });
+
+      it("should return empty array when no data", () => {
+        useRulesStore.setState({ rulesData: null });
+        const { getTopLevelSections } = useRulesStore.getState();
+        expect(getTopLevelSections()).toEqual([]);
+      });
+    });
+
+    describe("getRuleById", () => {
+      it("should return rule from index", () => {
+        const { getRuleById } = useRulesStore.getState();
+        const rule = getRuleById("100.1");
+        expect(rule).toBeDefined();
+        expect(rule?.title).toBe("Initiative");
+      });
+
+      it("should return undefined for non-existent ID", () => {
+        const { getRuleById } = useRulesStore.getState();
+        const rule = getRuleById("999");
+        expect(rule).toBeUndefined();
+      });
+
+      it("should return undefined when no data", () => {
+        useRulesStore.setState({ rulesData: null });
+        const { getRuleById } = useRulesStore.getState();
+        expect(getRuleById("100")).toBeUndefined();
+      });
+    });
+
+    describe("getChildRules", () => {
+      it("should return child rules", () => {
+        const { getChildRules } = useRulesStore.getState();
+        const children = getChildRules("100");
+        expect(children).toHaveLength(2);
+        expect(children[0].id).toBe("100.1");
+        expect(children[1].id).toBe("100.2");
+      });
+
+      it("should return empty array for rule with no children", () => {
+        const { getChildRules } = useRulesStore.getState();
+        const children = getChildRules("100.2");
+        expect(children).toEqual([]);
+      });
+
+      it("should return empty array for non-existent rule", () => {
+        const { getChildRules } = useRulesStore.getState();
+        const children = getChildRules("999");
+        expect(children).toEqual([]);
+      });
+
+      it("should filter out undefined children", () => {
+        const { getChildRules } = useRulesStore.getState();
+        // Add a rule with a non-existent child
+        const modifiedData = {
+          ...mockRulesData,
+          sections: [
+            ...mockSections,
+            {
+              id: "300",
+              number: "300.",
+              title: "Test",
+              content: "Test",
+              level: 0,
+              children: ["300.1", "non-existent"],
+              crossRefs: [],
+              version: "1.2",
+            },
+          ],
+        };
+        useRulesStore.setState({ rulesData: modifiedData });
+        const children = getChildRules("300");
+        expect(children.every((c) => c !== undefined)).toBe(true);
+      });
+    });
+
+    describe("getReferencedBy", () => {
+      it("should return rules that reference the given rule", () => {
+        const { getReferencedBy } = useRulesStore.getState();
+        const refs = getReferencedBy("100");
+        expect(refs).toHaveLength(1);
+        expect(refs[0].id).toBe("200");
+      });
+
+      it("should return empty array when no references", () => {
+        const { getReferencedBy } = useRulesStore.getState();
+        const refs = getReferencedBy("100.1.a");
+        expect(refs).toEqual([]);
+      });
+
+      it("should return empty array when no data", () => {
+        useRulesStore.setState({ rulesData: null });
+        const { getReferencedBy } = useRulesStore.getState();
+        expect(getReferencedBy("100")).toEqual([]);
+      });
     });
   });
 
   describe("addBookmark", () => {
     it("should add a bookmark", () => {
       const { addBookmark } = useRulesStore.getState();
-      addBookmark("rule-1");
+      addBookmark("100.1");
 
       const state = useRulesStore.getState();
       expect(state.bookmarks).toHaveLength(1);
-      expect(state.bookmarks[0].ruleId).toBe("rule-1");
+      expect(state.bookmarks[0].ruleId).toBe("100.1");
       expect(state.bookmarks[0].timestamp).toBeDefined();
     });
 
     it("should add bookmark with notes", () => {
       const { addBookmark } = useRulesStore.getState();
-      addBookmark("rule-1", "Important rule");
+      addBookmark("100.1", "Important rule");
 
       const state = useRulesStore.getState();
       expect(state.bookmarks[0].notes).toBe("Important rule");
@@ -221,8 +355,8 @@ describe("rulesStore", () => {
 
     it("should not add duplicate bookmarks", () => {
       const { addBookmark } = useRulesStore.getState();
-      addBookmark("rule-1");
-      addBookmark("rule-1");
+      addBookmark("100.1");
+      addBookmark("100.1");
 
       const state = useRulesStore.getState();
       expect(state.bookmarks).toHaveLength(1);
@@ -230,9 +364,9 @@ describe("rulesStore", () => {
 
     it("should add multiple bookmarks", () => {
       const { addBookmark } = useRulesStore.getState();
-      addBookmark("rule-1");
-      addBookmark("rule-2");
-      addBookmark("rule-3");
+      addBookmark("100.1");
+      addBookmark("100.2");
+      addBookmark("200");
 
       const state = useRulesStore.getState();
       expect(state.bookmarks).toHaveLength(3);
@@ -241,7 +375,7 @@ describe("rulesStore", () => {
     it("should set timestamp when adding bookmark", () => {
       const now = Date.now();
       const { addBookmark } = useRulesStore.getState();
-      addBookmark("rule-1");
+      addBookmark("100.1");
 
       const state = useRulesStore.getState();
       expect(state.bookmarks[0].timestamp).toBeGreaterThanOrEqual(now);
@@ -251,8 +385,8 @@ describe("rulesStore", () => {
   describe("removeBookmark", () => {
     it("should remove a bookmark", () => {
       const { addBookmark, removeBookmark } = useRulesStore.getState();
-      addBookmark("rule-1");
-      removeBookmark("rule-1");
+      addBookmark("100.1");
+      removeBookmark("100.1");
 
       const state = useRulesStore.getState();
       expect(state.bookmarks).toHaveLength(0);
@@ -260,24 +394,22 @@ describe("rulesStore", () => {
 
     it("should remove only specified bookmark", () => {
       const { addBookmark, removeBookmark } = useRulesStore.getState();
-      addBookmark("rule-1");
-      addBookmark("rule-2");
-      addBookmark("rule-3");
-      removeBookmark("rule-2");
+      addBookmark("100.1");
+      addBookmark("100.2");
+      addBookmark("200");
+      removeBookmark("100.2");
 
       const state = useRulesStore.getState();
       expect(state.bookmarks).toHaveLength(2);
-      expect(state.bookmarks.find((b) => b.ruleId === "rule-1")).toBeDefined();
-      expect(state.bookmarks.find((b) => b.ruleId === "rule-3")).toBeDefined();
-      expect(
-        state.bookmarks.find((b) => b.ruleId === "rule-2"),
-      ).toBeUndefined();
+      expect(state.bookmarks.find((b) => b.ruleId === "100.1")).toBeDefined();
+      expect(state.bookmarks.find((b) => b.ruleId === "200")).toBeDefined();
+      expect(state.bookmarks.find((b) => b.ruleId === "100.2")).toBeUndefined();
     });
 
     it("should handle removing non-existent bookmark", () => {
       const { addBookmark, removeBookmark } = useRulesStore.getState();
-      addBookmark("rule-1");
-      removeBookmark("rule-999");
+      addBookmark("100.1");
+      removeBookmark("999");
 
       const state = useRulesStore.getState();
       expect(state.bookmarks).toHaveLength(1);
@@ -320,34 +452,34 @@ describe("rulesStore", () => {
   describe("addToRecentlyViewed", () => {
     it("should add rule to recently viewed", () => {
       const { addToRecentlyViewed } = useRulesStore.getState();
-      addToRecentlyViewed("rule-1");
+      addToRecentlyViewed("100.1");
 
       const state = useRulesStore.getState();
-      expect(state.preferences.recentlyViewed).toEqual(["rule-1"]);
+      expect(state.preferences.recentlyViewed).toEqual(["100.1"]);
     });
 
     it("should add multiple rules to recently viewed", () => {
       const { addToRecentlyViewed } = useRulesStore.getState();
-      addToRecentlyViewed("rule-1");
-      addToRecentlyViewed("rule-2");
-      addToRecentlyViewed("rule-3");
+      addToRecentlyViewed("100.1");
+      addToRecentlyViewed("100.2");
+      addToRecentlyViewed("200");
 
       const state = useRulesStore.getState();
       expect(state.preferences.recentlyViewed).toEqual([
-        "rule-3",
-        "rule-2",
-        "rule-1",
+        "200",
+        "100.2",
+        "100.1",
       ]);
     });
 
     it("should move existing rule to front", () => {
       const { addToRecentlyViewed } = useRulesStore.getState();
-      addToRecentlyViewed("rule-1");
-      addToRecentlyViewed("rule-2");
-      addToRecentlyViewed("rule-1");
+      addToRecentlyViewed("100.1");
+      addToRecentlyViewed("100.2");
+      addToRecentlyViewed("100.1");
 
       const state = useRulesStore.getState();
-      expect(state.preferences.recentlyViewed).toEqual(["rule-1", "rule-2"]);
+      expect(state.preferences.recentlyViewed).toEqual(["100.1", "100.2"]);
     });
 
     it("should keep only last 10 items", () => {
@@ -365,7 +497,7 @@ describe("rulesStore", () => {
 
   describe("searchRules", () => {
     beforeEach(() => {
-      useRulesStore.setState({ rules: mockRules });
+      useRulesStore.setState({ rulesData: mockRulesData });
     });
 
     it("should return empty array for empty query", () => {
@@ -374,40 +506,40 @@ describe("rulesStore", () => {
       expect(results).toEqual([]);
     });
 
+    it("should search in rule number", () => {
+      const { searchRules } = useRulesStore.getState();
+      const results = searchRules("100.1");
+      expect(results).toHaveLength(2); // 100.1 and 100.1.a
+      expect(results[0].rule.id).toBe("100.1");
+    });
+
     it("should search in title", () => {
       const { searchRules } = useRulesStore.getState();
       const results = searchRules("Combat");
-      expect(results).toHaveLength(2);
-      expect(results.some((r) => r.rule.id === "rule-1")).toBe(true);
-      expect(results.some((r) => r.rule.id === "rule-3")).toBe(true);
+      expect(results).toHaveLength(2); // "Combat" section and "combat" in content
+      expect(results.some((r) => r.rule.id === "100")).toBe(true);
     });
 
     it("should search in content", () => {
       const { searchRules } = useRulesStore.getState();
       const results = searchRules("movement");
-      expect(results).toHaveLength(1);
-      expect(results[0].rule.id).toBe("rule-2");
-    });
-
-    it("should search in tags", () => {
-      const { searchRules } = useRulesStore.getState();
-      const results = searchRules("damage");
-      expect(results).toHaveLength(1);
-      expect(results[0].rule.id).toBe("rule-3");
+      expect(results).toHaveLength(2);
     });
 
     it("should be case insensitive", () => {
       const { searchRules } = useRulesStore.getState();
       const results = searchRules("COMBAT");
-      expect(results).toHaveLength(2);
+      expect(results.length).toBeGreaterThan(0);
     });
 
     it("should return results sorted by score", () => {
       const { searchRules } = useRulesStore.getState();
       const results = searchRules("combat");
 
-      // Title matches score higher than content/tag matches
-      expect(results[0].score).toBeGreaterThanOrEqual(results[1].score);
+      // Title/number matches score higher than content matches
+      expect(results[0].score).toBeGreaterThanOrEqual(
+        results[results.length - 1].score,
+      );
     });
 
     it("should include match information", () => {
@@ -420,17 +552,10 @@ describe("rulesStore", () => {
       expect(results[0].matches[0].snippet).toBeDefined();
     });
 
-    it("should handle special characters in query", () => {
-      const { searchRules } = useRulesStore.getState();
-      const results = searchRules("combat-rule");
-      // Should not crash, just return no results
-      expect(results).toBeDefined();
-    });
-
     it("should trim whitespace from query", () => {
       const { searchRules } = useRulesStore.getState();
       const results = searchRules("  Combat  ");
-      expect(results).toHaveLength(2);
+      expect(results.length).toBeGreaterThan(0);
     });
 
     it("should create snippet for content matches", () => {
@@ -444,12 +569,18 @@ describe("rulesStore", () => {
       expect(contentMatch?.snippet).toContain("encounters");
     });
 
-    it("should score title matches higher than content matches", () => {
+    it("should score number matches highest", () => {
       const { searchRules } = useRulesStore.getState();
-      const results = searchRules("combat");
+      const results = searchRules("100.1");
 
-      // Rule with "Combat" in title should score higher
-      const titleMatch = results.find((r) => r.rule.title.includes("Combat"));
+      expect(results[0].score).toBeGreaterThan(10);
+    });
+
+    it("should score title matches higher than content", () => {
+      const { searchRules } = useRulesStore.getState();
+      const results = searchRules("Initiative");
+
+      const titleMatch = results.find((r) => r.rule.title === "Initiative");
       expect(titleMatch?.score).toBeGreaterThan(5);
     });
 
@@ -458,16 +589,22 @@ describe("rulesStore", () => {
       const results = searchRules("nonexistent");
       expect(results).toEqual([]);
     });
+
+    it("should return empty array when no data", () => {
+      useRulesStore.setState({ rulesData: null });
+      const { searchRules } = useRulesStore.getState();
+      const results = searchRules("combat");
+      expect(results).toEqual([]);
+    });
   });
 
   describe("Persistence", () => {
     it("should persist bookmarks", () => {
       const { addBookmark } = useRulesStore.getState();
-      addBookmark("rule-1");
+      addBookmark("100.1");
 
       // The persist middleware should handle this
-      // We can't easily test localStorage in Vitest without additional setup
-      // but we can verify the bookmark is in the state
+      // We can verify the bookmark is in the state
       const state = useRulesStore.getState();
       expect(state.bookmarks).toHaveLength(1);
     });

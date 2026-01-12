@@ -1,10 +1,10 @@
 /**
  * RulesListPage Component
- * Displays a list of rules, optionally filtered by section
+ * Displays all rules in a flat list view (useful for scanning/browsing)
  */
 
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRulesStore } from "@/store/rulesStore";
 import { RuleCard, EmptyState } from "@/components/common";
 import {
@@ -16,36 +16,32 @@ import {
 
 export function RulesListPage() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const sectionId = searchParams.get("section");
-
-  const { rules, sections, isLoading, error, loadRules } = useRulesStore();
+  const { rulesData, isLoading, error, loadRules, searchRules } =
+    useRulesStore();
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    if (rules.length === 0 && !isLoading && !error) {
+    if (!rulesData && !isLoading && !error) {
       loadRules();
     }
-  }, [rules.length, isLoading, error, loadRules]);
+  }, [rulesData, isLoading, error, loadRules]);
 
-  // Filter rules by section if specified
-  const section = sections.find((s) => s.id === sectionId);
-  const filteredBySection = sectionId
-    ? rules.filter((rule) => section?.rules.includes(rule.id))
-    : rules;
+  // Get all rules, sorted by rule number
+  const allRules = rulesData
+    ? [...rulesData.sections].sort((a, b) => {
+        // Sort by rule number (e.g., "000" < "001" < "103.1" < "103.1.a")
+        return a.number.localeCompare(b.number, undefined, { numeric: true });
+      })
+    : [];
 
-  // Filter by search query
+  // Filter by search query if provided
   const displayedRules = searchQuery
-    ? filteredBySection.filter(
-        (rule) =>
-          rule.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          rule.content.toLowerCase().includes(searchQuery.toLowerCase()),
-      )
-    : filteredBySection;
+    ? searchRules(searchQuery).map((result) => result.rule)
+    : allRules;
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },
-    ...(section ? [{ label: section.title }] : [{ label: "All Rules" }]),
+    { label: "All Rules" },
   ];
 
   if (isLoading) {
@@ -73,9 +69,11 @@ export function RulesListPage() {
       <div className="mb-6">
         <Breadcrumb items={breadcrumbItems} />
         <h1 className="text-2xl md:text-3xl font-bold text-neutral-900 mt-4 mb-2">
-          {section ? section.title : "All Rules"}
+          All Rules
         </h1>
-        {section && <p className="text-neutral-600">{section.description}</p>}
+        <p className="text-neutral-600">
+          Browse all {allRules.length} rules in a flat list view.
+        </p>
       </div>
 
       {/* Search */}
@@ -84,34 +82,43 @@ export function RulesListPage() {
           value={searchQuery}
           onChange={setSearchQuery}
           onClear={() => setSearchQuery("")}
-          placeholder={`Search ${section ? section.title.toLowerCase() : "rules"}...`}
+          placeholder="Search rules by number, title, or content..."
         />
       </div>
 
       {/* Rules List */}
       {displayedRules.length > 0 ? (
-        <ul className="space-y-4">
-          {displayedRules.map((rule) => (
-            <li key={rule.id}>
-              <RuleCard
-                rule={rule}
-                onClick={() => navigate(`/rules/${rule.id}`)}
-              />
-            </li>
-          ))}
-        </ul>
+        <>
+          {searchQuery && (
+            <p className="text-sm text-neutral-600 mb-4">
+              {displayedRules.length}{" "}
+              {displayedRules.length === 1 ? "result" : "results"} for "
+              {searchQuery}"
+            </p>
+          )}
+          <ul className="space-y-4">
+            {displayedRules.map((rule) => (
+              <li key={rule.id}>
+                <RuleCard
+                  rule={rule}
+                  onClick={() => navigate(`/rules/${rule.id}`)}
+                />
+              </li>
+            ))}
+          </ul>
+        </>
       ) : (
         <EmptyState
           icon="🔍"
-          title={searchQuery ? "No rules found" : "No rules in this section"}
+          title={searchQuery ? "No rules found" : "No rules available"}
           description={
             searchQuery
               ? `No rules match "${searchQuery}". Try a different search term.`
-              : "This section doesn't have any rules yet."
+              : "No rules are available at this time."
           }
           action={{
-            label: "Browse All Rules",
-            onClick: () => navigate("/rules"),
+            label: "Go to Home",
+            onClick: () => navigate("/"),
           }}
         />
       )}

@@ -10,6 +10,8 @@ export type { RuleCardProps } from "./RuleCard";
 
 export { RuleNavigator } from "./RuleNavigator";
 export { RuleViewer } from "./RuleViewer";
+export { RuleTree } from "./RuleTree";
+export type { RuleTreeProps } from "./RuleTree";
 
 export { SectionCard } from "./SectionCard";
 export type { SectionCardProps } from "./SectionCard";
