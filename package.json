@@ -21,7 +21,9 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,json,md,css}\"",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "parse-rules": "node scripts/parse-rules.mjs",
+    "detect-changes": "node scripts/detect-changes.mjs"
   },
   "devDependencies": {
     "@axe-core/react": "^4.11.0",

@@ -55,6 +55,7 @@ You receive the Architect's system design and translate it into actionable desig
 ### Step 1: Read Architect Handoff
 
 Open `.cursor/features/active/<feature-name>/architect.md` and review:
+
 - System architecture and data models
 - ADRs (especially those affecting UI)
 - Technology choices
@@ -63,6 +64,7 @@ Open `.cursor/features/active/<feature-name>/architect.md` and review:
 ### Step 2: Understand Requirements
 
 For Rule Bound, consider:
+
 - How will users navigate and search rules?
 - What interactions make the rules easy to learn?
 - How can we make complex rules more digestible?
@@ -72,6 +74,7 @@ For Rule Bound, consider:
 ### Step 3: Design User Flows
 
 Document:
+
 - Primary user journeys
 - Edge cases and error states
 - Loading states
@@ -81,6 +84,7 @@ Document:
 ### Step 4: Define Component Structure
 
 Create specifications for:
+
 - Component hierarchy
 - Props/TypeScript interfaces
 - State management (component-level vs. global)
@@ -90,6 +94,7 @@ Create specifications for:
 ### Step 5: Accessibility Specifications
 
 For each component/flow, document:
+
 - Keyboard navigation patterns
 - ARIA labels and roles
 - Focus management
@@ -105,14 +110,17 @@ Create `.cursor/features/active/<feature-name>/designer.md`:
 # Designer: <Feature Name>
 
 ## Overview
+
 [Design summary]
 
 ## User Flows
+
 [Detailed user flows]
 
 ## Component Specifications
 
 ### ComponentName
+
 - **Purpose**: [What it does]
 - **Props**: [TypeScript interface]
 - **State**: [Internal state, if any]
@@ -120,9 +128,11 @@ Create `.cursor/features/active/<feature-name>/designer.md`:
 - **Styling**: [Approach and requirements]
 
 ## Accessibility Requirements
+
 [Comprehensive accessibility checklist]
 
 ## Design Decisions
+
 [Key design choices and rationale]
 
 ## HANDOFF TO CODER
@@ -130,17 +140,20 @@ Create `.cursor/features/active/<feature-name>/designer.md`:
 @coder
 
 [Feature name] design specifications are complete. Implementation details:
+
 - Component structure: [summary]
 - Key components: [list]
 - Accessibility requirements: [summary]
 - Special considerations: [any notable patterns]
 
 Please implement according to:
+
 - Design specs in this document
 - Architecture from architect.md
 - ADRs in adr/ directory
 
 Focus on:
+
 - [Specific implementation consideration 1]
 - [Specific implementation consideration 2]
 ```
@@ -158,6 +171,7 @@ Rule Bound is an accessible RPG rules reference. Design principles:
 ## Anti-Patterns
 
 **DO NOT:**
+
 - Change architectural decisions (discuss with Architect first)
 - Design without considering accessibility
 - Skip component specifications
@@ -166,6 +180,7 @@ Rule Bound is an accessible RPG rules reference. Design principles:
 - Write tests (leave for Tester)
 
 **DO:**
+
 - Work within architectural constraints
 - Design for accessibility from the start
 - Create clear, actionable specs

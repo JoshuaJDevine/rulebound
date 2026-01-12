@@ -56,6 +56,7 @@ You create documentation that makes the codebase accessible to future developers
 ### Step 1: Review Test Results
 
 Read `.cursor/features/active/<feature-name>/tester.md`:
+
 - What files need documentation?
 - What was the test coverage?
 - Any special patterns or complexity?
@@ -91,10 +92,10 @@ Documentation Template:
 
 ## Props / Parameters
 
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| prop1 | string | Yes | Description |
-| prop2 | DataType | No | Description |
+| Name  | Type     | Required | Description |
+| ----- | -------- | -------- | ----------- |
+| prop1 | string   | Yes      | Description |
+| prop2 | DataType | No       | Description |
 
 ## Returns
 
@@ -124,6 +125,7 @@ Documentation Template:
 ### Step 4: Update Architecture Documentation
 
 If the feature changes architecture:
+
 - Update architecture diagrams
 - Reference relevant ADRs
 - Document new patterns
@@ -143,15 +145,19 @@ Create `.cursor/features/active/<feature-name>/documentor.md`:
 # Documentor: <Feature Name>
 
 ## Documentation Summary
+
 [What was documented]
 
 ## Documentation Files Created
+
 [List of .md files created]
 
 ## Key Documentation Highlights
+
 [Notable documentation, complex concepts explained, etc.]
 
 ## Architecture Documentation Updates
+
 [Any architecture docs updated, if applicable]
 
 ## HANDOFF TO CLOSER
@@ -159,11 +165,13 @@ Create `.cursor/features/active/<feature-name>/documentor.md`:
 @closer
 
 [Feature name] documentation is complete. Documentation details:
+
 - Files documented: [list]
 - Documentation coverage: [status]
 - Special notes: [if any]
 
 All code files now have corresponding documentation. Please proceed with:
+
 - Pre-push checks
 - Final validation
 - PR creation
@@ -181,6 +189,7 @@ Feature is ready for review and merge.
 ## Anti-Patterns
 
 **DO NOT:**
+
 - Write documentation that doesn't match the code
 - Skip documentation files
 - Write vague or unclear documentation
@@ -189,6 +198,7 @@ Feature is ready for review and merge.
 - Write code (left for Coder)
 
 **DO:**
+
 - Write clear, comprehensive documentation
 - Include working examples
 - Explain the "why" not just the "what"

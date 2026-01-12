@@ -3,11 +3,11 @@
  * Landing page with hero section and primary navigation to rule sections
  */
 
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRulesStore } from '@/store/rulesStore';
-import { SectionCard } from '@/components/common';
-import { LoadingSpinner, ErrorMessage } from '@/components/ui';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRulesStore } from "@/store/rulesStore";
+import { SectionCard } from "@/components/common";
+import { LoadingSpinner, ErrorMessage } from "@/components/ui";
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -28,7 +28,10 @@ export function HomePage() {
       <div className="container mx-auto px-4 py-8">
         <ErrorMessage
           title="Failed to load rules"
-          message={error.message || 'An error occurred while loading the rules. Please try again.'}
+          message={
+            error.message ||
+            "An error occurred while loading the rules. Please try again."
+          }
           retry={loadRules}
         />
       </div>
@@ -43,7 +46,8 @@ export function HomePage() {
           Welcome to Rule Bound
         </h1>
         <p className="text-lg md:text-xl text-neutral-600 mb-6 max-w-2xl mx-auto">
-          Your accessible, easy-to-use reference for the Riftbound Core Rules. Find any rule quickly and bookmark your favorites.
+          Your accessible, easy-to-use reference for the Riftbound Core Rules.
+          Find any rule quickly and bookmark your favorites.
         </p>
       </section>
 

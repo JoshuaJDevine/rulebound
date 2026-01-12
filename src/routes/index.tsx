@@ -2,17 +2,17 @@
  * Route definitions for Rule Bound
  */
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AppLayout } from '@/components/layout';
-import { HomePage } from '@/pages/HomePage';
-import { RulesListPage } from '@/pages/RulesListPage';
-import { RuleDetailPage } from '@/pages/RuleDetailPage';
-import { BookmarksPage } from '@/pages/BookmarksPage';
-import { SearchPage } from '@/pages/SearchPage';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AppLayout } from "@/components/layout";
+import { HomePage } from "@/pages/HomePage";
+import { RulesListPage } from "@/pages/RulesListPage";
+import { RuleDetailPage } from "@/pages/RuleDetailPage";
+import { BookmarksPage } from "@/pages/BookmarksPage";
+import { SearchPage } from "@/pages/SearchPage";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: (
       <AppLayout>
         <HomePage />
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/rules',
+    path: "/rules",
     element: (
       <AppLayout>
         <RulesListPage />
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/rules/:ruleId',
+    path: "/rules/:ruleId",
     element: (
       <AppLayout>
         <RuleDetailPage />
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/bookmarks',
+    path: "/bookmarks",
     element: (
       <AppLayout>
         <BookmarksPage />
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/search',
+    path: "/search",
     element: (
       <AppLayout>
         <SearchPage />

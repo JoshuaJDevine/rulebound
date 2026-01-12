@@ -3,10 +3,10 @@
  * Displays a rule in list views with preview
  */
 
-import { cn } from '@/lib/utils';
-import { formatTimestamp } from '@/lib/utils';
-import type { Rule } from '@/types';
-import { BookmarkButton } from './BookmarkButton';
+import { cn } from "@/lib/utils";
+import { formatTimestamp } from "@/lib/utils";
+import type { Rule } from "@/types";
+import { BookmarkButton } from "./BookmarkButton";
 
 export interface RuleCardProps {
   rule: Rule;
@@ -30,16 +30,14 @@ export function RuleCard({
   return (
     <button
       className={cn(
-        'w-full bg-white rounded-lg border border-neutral-200 p-4 text-left hover:shadow-md hover:border-primary-300 focus:ring-4 focus:ring-primary-500/50 focus:outline-none transition-all',
-        className
+        "w-full bg-white rounded-lg border border-neutral-200 p-4 text-left hover:shadow-md hover:border-primary-300 focus:ring-4 focus:ring-primary-500/50 focus:outline-none transition-all",
+        className,
       )}
       onClick={onClick}
       type="button"
     >
       <div className="flex items-start justify-between gap-4 mb-2">
-        <h3 className="text-lg font-semibold text-neutral-900">
-          {rule.title}
-        </h3>
+        <h3 className="text-lg font-semibold text-neutral-900">{rule.title}</h3>
         <BookmarkButton ruleId={rule.id} size="sm" />
       </div>
 

@@ -1,11 +1,13 @@
 # ADR-001: Build Tool Selection
 
 ## Status
+
 Accepted
 
 ## Context
 
 Rule Bound needs a modern build tool for the React + TypeScript web application. The build tool must support:
+
 - Fast development server with hot module replacement (HMR)
 - TypeScript compilation
 - Modern JavaScript features (ES modules, etc.)
@@ -18,6 +20,7 @@ The README mentions Vite as the intended build tool, but we need to formally eva
 ## Options Considered
 
 ### 1. Vite
+
 - **Pros:**
   - Extremely fast dev server using native ES modules
   - Built-in TypeScript support
@@ -32,6 +35,7 @@ The README mentions Vite as the intended build tool, but we need to formally eva
   - Some legacy browser support requires polyfills
 
 ### 2. Create React App (CRA)
+
 - **Pros:**
   - Battle-tested, widely used
   - Zero configuration to start
@@ -44,6 +48,7 @@ The README mentions Vite as the intended build tool, but we need to formally eva
   - Slower HMR compared to Vite
 
 ### 3. Webpack (custom setup)
+
 - **Pros:**
   - Maximum flexibility
   - Mature ecosystem
@@ -55,6 +60,7 @@ The README mentions Vite as the intended build tool, but we need to formally eva
   - Steeper learning curve
 
 ### 4. Parcel
+
 - **Pros:**
   - Zero configuration
   - Fast builds
@@ -69,6 +75,7 @@ The README mentions Vite as the intended build tool, but we need to formally eva
 We will use **Vite** as the build tool for Rule Bound.
 
 **Key reasons:**
+
 1. **Performance**: Vite's dev server is significantly faster, improving developer experience
 2. **Modern**: Built for modern web development with ES modules at its core
 3. **TypeScript**: Excellent TypeScript support out of the box
@@ -80,6 +87,7 @@ We will use **Vite** as the build tool for Rule Bound.
 ## Consequences
 
 ### Positive
+
 - Fast development experience with instant HMR
 - Simple, maintainable build configuration
 - Modern build output optimized for performance
@@ -87,9 +95,11 @@ We will use **Vite** as the build tool for Rule Bound.
 - Easy to add plugins as needed (e.g., PWA, compression)
 
 ### Negative
+
 - Developers unfamiliar with Vite will need to learn new tooling (minimal learning curve)
 - Some older browser support may require additional polyfills (acceptable given modern target audience)
 
 ### Neutral
+
 - Will use `vite.config.ts` instead of `webpack.config.js` or similar
 - Build scripts will use Vite CLI commands

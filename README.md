@@ -38,7 +38,7 @@ See [.cursor/WORKFLOW.md](.cursor/WORKFLOW.md) for complete workflow documentati
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
 ### Installation

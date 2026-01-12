@@ -13,7 +13,7 @@ export interface BreadcrumbProps {
   separator?: React.ReactNode;
 }
 
-export function Breadcrumb({ items, separator = '/' }: BreadcrumbProps) {
+export function Breadcrumb({ items, separator = "/" }: BreadcrumbProps) {
   return (
     <nav aria-label="Breadcrumb">
       <ol className="flex items-center flex-wrap gap-2 text-sm">
@@ -32,9 +32,7 @@ export function Breadcrumb({ items, separator = '/' }: BreadcrumbProps) {
                 {item.label}
               </a>
             ) : (
-              <span className="text-neutral-900 font-medium">
-                {item.label}
-              </span>
+              <span className="text-neutral-900 font-medium">{item.label}</span>
             )}
           </li>
         ))}

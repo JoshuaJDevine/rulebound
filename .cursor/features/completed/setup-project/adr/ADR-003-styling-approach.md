@@ -1,11 +1,13 @@
 # ADR-003: Styling Approach (Mobile-First)
 
 ## Status
+
 Accepted
 
 ## Context
 
 Rule Bound must be:
+
 - **Mobile-friendly**: Work seamlessly on phones and tablets
 - **Accessible**: WCAG 2.1 AA compliant with proper contrast, sizing, etc.
 - **Beautiful**: Modern, well-designed interface
@@ -13,6 +15,7 @@ Rule Bound must be:
 - **Maintainable**: Easy to update and extend styles
 
 The app will be used both as a reference (quick lookups on mobile) and learning tool (potentially longer sessions on desktop). We need a styling solution that supports:
+
 - Responsive, mobile-first design
 - Design system/theming for consistency
 - Accessibility features (contrast, focus states, etc.)
@@ -23,6 +26,7 @@ The app will be used both as a reference (quick lookups on mobile) and learning 
 ## Options Considered
 
 ### 1. CSS Modules + PostCSS
+
 - **Pros:**
   - Component-scoped styles
   - Standard CSS syntax
@@ -36,6 +40,7 @@ The app will be used both as a reference (quick lookups on mobile) and learning 
   - Limited dynamic styling
 
 ### 2. Tailwind CSS
+
 - **Pros:**
   - Utility-first approach
   - Mobile-first responsive design built-in
@@ -51,6 +56,7 @@ The app will be used both as a reference (quick lookups on mobile) and learning 
   - Some developers find it less "semantic"
 
 ### 3. Styled Components / Emotion
+
 - **Pros:**
   - CSS-in-JS with full JavaScript power
   - Dynamic styling easy
@@ -63,6 +69,7 @@ The app will be used both as a reference (quick lookups on mobile) and learning 
   - More complex build setup
 
 ### 4. Vanilla Extract
+
 - **Pros:**
   - Zero-runtime CSS-in-TS
   - Type-safe styling
@@ -77,6 +84,7 @@ The app will be used both as a reference (quick lookups on mobile) and learning 
 We will use **Tailwind CSS** as the primary styling solution.
 
 **Key reasons:**
+
 1. **Mobile-First**: Responsive utilities are mobile-first by default
 2. **Accessibility**: Built-in utilities for focus rings, sr-only, contrast
 3. **Performance**: PurgeCSS removes unused styles, minimal runtime cost
@@ -89,6 +97,7 @@ We will use **Tailwind CSS** as the primary styling solution.
 ## Consequences
 
 ### Positive
+
 - Fast development with utility classes
 - Automatic responsive design with mobile-first breakpoints
 - Built-in accessibility utilities (focus-visible, sr-only, etc.)
@@ -98,11 +107,13 @@ We will use **Tailwind CSS** as the primary styling solution.
 - Excellent editor support with autocomplete
 
 ### Negative
+
 - Developers unfamiliar with Tailwind need to learn utility-first approach
 - className strings can get long (mitigated with components)
 - Need to configure design tokens properly upfront
 
 ### Neutral
+
 - Will use `@tailwindcss/forms` plugin for accessible form styling
 - Will use `@tailwindcss/typography` plugin for rich text content
 - May use `tailwind-merge` and `clsx` for conditional classes
@@ -110,14 +121,16 @@ We will use **Tailwind CSS** as the primary styling solution.
 ### Implementation Notes
 
 #### Configuration
+
 - Define design tokens in `tailwind.config.ts`:
   - Color palette (with WCAG AA compliant contrast)
   - Typography scale
   - Spacing scale
   - Breakpoints (mobile, tablet, desktop)
   - Focus ring styles
-  
+
 #### Mobile-First Breakpoints
+
 ```
 sm: 640px   - Small tablets
 md: 768px   - Tablets
@@ -127,6 +140,7 @@ xl: 1280px  - Desktops
 ```
 
 #### Accessibility Considerations
+
 - Use Tailwind's contrast utilities
 - Implement focus-visible for keyboard navigation
 - Use sr-only for screen reader text
@@ -134,6 +148,7 @@ xl: 1280px  - Desktops
 - Use semantic HTML with Tailwind classes
 
 #### Component Organization
+
 - Create reusable components to avoid className duplication
 - Use composition for variant styling
 - Extract common patterns into custom utilities if needed

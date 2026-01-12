@@ -2,13 +2,18 @@
  * Zustand store for rules, bookmarks, and user preferences
  */
 
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { RulesStore, Bookmark, UserPreferences, SearchResult } from '@/types';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import type {
+  RulesStore,
+  Bookmark,
+  UserPreferences,
+  SearchResult,
+} from "@/types";
 
 const defaultPreferences: UserPreferences = {
-  theme: 'light',
-  fontSize: 'medium',
+  theme: "light",
+  fontSize: "medium",
   highContrast: false,
   reducedMotion: false,
   bookmarks: [],
@@ -31,27 +36,27 @@ export const useRulesStore = create<RulesStore>()(
         set({ isLoading: true, error: null });
         try {
           // Load rules from static JSON
-          const response = await fetch('/data/rules.json');
+          const response = await fetch("/data/rules.json");
           if (!response.ok) {
-            throw new Error('Failed to load rules');
+            throw new Error("Failed to load rules");
           }
           const data = await response.json();
-          set({ 
-            rules: data.rules || [], 
+          set({
+            rules: data.rules || [],
             sections: data.sections || [],
-            isLoading: false 
+            isLoading: false,
           });
         } catch (error) {
-          set({ 
-            error: error as Error, 
-            isLoading: false 
+          set({
+            error: error as Error,
+            isLoading: false,
           });
         }
       },
 
       addBookmark: (ruleId: string, notes?: string) => {
         const { bookmarks } = get();
-        if (bookmarks.find(b => b.ruleId === ruleId)) {
+        if (bookmarks.find((b) => b.ruleId === ruleId)) {
           return; // Already bookmarked
         }
         const newBookmark: Bookmark = {
@@ -64,7 +69,7 @@ export const useRulesStore = create<RulesStore>()(
 
       removeBookmark: (ruleId: string) => {
         const { bookmarks } = get();
-        set({ bookmarks: bookmarks.filter(b => b.ruleId !== ruleId) });
+        set({ bookmarks: bookmarks.filter((b) => b.ruleId !== ruleId) });
       },
 
       updatePreferences: (prefs: Partial<UserPreferences>) => {
@@ -74,22 +79,24 @@ export const useRulesStore = create<RulesStore>()(
 
       addToRecentlyViewed: (ruleId: string) => {
         const { preferences } = get();
-        const recentlyViewed = preferences.recentlyViewed.filter(id => id !== ruleId);
+        const recentlyViewed = preferences.recentlyViewed.filter(
+          (id) => id !== ruleId,
+        );
         recentlyViewed.unshift(ruleId);
         // Keep only last 10
         const trimmed = recentlyViewed.slice(0, 10);
-        set({ 
-          preferences: { 
-            ...preferences, 
-            recentlyViewed: trimmed 
-          } 
+        set({
+          preferences: {
+            ...preferences,
+            recentlyViewed: trimmed,
+          },
         });
       },
 
       searchRules: (query: string): SearchResult[] => {
         const { rules } = get();
         const lowerQuery = query.toLowerCase().trim();
-        
+
         if (!lowerQuery) {
           return [];
         }
@@ -97,7 +104,7 @@ export const useRulesStore = create<RulesStore>()(
         const results: SearchResult[] = [];
 
         for (const rule of rules) {
-          const matches: SearchResult['matches'] = [];
+          const matches: SearchResult["matches"] = [];
           let score = 0;
 
           // Search in title
@@ -105,7 +112,7 @@ export const useRulesStore = create<RulesStore>()(
             score += 10;
             const index = rule.title.toLowerCase().indexOf(lowerQuery);
             matches.push({
-              field: 'title',
+              field: "title",
               snippet: rule.title,
               position: index,
             });
@@ -116,12 +123,16 @@ export const useRulesStore = create<RulesStore>()(
             score += 5;
             const index = rule.content.toLowerCase().indexOf(lowerQuery);
             const start = Math.max(0, index - 50);
-            const end = Math.min(rule.content.length, index + lowerQuery.length + 50);
-            const snippet = (start > 0 ? '...' : '') + 
-                          rule.content.slice(start, end) + 
-                          (end < rule.content.length ? '...' : '');
+            const end = Math.min(
+              rule.content.length,
+              index + lowerQuery.length + 50,
+            );
+            const snippet =
+              (start > 0 ? "..." : "") +
+              rule.content.slice(start, end) +
+              (end < rule.content.length ? "..." : "");
             matches.push({
-              field: 'content',
+              field: "content",
               snippet,
               position: index,
             });
@@ -132,7 +143,7 @@ export const useRulesStore = create<RulesStore>()(
             if (tag.toLowerCase().includes(lowerQuery)) {
               score += 3;
               matches.push({
-                field: 'tags',
+                field: "tags",
                 snippet: tag,
                 position: 0,
               });
@@ -149,11 +160,11 @@ export const useRulesStore = create<RulesStore>()(
       },
     }),
     {
-      name: 'rulebound-storage',
+      name: "rulebound-storage",
       partialize: (state) => ({
         bookmarks: state.bookmarks,
         preferences: state.preferences,
       }),
-    }
-  )
+    },
+  ),
 );

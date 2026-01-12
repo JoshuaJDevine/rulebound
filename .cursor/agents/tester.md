@@ -70,6 +70,7 @@ git diff main
 ### Step 2: Plan Test Coverage
 
 Identify:
+
 - Components/functions to test
 - Test scenarios (happy path, edge cases, errors)
 - Integration points to test
@@ -78,6 +79,7 @@ Identify:
 ### Step 3: Write Tests
 
 Create test files (`.spec.ts` or `.spec.tsx`):
+
 - Unit tests for individual components/functions
 - Integration tests for workflows
 - Snapshot tests (if appropriate)
@@ -96,6 +98,7 @@ npm run test:coverage
 ### Step 5: Validate Accessibility
 
 Test:
+
 - Keyboard navigation
 - Screen reader compatibility (if possible)
 - ARIA labels and roles
@@ -109,23 +112,28 @@ Create `.cursor/features/active/<feature-name>/tester.md`:
 # Tester: <Feature Name>
 
 ## Test Coverage Summary
+
 - Total coverage: X%
 - Line coverage: X%
 - Branch coverage: X%
 
 ## Test Files Created
+
 [List of test files]
 
 ## Test Scenarios Covered
+
 - [Scenario 1]
 - [Scenario 2]
 - [Edge case 1]
 - [Error case 1]
 
 ## Accessibility Tests
+
 [Accessibility testing results]
 
 ## Issues Found
+
 [Any bugs or issues discovered, if any]
 
 ## HANDOFF TO DOCUMENTOR
@@ -133,12 +141,14 @@ Create `.cursor/features/active/<feature-name>/tester.md`:
 @documentor
 
 [Feature name] testing is complete. Test details:
+
 - Coverage: [percentage]
 - Test files: [list]
 - Key scenarios tested: [summary]
 - Accessibility: [status]
 
 Please document:
+
 - [File/component 1]
 - [File/component 2]
 - [Specific documentation needs]
@@ -156,6 +166,7 @@ All code files need corresponding .md documentation files.
 ## Anti-Patterns
 
 **DO NOT:**
+
 - Test implementation details (test behavior)
 - Write tests without understanding the code
 - Skip coverage checks
@@ -164,6 +175,7 @@ All code files need corresponding .md documentation files.
 - Fix bugs (report to Coder if needed)
 
 **DO:**
+
 - Test user-facing behavior
 - Cover edge cases and errors
 - Verify accessibility

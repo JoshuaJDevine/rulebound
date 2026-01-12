@@ -1,11 +1,13 @@
 # ADR-006: Project Structure
 
 ## Status
+
 Accepted
 
 ## Context
 
 Rule Bound needs a clear, maintainable project structure that:
+
 - Scales as the application grows
 - Makes code easy to find
 - Separates concerns logically
@@ -14,6 +16,7 @@ Rule Bound needs a clear, maintainable project structure that:
 - Works well with Vite's build system
 
 Key considerations:
+
 - Every `.ts`/`.tsx` file needs a corresponding `.spec.ts(x)` test file
 - Every `.ts`/`.tsx` file needs a corresponding `.md` documentation file
 - Need clear separation between components, pages, utilities, etc.
@@ -23,6 +26,7 @@ Key considerations:
 ## Options Considered
 
 ### 1. Feature-Based Structure
+
 ```
 src/
   features/
@@ -34,6 +38,7 @@ src/
       components/
       hooks/
 ```
+
 - **Pros:**
   - Groups related code together
   - Easy to understand feature boundaries
@@ -44,6 +49,7 @@ src/
   - Overkill for initial setup
 
 ### 2. Layer-Based Structure (Traditional)
+
 ```
 src/
   components/
@@ -52,6 +58,7 @@ src/
   utils/
   types/
 ```
+
 - **Pros:**
   - Simple and intuitive
   - Easy to find things by type
@@ -62,6 +69,7 @@ src/
   - Less clear feature boundaries
 
 ### 3. Hybrid Approach
+
 ```
 src/
   components/    (shared UI components)
@@ -69,6 +77,7 @@ src/
   pages/         (route pages)
   lib/           (utilities, hooks)
 ```
+
 - **Pros:**
   - Balances organization and simplicity
   - Clear home for shared vs feature code
@@ -117,6 +126,7 @@ rulebound/
 ```
 
 **Key reasons:**
+
 1. **Intuitive**: Easy to find code by its type
 2. **Scalable**: Can add features/ directory as needed
 3. **Clear Separation**: Components vs pages vs utilities
@@ -127,6 +137,7 @@ rulebound/
 ## Consequences
 
 ### Positive
+
 - Clear, predictable file locations
 - Easy for new developers to understand
 - Scales from simple to complex
@@ -134,10 +145,12 @@ rulebound/
 - Follows React community conventions
 
 ### Negative
+
 - May need to refactor to feature-based if app becomes very large
 - Need discipline to avoid dumping everything in one folder
 
 ### Neutral
+
 - Will need to establish conventions for when something goes in components/ vs features/
 - Test files colocated with source (e.g., `Button.tsx` and `Button.spec.tsx` in same folder)
 - Documentation files colocated with source (e.g., `Button.tsx` and `Button.md` in same folder)
@@ -145,6 +158,7 @@ rulebound/
 ### File Organization Rules
 
 #### 1. Components
+
 ```
 src/components/ui/Button/
 ├── Button.tsx           # Component implementation
@@ -154,6 +168,7 @@ src/components/ui/Button/
 ```
 
 #### 2. Pages
+
 ```
 src/pages/RulesPage/
 ├── RulesPage.tsx        # Page component
@@ -163,6 +178,7 @@ src/pages/RulesPage/
 ```
 
 #### 3. Utilities
+
 ```
 src/lib/utils/
 ├── formatRuleReference.ts
@@ -172,6 +188,7 @@ src/lib/utils/
 ```
 
 #### 4. Hooks
+
 ```
 src/lib/hooks/
 ├── useRuleSearch.ts
@@ -196,19 +213,21 @@ Each directory should have an `index.ts` that exports its public API:
 
 ```typescript
 // src/components/ui/index.ts
-export { Button } from './Button';
-export { Card } from './Card';
-export { Input } from './Input';
+export { Button } from "./Button";
+export { Card } from "./Card";
+export { Input } from "./Input";
 ```
 
 This allows clean imports:
+
 ```typescript
-import { Button, Card } from '@/components/ui';
+import { Button, Card } from "@/components/ui";
 ```
 
 ### Path Aliases
 
 Configure in `tsconfig.json` and `vite.config.ts`:
+
 ```json
 {
   "compilerOptions": {
@@ -226,12 +245,14 @@ Configure in `tsconfig.json` and `vite.config.ts`:
 ### Growth Strategy
 
 As the app grows:
+
 1. Start with this structure
 2. If a domain area gets complex, move it to `features/`
 3. Keep `components/` for truly shared UI components
 4. Keep `lib/` for generic utilities
 
 Example future state:
+
 ```
 src/
   components/      # Still shared UI

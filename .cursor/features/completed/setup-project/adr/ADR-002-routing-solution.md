@@ -1,11 +1,13 @@
 # ADR-002: Routing Solution
 
 ## Status
+
 Accepted
 
 ## Context
 
 Rule Bound is a web application that will serve RPG rules content across multiple pages/views. Users need to:
+
 - Navigate between different rule sections
 - Deep link to specific rules
 - Use browser back/forward buttons
@@ -13,6 +15,7 @@ Rule Bound is a web application that will serve RPG rules content across multipl
 - Experience smooth transitions on mobile devices
 
 We need a routing solution that supports:
+
 - Client-side routing (SPA experience)
 - TypeScript support
 - Accessibility features (focus management, announcements)
@@ -22,6 +25,7 @@ We need a routing solution that supports:
 ## Options Considered
 
 ### 1. React Router v6
+
 - **Pros:**
   - Industry standard for React routing
   - Strong TypeScript support
@@ -37,6 +41,7 @@ We need a routing solution that supports:
   - API changes between major versions
 
 ### 2. TanStack Router
+
 - **Pros:**
   - Excellent TypeScript support (type-safe routes)
   - Modern, innovative features
@@ -49,6 +54,7 @@ We need a routing solution that supports:
   - Steeper learning curve
 
 ### 3. Wouter
+
 - **Pros:**
   - Very lightweight (~1.5KB)
   - Simple API
@@ -60,6 +66,7 @@ We need a routing solution that supports:
   - May need additional solutions for complex routing
 
 ### 4. Next.js (Framework)
+
 - **Pros:**
   - File-based routing
   - SSR/SSG capabilities
@@ -75,6 +82,7 @@ We need a routing solution that supports:
 We will use **React Router v6** as the routing solution.
 
 **Key reasons:**
+
 1. **Accessibility**: Built-in focus management and screen reader announcements
 2. **Battle-Tested**: Proven in production across thousands of apps
 3. **TypeScript Support**: Good type definitions and type safety
@@ -86,6 +94,7 @@ We will use **React Router v6** as the routing solution.
 ## Consequences
 
 ### Positive
+
 - Standardized routing patterns familiar to React developers
 - Built-in accessibility features reduce custom implementation
 - Code splitting at route level for better performance
@@ -93,15 +102,18 @@ We will use **React Router v6** as the routing solution.
 - Strong community support for troubleshooting
 
 ### Negative
+
 - Bundle size slightly larger than minimal alternatives (~10KB gzipped)
 - Need to learn React Router API (though it's well-documented)
 
 ### Neutral
+
 - Will use declarative `<Routes>` and `<Route>` components
 - Route definitions will be centralized for maintainability
 - Focus management handled automatically by library
 
 ### Implementation Notes
+
 - Use lazy loading with `React.lazy()` for route-based code splitting
 - Implement proper loading states during route transitions
 - Ensure all navigation elements have proper ARIA labels
