@@ -83,8 +83,8 @@ A fixed bottom navigation bar with three navigation items, visible only on mobil
 
 ### Container Styling
 
-- Background: White (bg-white)
-- Border: Top border, neutral-200 (border-t border-neutral-200)
+- Background: Dark blue (primary-900, Riftbound branding)
+- Border: Top border, primary-700 (border-t border-primary-700)
 - Layout: CSS Grid, 3 equal columns (grid grid-cols-3)
 - Height: 64px (h-16)
 
@@ -104,20 +104,21 @@ A fixed bottom navigation bar with three navigation items, visible only on mobil
 ### Label Styling
 
 - Font size: 12px (text-xs)
-- Active state: Primary-600, semibold (text-primary-600 font-semibold)
-- Inactive state: Neutral-500 (text-neutral-500)
-- Hover: Neutral-700 (hover:text-neutral-700)
+- Active state: Gold accent, semibold (text-accent-400 font-semibold)
+- Inactive state: Light primary (text-primary-300)
+- Hover: White (hover:text-white)
 
 ### Active State
 
-- Text color: Primary-600
+- Text color: Gold accent (accent-400)
 - Font weight: Semibold
 - Icon color: Matches text (currentColor)
+- Active indicator: Gold dot at bottom (bg-accent-400)
 
 ### Focus State
 
 - 4px focus ring (focus:ring-4)
-- Primary color at 50% opacity (focus:ring-primary-500/50)
+- Gold accent color (focus:ring-accent-500)
 - No outline (focus:outline-none)
 - Smooth transitions (transition-colors)
 

@@ -1,7 +1,7 @@
 /**
  * SectionCard Component
- * Display top-level sections (level 0) on home page in prominent, scannable format
- * Per designer specs: Large text, centered layout, elevated shadow
+ * Display top-level sections (level 0) with Riftbound branding
+ * Dark blue gradient background, gold numbers, section icons
  */
 
 import { cn } from "@/lib/utils";
@@ -10,33 +10,39 @@ import type { RuleSection } from "@/types";
 export interface SectionCardProps {
   section: RuleSection; // level must be 0
   onClick: (sectionId: string) => void;
-  variant?: "default" | "featured";
+  icon?: React.ReactNode;
   className?: string;
 }
+
+// Section icon mapping based on section number
+const getSectionIcon = (number: string): string => {
+  const sectionNum = parseInt(number);
+  if (sectionNum === 0) return "📖"; // Glossary
+  if (sectionNum >= 100 && sectionNum < 200) return "🎮"; // The Game
+  if (sectionNum >= 200 && sectionNum < 300) return "🃏"; // Cards
+  if (sectionNum >= 300 && sectionNum < 400) return "🔄"; // Turns
+  if (sectionNum >= 400 && sectionNum < 500) return "⏱️"; // Phases
+  if (sectionNum >= 500 && sectionNum < 600) return "⚔️"; // Combat
+  if (sectionNum >= 600 && sectionNum < 700) return "✨"; // Abilities
+  if (sectionNum >= 700 && sectionNum < 800) return "🏷️"; // Keywords
+  return "📋"; // Default
+};
 
 export function SectionCard({
   section,
   onClick,
-  variant = "default",
+  icon,
   className,
 }: SectionCardProps) {
   const childCount = section.children.length;
-  const isFeatured = variant === "featured";
-
-  // Get description (first 3 lines max, ~200 chars)
-  const description =
-    section.content && section.content !== section.title
-      ? section.content.length > 200
-        ? section.content.slice(0, 200) + "..."
-        : section.content
-      : null;
+  const sectionIcon = icon || getSectionIcon(section.number);
 
   const handleClick = () => {
     onClick(section.id);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       onClick(section.id);
     }
@@ -46,70 +52,35 @@ export function SectionCard({
     <button
       aria-label={`Section ${section.number} ${section.title}, contains ${childCount} ${childCount === 1 ? "rule" : "rules"}`}
       className={cn(
-        "group w-full rounded-xl border text-center transition-all",
-        "focus:outline-none focus:ring-4 focus:ring-primary-500 focus:ring-offset-2",
-        isFeatured
-          ? "bg-gradient-to-br from-primary-100 via-primary-50 to-white border-primary-300 p-8 md:p-10 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-100"
-          : "bg-white border-neutral-200 p-6 md:p-8 shadow-lg hover:shadow-2xl hover:scale-102 active:scale-98",
+        "group w-full rounded-lg p-6 text-left transition-all duration-normal",
+        "bg-gradient-primary text-white shadow-lg",
+        "hover:-translate-y-0.5 hover:shadow-xl",
+        "focus:outline-none focus:ring-4 focus:ring-accent-500 dark:focus:ring-accent-400",
+        "active:translate-y-0",
         className,
       )}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       type="button"
     >
-      {/* Section Number - Large and prominent */}
-      <div
-        className={cn(
-          "font-mono font-extrabold mb-3",
-          isFeatured
-            ? "text-5xl md:text-6xl text-primary-700"
-            : "text-4xl text-primary-600",
-        )}
-      >
+      {/* Icon - circular container */}
+      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 mb-4 text-2xl">
+        {sectionIcon}
+      </div>
+
+      {/* Section Number - Gold, mono font */}
+      <div className="font-mono text-xl font-semibold text-accent-400 mb-2">
         {section.number}
       </div>
 
-      {/* Section Title - Bold heading */}
-      <h3
-        className={cn(
-          "font-bold text-neutral-900 mb-3",
-          isFeatured ? "text-2xl md:text-3xl" : "text-xl md:text-2xl",
-        )}
-      >
+      {/* Section Title - Cinzel display font */}
+      <h3 className="font-display text-2xl md:text-3xl font-semibold mb-3 uppercase tracking-wide">
         {section.title}
       </h3>
 
-      {/* Description - 3 lines max */}
-      {description && (
-        <p
-          className={cn(
-            "text-neutral-600 mb-4 mx-auto line-clamp-3",
-            isFeatured ? "text-base max-w-lg" : "text-sm max-w-md",
-          )}
-        >
-          {description}
-        </p>
-      )}
-
-      {/* Child count - Metadata */}
-      <div className="flex items-center justify-center gap-2 text-sm text-neutral-500">
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-          />
-        </svg>
-        <span>
-          {childCount} {childCount === 1 ? "rule" : "rules"}
-        </span>
+      {/* Child count - Light text */}
+      <div className="font-body text-sm text-primary-200">
+        {childCount} {childCount === 1 ? "rule" : "rules"}
       </div>
     </button>
   );

@@ -164,16 +164,16 @@ export function RuleDetailPage() {
         <Breadcrumb items={breadcrumbItems} />
       </div>
 
-      {/* Rule Header - sizing based on level per designer specs */}
+      {/* Rule Header - Riftbound branded styling */}
       <div className="flex items-start justify-between gap-4 mb-6">
         <div className="flex-1">
           <div className="flex items-baseline gap-4 mb-2">
             <span
               className={cn(
-                "font-mono font-extrabold text-primary-600",
-                rule.level === 0 && "text-4xl",
-                rule.level === 1 && "text-3xl",
-                rule.level >= 2 && "text-2xl",
+                "font-mono font-semibold text-accent-600 dark:text-accent-400",
+                rule.level === 0 && "text-3xl md:text-4xl",
+                rule.level === 1 && "text-2xl md:text-3xl",
+                rule.level >= 2 && "text-xl md:text-2xl",
               )}
             >
               {rule.number}
@@ -181,8 +181,9 @@ export function RuleDetailPage() {
             <h1
               id="rule-title"
               className={cn(
-                "font-bold text-neutral-900",
-                rule.level === 0 && "text-3xl md:text-4xl",
+                "font-display font-semibold text-primary-900 dark:text-neutral-100",
+                rule.level === 0 &&
+                  "text-3xl md:text-4xl uppercase tracking-wide",
                 rule.level === 1 && "text-2xl md:text-3xl",
                 rule.level >= 2 && "text-xl md:text-2xl",
               )}
@@ -190,14 +191,14 @@ export function RuleDetailPage() {
               {rule.title}
             </h1>
           </div>
-          {/* Level badge (optional) */}
-          <span className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded">
+          {/* Level badge */}
+          <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-accent-100 text-accent-800 dark:bg-accent-900/30 dark:text-accent-300 rounded-full">
             {rule.level === 0
               ? "Section"
               : rule.level === 1
-                ? "Rule"
+                ? "Topic"
                 : rule.level === 2
-                  ? "Sub-rule"
+                  ? "Definition"
                   : "Detail"}
           </span>
         </div>
@@ -207,12 +208,12 @@ export function RuleDetailPage() {
       {/* Section/Rule with Children Mode */}
       {isSection && (
         <>
-          {/* Content Area - prose styling per designer specs */}
+          {/* Content Area - Riftbound prose styling */}
           {rule.content && rule.content !== rule.title && (
             <article aria-label="Rule content" className="mb-8">
-              <div className="bg-white rounded-lg border border-neutral-200 p-6">
-                <div className="prose prose-lg max-w-none">
-                  <p className="text-neutral-700 leading-7 whitespace-pre-wrap">
+              <div className="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-primary-700 p-6">
+                <div className="prose-readable">
+                  <p className="font-body text-lg leading-relaxed text-neutral-900 dark:text-neutral-200 whitespace-pre-wrap">
                     {rule.content}
                   </p>
                 </div>
@@ -220,17 +221,16 @@ export function RuleDetailPage() {
             </article>
           )}
 
-          {/* Children Section - Grid of RuleCard components per designer specs */}
+          {/* Children Section - Use new components based on level */}
           {childRules.length > 0 && (
             <section aria-labelledby="sub-rules-heading" className="mb-8">
               <h2
                 id="sub-rules-heading"
-                className="text-xl font-semibold text-neutral-900 mb-4"
+                className="font-display text-2xl font-semibold text-primary-900 dark:text-neutral-100 mb-4"
               >
-                {rule.level === 0 ? "Rules" : "Sub-Rules"}
+                {rule.level === 0 ? "Topics" : "Rules"}
               </h2>
-              {/* Responsive grid: 1 col mobile, 2 col tablet, 3 col desktop */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="space-y-4">
                 {childRules.map((childRule) => (
                   <RuleCard
                     key={childRule.id}
@@ -250,14 +250,11 @@ export function RuleDetailPage() {
       {/* Leaf Rule Mode (no children) */}
       {!isSection && (
         <>
-          {/* Rule Content - max-width 65ch for optimal reading per designer specs */}
+          {/* Rule Content - Riftbound reading experience */}
           <article aria-label="Rule content" className="mb-8">
-            <div className="bg-white rounded-lg border border-neutral-200 p-6">
-              <div
-                className="prose prose-lg max-w-none"
-                style={{ maxWidth: "65ch" }}
-              >
-                <p className="text-neutral-700 leading-7 whitespace-pre-wrap">
+            <div className="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-primary-700 p-6">
+              <div className="prose-readable">
+                <p className="font-body text-lg leading-relaxed text-neutral-700 dark:text-neutral-200 whitespace-pre-wrap">
                   {rule.content}
                 </p>
               </div>
@@ -267,7 +264,7 @@ export function RuleDetailPage() {
           {/* Parent Rule Link */}
           {rule.parentId && (
             <div className="mb-6">
-              <h2 className="text-sm font-semibold text-neutral-700 uppercase tracking-wide mb-2">
+              <h2 className="text-sm font-semibold text-neutral-800 dark:text-neutral-300 uppercase tracking-wide mb-2">
                 Parent Rule
               </h2>
               <Chip
@@ -338,12 +335,12 @@ export function RuleDetailPage() {
         </>
       )}
 
-      {/* Cross-References Section - "See Also" per designer specs */}
+      {/* Cross-References Section - Riftbound styled */}
       {rule.crossRefs.length > 0 && (
         <nav aria-labelledby="see-also-heading" className="mb-8">
           <h2
             id="see-also-heading"
-            className="text-xl font-semibold text-neutral-900 mb-4"
+            className="font-display text-xl font-semibold text-primary-900 dark:text-neutral-100 mb-4"
           >
             See Also
           </h2>
@@ -359,14 +356,13 @@ export function RuleDetailPage() {
                       e.preventDefault();
                       navigate(`/rules/${refId}`);
                     }}
-                    className="flex items-center gap-2 text-primary-600 hover:text-primary-700 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded px-2 py-1"
+                    className="flex items-center gap-2 font-body text-accent-600 dark:text-accent-400 hover:text-accent-500 hover:underline hover:decoration-solid decoration-dotted underline-offset-2 focus:outline-none focus:ring-2 focus:ring-accent-500 rounded px-2 py-1 transition-colors"
                   >
                     <span aria-hidden="true" className="text-lg">
                       →
                     </span>
-                    <span>
-                      {refRule.number} {refRule.title}
-                    </span>
+                    <span className="font-mono text-sm">{refRule.number}</span>
+                    <span>{refRule.title}</span>
                   </a>
                 </li>
               );
@@ -380,7 +376,7 @@ export function RuleDetailPage() {
         <nav aria-labelledby="referenced-by-heading" className="mb-8">
           <h2
             id="referenced-by-heading"
-            className="text-xl font-semibold text-neutral-900 mb-4"
+            className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4"
           >
             Referenced By
           </h2>
@@ -393,7 +389,7 @@ export function RuleDetailPage() {
                     e.preventDefault();
                     navigate(`/rules/${refRule.id}`);
                   }}
-                  className="flex items-center gap-2 text-neutral-600 hover:text-neutral-700 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded px-2 py-1 text-sm"
+                  className="flex items-center gap-2 text-neutral-800 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded px-2 py-1 text-sm"
                 >
                   <span aria-hidden="true">←</span>
                   <span>

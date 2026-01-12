@@ -27,9 +27,13 @@ export function EmptyState({
         {icon}
       </div>
 
-      <h2 className="text-xl font-semibold text-neutral-900 mb-2">{title}</h2>
+      <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
+        {title}
+      </h2>
 
-      <p className="text-neutral-600 mb-6 max-w-sm">{description}</p>
+      <p className="text-neutral-700 dark:text-neutral-300 mb-6 max-w-sm">
+        {description}
+      </p>
 
       {action && (
         <Button variant="primary" onClick={action.onClick}>

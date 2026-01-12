@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export interface ChipProps {
   label: string;
-  variant?: "default" | "interactive" | "selected";
+  variant?: "default" | "interactive" | "selected" | "accent" | "primary";
   icon?: React.ReactNode;
   onRemove?: () => void;
   onClick?: () => void;
@@ -26,10 +26,16 @@ export function Chip({
     "inline-flex items-center gap-2 px-3 h-11 rounded-full text-sm border transition-all focus:ring-2 focus:ring-primary-500/50 focus:outline-none";
 
   const variantStyles = {
-    default: "bg-neutral-100 border-neutral-200 text-neutral-700",
+    default:
+      "bg-neutral-200 border-neutral-300 text-neutral-900 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100",
     interactive:
-      "bg-white border-neutral-300 text-neutral-900 hover:border-primary-500 cursor-pointer",
-    selected: "bg-primary-600 border-primary-600 text-white",
+      "bg-white border-neutral-300 text-neutral-900 hover:border-primary-500 cursor-pointer dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-100",
+    selected:
+      "bg-primary-600 border-primary-600 text-white dark:bg-primary-500 dark:border-primary-500",
+    accent:
+      "bg-accent-100 border-accent-200 text-accent-800 dark:bg-accent-900/30 dark:border-accent-700 dark:text-accent-300",
+    primary:
+      "bg-primary-100 border-primary-200 text-primary-800 dark:bg-primary-900/30 dark:border-primary-700 dark:text-primary-300",
   };
 
   const Component = onClick ? "button" : "span";

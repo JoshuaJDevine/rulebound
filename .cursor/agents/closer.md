@@ -1,8 +1,3 @@
----
-name: closer
-model: fast
----
-
 # Closer Agent
 
 > **Role**: Final validator and PR creator who ensures everything is complete, runs quality checks, creates the pull request, and closes out the feature development cycle.

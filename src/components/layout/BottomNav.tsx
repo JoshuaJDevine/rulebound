@@ -1,6 +1,7 @@
 /**
  * BottomNav Component
- * Mobile bottom navigation for primary app sections
+ * Mobile bottom navigation with Riftbound branding
+ * Dark blue background, gold active states
  */
 
 import { Link, useLocation } from "react-router-dom";
@@ -71,7 +72,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 md:hidden z-40"
+      className="fixed bottom-0 left-0 right-0 bg-primary-900 border-t border-primary-700 md:hidden z-40"
       aria-label="Primary navigation"
     >
       <div className="grid grid-cols-3 h-16">
@@ -83,15 +84,20 @@ export function BottomNav() {
               key={item.path}
               to={item.path}
               className={cn(
-                "flex flex-col items-center justify-center gap-1 transition-colors focus:outline-none focus:ring-4 focus:ring-primary-500/50",
+                "relative flex flex-col items-center justify-center gap-1 transition-colors font-body",
+                "focus:outline-none focus:ring-4 focus:ring-accent-500",
                 isActive
-                  ? "text-primary-600 font-semibold"
-                  : "text-neutral-500 hover:text-neutral-700",
+                  ? "text-accent-400 font-semibold"
+                  : "text-primary-300 hover:text-white",
               )}
               aria-current={isActive ? "page" : undefined}
             >
               <span aria-hidden="true">{item.icon}</span>
               <span className="text-xs">{item.label}</span>
+              {/* Active indicator dot */}
+              {isActive && (
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent-400" />
+              )}
             </Link>
           );
         })}

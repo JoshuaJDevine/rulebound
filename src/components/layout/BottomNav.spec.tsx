@@ -59,7 +59,7 @@ describe("BottomNav", () => {
     it("should highlight active route (home)", () => {
       renderWithRouter("/");
       const homeLink = screen.getByRole("link", { name: /home/i });
-      expect(homeLink).toHaveClass("text-primary-600");
+      expect(homeLink).toHaveClass("text-accent-400");
       expect(homeLink).toHaveClass("font-semibold");
       expect(homeLink).toHaveAttribute("aria-current", "page");
     });
@@ -67,7 +67,7 @@ describe("BottomNav", () => {
     it("should highlight active route (browse)", () => {
       renderWithRouter("/rules");
       const browseLink = screen.getByRole("link", { name: /browse/i });
-      expect(browseLink).toHaveClass("text-primary-600");
+      expect(browseLink).toHaveClass("text-accent-400");
       expect(browseLink).toHaveClass("font-semibold");
       expect(browseLink).toHaveAttribute("aria-current", "page");
     });
@@ -75,7 +75,7 @@ describe("BottomNav", () => {
     it("should highlight active route (saved)", () => {
       renderWithRouter("/bookmarks");
       const savedLink = screen.getByRole("link", { name: /saved/i });
-      expect(savedLink).toHaveClass("text-primary-600");
+      expect(savedLink).toHaveClass("text-accent-400");
       expect(savedLink).toHaveClass("font-semibold");
       expect(savedLink).toHaveAttribute("aria-current", "page");
     });
@@ -83,7 +83,7 @@ describe("BottomNav", () => {
     it("should not highlight inactive routes", () => {
       renderWithRouter("/rules");
       const homeLink = screen.getByRole("link", { name: /home/i });
-      expect(homeLink).toHaveClass("text-neutral-500");
+      expect(homeLink).toHaveClass("text-primary-300");
       expect(homeLink).not.toHaveAttribute("aria-current");
     });
 
@@ -139,7 +139,7 @@ describe("BottomNav", () => {
     it("should have hover styles on inactive items", () => {
       renderWithRouter("/");
       const browseLink = screen.getByRole("link", { name: /browse/i });
-      expect(browseLink).toHaveClass("hover:text-neutral-700");
+      expect(browseLink).toHaveClass("hover:text-white");
     });
 
     it("should have transition effects", () => {
@@ -258,7 +258,7 @@ describe("BottomNav", () => {
     it("should have white background", () => {
       const { container } = renderWithRouter();
       const nav = container.querySelector("nav");
-      expect(nav).toHaveClass("bg-white");
+      expect(nav).toHaveClass("bg-primary-900");
     });
 
     it("should be positioned above page content", () => {

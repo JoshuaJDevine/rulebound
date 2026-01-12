@@ -42,7 +42,7 @@ describe("Chip", () => {
     it("should render default variant", () => {
       const { container } = render(<Chip label="Default" variant="default" />);
       const chip = container.firstChild as HTMLElement;
-      expect(chip).toHaveClass("bg-neutral-100");
+      expect(chip).toHaveClass("bg-neutral-200");
     });
 
     it("should render interactive variant", () => {

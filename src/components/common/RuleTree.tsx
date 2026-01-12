@@ -181,7 +181,9 @@ function RuleTreeNode({
             <span
               className={cn(
                 "text-xs font-mono font-medium flex-shrink-0",
-                isSelected ? "text-primary-700" : "text-neutral-500",
+                isSelected
+                  ? "text-primary-700"
+                  : "text-neutral-700 dark:text-neutral-400",
               )}
             >
               {rule.number}

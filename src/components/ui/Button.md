@@ -27,18 +27,18 @@ import { Button } from '@/components/ui';
 
 ## Props / Parameters
 
-| Name      | Type                                            | Required | Description                                                |
-| --------- | ----------------------------------------------- | -------- | ---------------------------------------------------------- |
-| variant   | 'primary' \| 'secondary' \| 'ghost' \| 'danger' | No       | Visual style variant (default: 'primary')                  |
-| size      | 'sm' \| 'md' \| 'lg'                            | No       | Button size (default: 'md')                                |
-| fullWidth | boolean                                         | No       | Whether button should take full width (default: false)     |
-| loading   | boolean                                         | No       | Shows loading spinner and disables button (default: false) |
-| disabled  | boolean                                         | No       | Disables the button (default: false)                       |
-| icon      | React.ReactNode                                 | No       | Icon to display before the button text                     |
-| children  | React.ReactNode                                 | Yes      | Button label/content                                       |
-| ariaLabel | string                                          | No       | Accessible label for screen readers                        |
-| className | string                                          | No       | Additional CSS classes                                     |
-| ...props  | React.ButtonHTMLAttributes                      | No       | All standard HTML button attributes                        |
+| Name      | Type                                                            | Required | Description                                                |
+| --------- | --------------------------------------------------------------- | -------- | ---------------------------------------------------------- |
+| variant   | 'primary' \| 'secondary' \| 'ghost' \| 'ghost-dark' \| 'danger' | No       | Visual style variant (default: 'primary')                  |
+| size      | 'sm' \| 'md' \| 'lg'                                            | No       | Button size (default: 'md')                                |
+| fullWidth | boolean                                                         | No       | Whether button should take full width (default: false)     |
+| loading   | boolean                                                         | No       | Shows loading spinner and disables button (default: false) |
+| disabled  | boolean                                                         | No       | Disables the button (default: false)                       |
+| icon      | React.ReactNode                                                 | No       | Icon to display before the button text                     |
+| children  | React.ReactNode                                                 | Yes      | Button label/content                                       |
+| ariaLabel | string                                                          | No       | Accessible label for screen readers                        |
+| className | string                                                          | No       | Additional CSS classes                                     |
+| ...props  | React.ButtonHTMLAttributes                                      | No       | All standard HTML button attributes                        |
 
 ## Returns
 
@@ -110,25 +110,37 @@ A styled, accessible button element with the specified variant, size, and state.
 
 ### Primary (`variant="primary"`)
 
-- Background: Primary blue (#2563EB)
+- Background: Gold accent (accent-500, #F59E0B)
+- Text: Dark primary (primary-900)
 - Use for: Main call-to-action buttons
 - Example: "Save", "Submit", "Continue"
+- Branding: Matches Riftbound gold accent color
 
 ### Secondary (`variant="secondary"`)
 
-- Background: Neutral gray (#E5E5E5)
+- Background: Transparent with border
+- Border: Neutral gray (neutral-300)
 - Use for: Secondary actions that complement the primary action
 - Example: "Cancel", "Skip", "Back"
 
 ### Ghost (`variant="ghost"`)
 
 - Background: Transparent with hover state
-- Use for: Tertiary actions, less prominent interactions
+- Use for: Tertiary actions on light backgrounds
 - Example: "Learn More", "View Details", inline actions
+
+### Ghost Dark (`variant="ghost-dark"`)
+
+- Background: Transparent
+- Text: Light primary (primary-100)
+- Hover: Dark primary background (primary-800)
+- Use for: Buttons on dark backgrounds (header, nav)
+- Example: Navigation buttons in header
 
 ### Danger (`variant="danger"`)
 
-- Background: Error red (#DC2626)
+- Background: Error red (error-600)
+- Text: White
 - Use for: Destructive actions that require user attention
 - Example: "Delete", "Remove", "Revoke Access"
 

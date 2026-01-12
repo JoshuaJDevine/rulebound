@@ -85,28 +85,32 @@ A sticky header with logo, navigation, and search functionality, adapting to mob
 
 - Position: Sticky top (sticky top-0)
 - Z-index: 50 (above content, z-50)
-- Background: White (bg-white)
-- Border: Bottom border, neutral-200
+- Background: Dark blue (primary-900, Riftbound branding)
+- Border: Bottom border, primary-700
 - Role: "banner" landmark
 - Container: Max width with horizontal padding
 - Height: 56px mobile (h-14), 64px desktop (md:h-16)
 
 ### Logo/Brand
 
-- Font size: 20px (text-xl)
-- Font weight: Bold (font-bold)
-- Color: Primary-600 (text-primary-600)
-- Hover: Primary-700 (hover:text-primary-700)
-- Focus ring: 2px primary color with 50% opacity
+- Font: Cinzel display font (font-display)
+- Font size: 20px mobile (text-xl), 24px desktop (md:text-2xl)
+- Font weight: Semibold (font-semibold)
+- Color: White (text-white)
+- Hover: Gold accent (hover:text-accent-400)
+- Tracking: Wider letter spacing (tracking-wider)
+- Focus ring: 2px gold accent (focus:ring-2 focus:ring-accent-500)
 
 ### Navigation Links (Desktop)
 
-- Display: Flex with 16px gap (gap-4)
+- Display: Flex with 24px gap (gap-6)
 - Hidden on mobile (hidden md:flex)
-- Color: Neutral-700 (text-neutral-700)
-- Hover: Neutral-900 with underline
+- Color: Light primary (text-primary-100)
+- Active: White with gold underline (text-white underline decoration-accent-500)
+- Hover: White with gold underline (hover:text-white hover:underline hover:decoration-accent-500)
+- Underline: 2px gold accent, 4px offset
 - Padding: 4px horizontal, 8px vertical (px-2 py-1)
-- Focus ring: 2px primary color
+- Focus ring: 2px gold accent (focus:ring-2 focus:ring-accent-500)
 
 ### Search Bar (Desktop)
 
@@ -119,9 +123,12 @@ A sticky header with logo, navigation, and search functionality, adapting to mob
 
 - Search icon: Visible only on mobile (md:hidden)
 - Bookmark icon: Visible only on mobile (md:hidden)
+- Dark mode toggle: Always visible
 - Size: 40×40px (h-10 w-10)
 - Icon size: 20×20px (h-5 w-5)
-- Color: Neutral-600, hover Neutral-900
+- Color: Light primary (text-primary-300)
+- Hover: Gold accent (hover:text-accent-400)
+- Focus ring: 2px gold accent (focus:ring-2 focus:ring-accent-500)
 - Rounded corners for visual style
 
 ## Component Structure

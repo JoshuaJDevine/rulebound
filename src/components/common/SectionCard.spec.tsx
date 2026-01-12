@@ -55,35 +55,13 @@ describe("SectionCard", () => {
       expect(screen.getByText("0 rules")).toBeInTheDocument();
     });
 
-    it("should render content description when available", () => {
+    it("should not render content description (content field not displayed in new design)", () => {
       const handleClick = vi.fn();
       render(<SectionCard section={mockSection} onClick={handleClick} />);
+      // Content is not rendered in the new branded design
       expect(
-        screen.getByText(/Rules for combat encounters/),
-      ).toBeInTheDocument();
-    });
-
-    it("should truncate long descriptions", () => {
-      const handleClick = vi.fn();
-      const longContent: RuleSection = {
-        ...mockSection,
-        content: "A".repeat(300),
-      };
-      render(<SectionCard section={longContent} onClick={handleClick} />);
-      const description = screen.getByText(/A+\.\.\./);
-      expect(description.textContent?.length).toBeLessThanOrEqual(203); // 200 + "..."
-    });
-
-    it("should not render description when content equals title", () => {
-      const handleClick = vi.fn();
-      const noDesc: RuleSection = {
-        ...mockSection,
-        content: mockSection.title,
-      };
-      render(<SectionCard section={noDesc} onClick={handleClick} />);
-      // Should only have one instance of "Combat" (the title)
-      const combatTexts = screen.getAllByText("Combat");
-      expect(combatTexts).toHaveLength(1);
+        screen.queryByText(/Rules for combat encounters/),
+      ).not.toBeInTheDocument();
     });
 
     it("should render as button", () => {
@@ -93,55 +71,43 @@ describe("SectionCard", () => {
     });
   });
 
-  describe("Variants", () => {
-    it("should render default variant", () => {
+  describe("Branding", () => {
+    it("should render with gradient background", () => {
       const handleClick = vi.fn();
       const { container } = render(
         <SectionCard section={mockSection} onClick={handleClick} />,
       );
       const button = container.querySelector("button");
-      expect(button).toHaveClass("bg-white");
-      expect(button).toHaveClass("p-6");
+      expect(button).toHaveClass("bg-gradient-primary");
     });
 
-    it("should render featured variant with gradient", () => {
+    it("should render with icon container", () => {
       const handleClick = vi.fn();
       const { container } = render(
-        <SectionCard
-          section={mockSection}
-          onClick={handleClick}
-          variant="featured"
-        />,
+        <SectionCard section={mockSection} onClick={handleClick} />,
       );
-      const button = container.querySelector("button");
-      expect(button).toHaveClass("bg-gradient-to-br");
-      expect(button).toHaveClass("from-primary-100");
+      const iconContainer = container.querySelector(".rounded-full");
+      expect(iconContainer).toBeInTheDocument();
     });
 
-    it("should have larger padding in featured variant", () => {
+    it("should accept custom icon prop", () => {
       const handleClick = vi.fn();
-      const { container } = render(
-        <SectionCard
-          section={mockSection}
-          onClick={handleClick}
-          variant="featured"
-        />,
-      );
-      const button = container.querySelector("button");
-      expect(button).toHaveClass("p-8");
-    });
-
-    it("should have larger text in featured variant", () => {
-      const handleClick = vi.fn();
+      const customIcon = "⭐";
       render(
         <SectionCard
           section={mockSection}
           onClick={handleClick}
-          variant="featured"
+          icon={customIcon}
         />,
       );
-      const number = screen.getByText("100.");
-      expect(number).toHaveClass("text-5xl");
+      expect(screen.getByText(customIcon)).toBeInTheDocument();
+    });
+
+    it("should display Cinzel font for title", () => {
+      const handleClick = vi.fn();
+      render(<SectionCard section={mockSection} onClick={handleClick} />);
+      const title = screen.getByText("Combat");
+      expect(title).toHaveClass("font-display");
     });
   });
 
@@ -179,7 +145,7 @@ describe("SectionCard", () => {
         <SectionCard section={mockSection} onClick={handleClick} />,
       );
       const button = container.querySelector("button");
-      expect(button).toHaveClass("rounded-xl");
+      expect(button).toHaveClass("rounded-lg");
     });
 
     it("should have hover styles", () => {
@@ -188,7 +154,7 @@ describe("SectionCard", () => {
         <SectionCard section={mockSection} onClick={handleClick} />,
       );
       const button = container.querySelector("button");
-      expect(button).toHaveClass("hover:shadow-2xl");
+      expect(button).toHaveClass("hover:shadow-xl");
     });
 
     it("should be centered", () => {
@@ -197,7 +163,7 @@ describe("SectionCard", () => {
         <SectionCard section={mockSection} onClick={handleClick} />,
       );
       const button = container.querySelector("button");
-      expect(button).toHaveClass("text-center");
+      expect(button).toHaveClass("text-left");
     });
 
     it("should have transition effects", () => {
@@ -232,13 +198,15 @@ describe("SectionCard", () => {
       ).toBeInTheDocument();
     });
 
-    it("should hide SVG icons from screen readers", () => {
+    it("should render emoji icons (not SVG)", () => {
       const handleClick = vi.fn();
       const { container } = render(
         <SectionCard section={mockSection} onClick={handleClick} />,
       );
-      const icon = container.querySelector('svg[aria-hidden="true"]');
-      expect(icon).toBeInTheDocument();
+      // Section 100 should have 🎮 icon
+      const iconContainer = container.querySelector(".text-2xl");
+      expect(iconContainer).toBeInTheDocument();
+      expect(iconContainer?.textContent).toContain("🎮");
     });
 
     it("should have proper heading hierarchy", () => {
@@ -301,7 +269,7 @@ describe("SectionCard", () => {
         />,
       );
       const button = container.querySelector("button");
-      expect(button).toHaveClass("rounded-xl");
+      expect(button).toHaveClass("rounded-lg");
       expect(button).toHaveClass("custom-class");
     });
   });
@@ -346,8 +314,8 @@ describe("SectionCard", () => {
       const handleClick = vi.fn();
       render(<SectionCard section={mockSection} onClick={handleClick} />);
       const number = screen.getByText("100.");
-      expect(number).toHaveClass("font-extrabold");
-      expect(number).toHaveClass("text-4xl");
+      expect(number).toHaveClass("font-semibold");
+      expect(number).toHaveClass("text-xl");
     });
   });
 });

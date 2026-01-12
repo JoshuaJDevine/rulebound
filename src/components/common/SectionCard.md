@@ -36,12 +36,12 @@ import { SectionCard } from '@/components/common';
 
 ## Props / Parameters
 
-| Name      | Type                        | Required | Default   | Description                                               |
-| --------- | --------------------------- | -------- | --------- | --------------------------------------------------------- |
-| section   | RuleSection                 | Yes      | -         | Rule section object to display (must have `level: 0`)     |
-| onClick   | (sectionId: string) => void | Yes      | -         | Click handler called with section ID when card is clicked |
-| variant   | "default" \| "featured"     | No       | "default" | Visual variant affecting size, padding, and gradient      |
-| className | string                      | No       | -         | Additional CSS classes to apply to card container         |
+| Name      | Type                        | Required | Default | Description                                               |
+| --------- | --------------------------- | -------- | ------- | --------------------------------------------------------- |
+| section   | RuleSection                 | Yes      | -       | Rule section object to display (must have `level: 0`)     |
+| onClick   | (sectionId: string) => void | Yes      | -       | Click handler called with section ID when card is clicked |
+| icon      | React.ReactNode             | No       | -       | Custom icon to display (overrides automatic icon)         |
+| className | string                      | No       | -       | Additional CSS classes to apply to card container         |
 
 ### RuleSection Type
 
@@ -67,30 +67,21 @@ interface RuleSection {
 
 An interactive, visually prominent card element for navigating to a section's rules, featuring large section number, title, description, and child count.
 
-## Variants
+## Section Icons
 
-### default (Default)
+The component automatically assigns icons based on section number:
 
-Standard section card for grid layouts:
+- **000**: 📖 (Glossary)
+- **100-199**: 🎮 (The Game)
+- **200-299**: 🃏 (Cards)
+- **300-399**: 🔄 (Turns)
+- **400-499**: ⏱️ (Phases)
+- **500-599**: ⚔️ (Combat)
+- **600-699**: ✨ (Abilities)
+- **700-799**: 🏷️ (Keywords)
+- **Default**: 📋 (Other)
 
-- Background: White (bg-white)
-- Padding: p-6 md:p-8
-- Section number: text-4xl, text-primary-600
-- Title: text-xl md:text-2xl
-- Shadow: shadow-lg on hover:shadow-2xl
-- Scale: hover:scale-102 (2% larger on hover)
-
-### featured
-
-Emphasized section card for featured/promoted content:
-
-- Background: Gradient (from-primary-100 via-primary-50 to-white)
-- Padding: p-8 md:p-10 (larger)
-- Section number: text-5xl md:text-6xl, text-primary-700 (larger and darker)
-- Title: text-2xl md:text-3xl (larger)
-- Shadow: shadow-xl on hover:shadow-2xl (stronger)
-- Scale: hover:scale-105 (5% larger on hover)
-- Border: border-primary-300 (colored border)
+You can also provide a custom icon via the `icon` prop to override the automatic assignment.
 
 ## Examples
 
@@ -253,65 +244,68 @@ The SectionCard component is designed to meet WCAG 2.1 AA accessibility standard
 
 ```
 ┌─────────────────────────────────────────┐
+│  🎮                                     │  ← Section icon (circular container)
 │                                         │
-│           100.                           │  ← Large section number (text-4xl)
+│  100.                                   │  ← Section number (gold, mono)
 │                                         │
-│          Combat                          │  ← Section title (text-xl/2xl, bold)
+│  COMBAT                                 │  ← Section title (Cinzel, uppercase)
 │                                         │
-│   Rules for combat encounters and        │  ← Description (3 lines max, truncated)
-│   battle mechanics...                    │
-│                                         │
-│   📋 24 rules                            │  ← Child count with icon
+│  24 rules                               │  ← Child count (light text)
 │                                         │
 └─────────────────────────────────────────┘
-  ↑ Centered layout
-  ↑ Elevated shadow (shadow-lg)
-  ↑ Hover: shadow-2xl + scale
-  ↑ Focus: ring-4 ring-primary-500
+  ↑ Dark blue gradient background
+  ↑ Gold accent colors
+  ↑ Hover: translate-y + shadow
+  ↑ Focus: ring-4 ring-accent-500
 ```
 
 ### Styling Details
 
 **Container:**
 
-- Background: White (default) or gradient (featured)
-- Border: 1px neutral-200 (default) or primary-300 (featured)
-- Border radius: 12px (rounded-xl)
-- Padding: p-6 md:p-8 (default) or p-8 md:p-10 (featured)
+- Background: Dark blue gradient (bg-gradient-primary, Riftbound branding)
+- Text color: White (text-white)
+- Border radius: 8px (rounded-lg)
+- Padding: p-6
 - Width: Full width (w-full)
-- Text alignment: Center (text-center)
+- Text alignment: Left (text-left)
+- Shadow: shadow-lg
 - Transition: All properties for smooth hover/focus
+- Hover: -translate-y-0.5, shadow-xl
 
 **Typography:**
 
-- Section Number: font-mono, font-extrabold, text-4xl (default) or text-5xl md:text-6xl (featured), primary-600 (default) or primary-700 (featured)
-- Title: font-bold, text-xl md:text-2xl (default) or text-2xl md:text-3xl (featured), text-neutral-900
-- Description: text-sm (default) or text-base (featured), text-neutral-600, line-clamp-3, max-w-md (default) or max-w-lg (featured)
-- Child Count: text-sm, text-neutral-500
+- Section Number: font-mono, text-xl, font-semibold, accent-400 (gold)
+- Title: font-display (Cinzel), text-2xl md:text-3xl, font-semibold, uppercase, tracking-wide, white
+- Child Count: font-body, text-sm, primary-200 (light text)
+
+**Icon:**
+
+- Container: Circular (w-12 h-12, rounded-full), bg-white/10, mb-4
+- Icon: text-2xl (emoji or custom icon)
+- Position: Top of card
 
 **Spacing:**
 
-- Number to title: mb-3
-- Title to description: mb-3
-- Description to count: mb-4
-- Overall padding: Variant-dependent (p-6 md:p-8 or p-8 md:p-10)
+- Icon to number: mb-4
+- Number to title: mb-2
+- Title to count: mb-3
+- Overall padding: p-6
 
 **Visual Hierarchy:**
 
-- Section numbers are the largest text on the home page
-- Centered layout creates visual prominence
-- Elevated shadows indicate clickability
-- Featured variant uses gradient background for emphasis
+- Dark blue gradient background creates strong visual presence
+- Gold section numbers stand out prominently
+- Cinzel display font adds elegance and branding
+- Section icons provide quick visual identification
 
-### Gradient Background (Featured Variant)
+### Gradient Background
 
-The featured variant uses a subtle gradient:
+The component uses a dark blue gradient:
 
-- From: primary-100 (top-left)
-- Via: primary-50 (middle)
-- To: white (bottom-right)
-- Direction: Bottom-right (to-br)
-- Effect: Gentle elevation and visual interest
+- Background: bg-gradient-primary (dark blue gradient)
+- Effect: Creates depth and visual interest
+- Branding: Matches Riftbound brand colors
 
 ## Child Count Display
 
@@ -321,29 +315,7 @@ The component displays the number of child rules with proper pluralization:
 - **1 rule**: "1 rule" (singular)
 - **2+ rules**: "24 rules" (plural)
 
-The count is displayed with a document icon (📋) and uses the `children` array from the `RuleSection` interface.
-
-```tsx
-{
-  childCount;
-}
-{
-  childCount === 1 ? "rule" : "rules";
-}
-```
-
-## Content Description
-
-The component displays a truncated version of the section's content as a description:
-
-- **Truncation**: Content is truncated to 200 characters with "..." appended
-- **Line Clamp**: Description is limited to 3 lines using `line-clamp-3`
-- **Conditional Display**: Description is only shown if:
-  - Content exists
-  - Content is different from the title
-  - Content is not empty
-
-The description provides context about the section's content without overwhelming the card design.
+The count uses the `children` array from the `RuleSection` interface and is displayed in light text (primary-200) for contrast against the dark background.
 
 ## Performance Considerations
 
