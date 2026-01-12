@@ -162,7 +162,7 @@ describe("RuleCard", () => {
       const number = screen.getByText("100.");
       expect(number).toHaveClass("text-2xl");
       expect(number).toHaveClass("font-extrabold");
-      expect(number).toHaveClass("text-primary-700");
+      expect(number).toHaveClass("text-primary-800");
     });
 
     it("should apply level 1 styles to rules", () => {
@@ -170,7 +170,7 @@ describe("RuleCard", () => {
       const number = screen.getByText("100.1.");
       expect(number).toHaveClass("text-xl");
       expect(number).toHaveClass("font-bold");
-      expect(number).toHaveClass("text-primary-600");
+      expect(number).toHaveClass("text-primary-700");
     });
 
     it("should apply level 2 styles to sub-rules", () => {
@@ -178,7 +178,7 @@ describe("RuleCard", () => {
       const number = screen.getByText("100.1.a.");
       expect(number).toHaveClass("text-lg");
       expect(number).toHaveClass("font-semibold");
-      expect(number).toHaveClass("text-primary-600");
+      expect(number).toHaveClass("text-primary-700");
     });
 
     it("should apply level 3+ styles to details", () => {
@@ -187,18 +187,18 @@ describe("RuleCard", () => {
       const number = screen.getByText("100.1.a.");
       expect(number).toHaveClass("text-lg");
       expect(number).toHaveClass("font-medium");
-      expect(number).toHaveClass("text-neutral-700");
+      expect(number).toHaveClass("text-neutral-800");
     });
 
     it("should apply correct border colors by level", () => {
       const { container: container0 } = render(<RuleCard rule={mockSection} />);
-      expect(container0.firstChild).toHaveClass("border-l-primary-600");
+      expect(container0.firstChild).toHaveClass("border-l-primary-700");
 
       const { container: container1 } = render(<RuleCard rule={mockRule} />);
-      expect(container1.firstChild).toHaveClass("border-l-primary-500");
+      expect(container1.firstChild).toHaveClass("border-l-primary-600");
 
       const { container: container2 } = render(<RuleCard rule={mockSubRule} />);
-      expect(container2.firstChild).toHaveClass("border-l-primary-400");
+      expect(container2.firstChild).toHaveClass("border-l-primary-500");
     });
   });
 

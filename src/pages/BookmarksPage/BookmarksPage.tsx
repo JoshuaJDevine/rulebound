@@ -46,7 +46,7 @@ export function BookmarksPage() {
                     rule={rule}
                     onClick={() => navigate(`/rules/${rule.id}`)}
                   />
-                  <div className="mt-2 text-xs text-neutral-500">
+                  <div className="mt-2 text-xs text-neutral-700 dark:text-neutral-400">
                     Bookmarked: {new Date(timestamp).toLocaleDateString()}
                   </div>
                 </li>

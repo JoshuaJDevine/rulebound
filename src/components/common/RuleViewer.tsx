@@ -128,7 +128,7 @@ export function RuleViewer({
       {/* Rule Header */}
       <div>
         <div className="flex items-baseline gap-3 mb-2">
-          <span className="text-sm font-mono text-neutral-500">
+          <span className="text-sm font-mono text-neutral-700 dark:text-neutral-400">
             {rule.number}
           </span>
           <h1 className="text-2xl font-bold text-neutral-900">{rule.title}</h1>
@@ -148,7 +148,7 @@ export function RuleViewer({
 
       {/* Rule Content */}
       <div className="prose prose-sm max-w-none">
-        <div className="whitespace-pre-wrap text-neutral-700">
+        <div className="whitespace-pre-wrap text-neutral-900 dark:text-neutral-200">
           {renderContent(rule.content, rulesMap, navigate)}
         </div>
       </div>

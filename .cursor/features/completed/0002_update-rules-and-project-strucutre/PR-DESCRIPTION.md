@@ -7,32 +7,38 @@ This feature refactors the core data model and state management architecture to 
 ## Changes
 
 ### Architecture (ADR-001, ADR-002, ADR-003)
+
 - **Unified Hierarchical Data Model**: Single `RuleSection` type for all rules and sections
 - **Index Pattern**: O(1) rule lookups via `Record<string, RuleSection>` index
 - **Selector Pattern**: Store provides selector methods for consistent data access
 
 ### Components
+
 - **RuleCard**: Updated with hierarchy styling (4 levels, 3 variants: default, compact, inline)
 - **SectionCard**: Updated with new `RuleSection` interface and 2 variants (default, featured)
 - **RuleTree**: New component with ARIA tree navigation, keyboard shortcuts, and roving tabindex
 
 ### State Management
+
 - **rulesStore**: Updated with new `RulesData` structure (sections array + index)
 - **Selectors**: `getTopLevelSections()`, `getRuleById()`, `getChildRules()`, `getReferencedBy()`
 - **Backward Compatibility**: Index auto-building for existing data
 
 ### Pages
+
 - **HomePage**: Updated to use `getTopLevelSections()` selector
 - **RuleDetailPage**: Updated with breadcrumb paths and new data structure
 - **SearchPage**: Updated with breadcrumb paths in results
 - **BookmarksPage**: Updated to use new RuleCard interface
 
 ### Testing
+
 - **472 tests passing** with **100% coverage** on all updated/created components
 - **Accessibility**: WCAG 2.1 AA compliant, 0 axe violations
 - **Performance**: ~30s full test suite
 
 ### Documentation
+
 - **Priority 1 files**: All 4 critical components fully documented
   - `RuleCard.md` - Updated
   - `SectionCard.md` - Updated
@@ -42,16 +48,19 @@ This feature refactors the core data model and state management architecture to 
 ## Testing
 
 ### Run Tests
+
 ```bash
 npm test
 ```
 
 ### Test Coverage
+
 - All components: 100% coverage
 - 472 tests passing, 0 failures
 - Accessibility validated with axe
 
 ### Manual Testing Checklist
+
 - [ ] Navigate to home page - sections display correctly
 - [ ] Click section card - navigates to section detail
 - [ ] Click rule card - navigates to rule detail
@@ -74,6 +83,7 @@ Feature documentation is in `.cursor/features/active/update-rules-and-project-st
 - **Closer**: [closer.md](./.cursor/features/active/update-rules-and-project-strucutre/closer.md)
 
 ### Architecture Decision Records (ADRs)
+
 - [ADR-001: Hierarchical Data Model](./.cursor/features/active/update-rules-and-project-strucutre/adr/ADR-001-hierarchical-data-model.md)
 - [ADR-002: Index Pattern for Lookups](./.cursor/features/active/update-rules-and-project-strucutre/adr/ADR-002-index-pattern-for-lookups.md)
 - [ADR-003: Selector Pattern for Computed Data](./.cursor/features/active/update-rules-and-project-strucutre/adr/ADR-003-selector-pattern-for-computed-data.md)

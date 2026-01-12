@@ -19,36 +19,36 @@ export interface RuleCardProps {
 // Get hierarchy-based styling per designer specs
 function getHierarchyStyles(level: number) {
   const styles = {
-    // Level 0 (Sections): Large, bold, primary-700
+    // Level 0 (Sections): Large, bold, primary-800
     0: {
       numberSize: "text-2xl",
       numberWeight: "font-extrabold",
-      numberColor: "text-primary-700",
-      borderColor: "border-l-primary-600",
+      numberColor: "text-primary-800 dark:text-primary-300",
+      borderColor: "border-l-primary-700",
       borderWidth: "border-l-4",
     },
-    // Level 1 (Rules): Medium, semibold, primary-600
+    // Level 1 (Rules): Medium, semibold, primary-700
     1: {
       numberSize: "text-xl",
       numberWeight: "font-bold",
-      numberColor: "text-primary-600",
-      borderColor: "border-l-primary-500",
+      numberColor: "text-primary-700 dark:text-primary-200",
+      borderColor: "border-l-primary-600",
       borderWidth: "border-l-4",
     },
-    // Level 2 (Sub-rules): Small, semibold, primary-600
+    // Level 2 (Sub-rules): Small, semibold, primary-700
     2: {
       numberSize: "text-lg",
       numberWeight: "font-semibold",
-      numberColor: "text-primary-600",
-      borderColor: "border-l-primary-400",
+      numberColor: "text-primary-700 dark:text-primary-300",
+      borderColor: "border-l-primary-500",
       borderWidth: "border-l-3",
     },
-    // Level 3+ (Details): Extra small, normal, neutral-700
+    // Level 3+ (Details): Extra small, normal, neutral-800
     default: {
       numberSize: "text-lg",
       numberWeight: "font-medium",
-      numberColor: "text-neutral-700",
-      borderColor: "border-l-primary-300",
+      numberColor: "text-neutral-800 dark:text-neutral-300",
+      borderColor: "border-l-primary-400",
       borderWidth: "border-l-2",
     },
   };
@@ -101,11 +101,12 @@ export function RuleCard({
   return (
     <div
       className={cn(
-        "w-full bg-white rounded-lg border border-neutral-200 transition-all",
+        "w-full bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-primary-700 transition-all",
         hierarchyStyles.borderColor,
         hierarchyStyles.borderWidth,
-        !isInline && "hover:shadow-md hover:border-primary-300",
-        "focus-within:ring-4 focus-within:ring-primary-500 focus-within:ring-offset-2",
+        !isInline &&
+          "hover:shadow-md hover:border-primary-300 dark:hover:border-primary-600",
+        "focus-within:ring-4 focus-within:ring-primary-500 dark:focus-within:ring-accent-500 focus-within:ring-offset-2",
         isInline ? "border-0 p-2" : isCompact ? "p-3" : "p-4",
         className,
       )}
@@ -133,7 +134,7 @@ export function RuleCard({
               </span>
               <h3
                 className={cn(
-                  "font-semibold text-neutral-900",
+                  "font-semibold text-neutral-900 dark:text-neutral-100",
                   isCompact ? "text-base" : "text-lg",
                 )}
               >
@@ -144,7 +145,7 @@ export function RuleCard({
             {/* Level badge (optional) */}
             {showLevel && !isInline && (
               <div className="flex items-center gap-2 mb-2">
-                <span className="inline-block px-2 py-0.5 text-xs font-medium bg-primary-100 text-primary-700 rounded">
+                <span className="inline-block px-2 py-0.5 text-xs font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded">
                   {getLevelLabel(rule.level)}
                 </span>
               </div>
@@ -152,7 +153,7 @@ export function RuleCard({
 
             {/* Content preview */}
             {contentPreview && !isCompact && (
-              <p className="text-sm text-neutral-600 line-clamp-2 mb-2">
+              <p className="text-sm text-neutral-800 dark:text-neutral-300 line-clamp-2 mb-2">
                 {contentPreview}
               </p>
             )}
@@ -160,7 +161,7 @@ export function RuleCard({
             {/* Metadata: children count and cross-refs */}
             {showChildren &&
               (rule.children.length > 0 || rule.crossRefs.length > 0) && (
-                <div className="flex items-center gap-3 text-xs text-neutral-600">
+                <div className="flex items-center gap-3 text-xs text-neutral-800 dark:text-neutral-400">
                   {rule.children.length > 0 && (
                     <span className="flex items-center gap-1">
                       <svg

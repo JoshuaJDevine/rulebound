@@ -20,7 +20,7 @@ describe("Button", () => {
     it("should render with default variant and size", () => {
       render(<Button>Default</Button>);
       const button = screen.getByRole("button");
-      expect(button).toHaveClass("bg-primary-600");
+      expect(button).toHaveClass("bg-accent-500");
       expect(button).toHaveClass("h-11");
     });
 
@@ -35,13 +35,13 @@ describe("Button", () => {
     it("should render primary variant", () => {
       render(<Button variant="primary">Primary</Button>);
       const button = screen.getByRole("button");
-      expect(button).toHaveClass("bg-primary-600");
+      expect(button).toHaveClass("bg-accent-500");
     });
 
     it("should render secondary variant", () => {
       render(<Button variant="secondary">Secondary</Button>);
       const button = screen.getByRole("button");
-      expect(button).toHaveClass("bg-neutral-200");
+      expect(button).toHaveClass("bg-transparent");
     });
 
     it("should render ghost variant", () => {

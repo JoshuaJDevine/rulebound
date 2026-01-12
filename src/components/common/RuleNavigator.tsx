@@ -65,7 +65,7 @@ function RuleNode({
           </span>
         )}
         {!hasChildren && <span className="w-3" aria-hidden="true" />}
-        <span className="text-xs text-neutral-500 font-mono">
+        <span className="text-xs text-neutral-700 dark:text-neutral-400 font-mono">
           {rule.number}
         </span>
         <span className="flex-1 truncate">{rule.title}</span>

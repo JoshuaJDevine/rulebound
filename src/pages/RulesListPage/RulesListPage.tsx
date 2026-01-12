@@ -68,10 +68,10 @@ export function RulesListPage() {
       {/* Header with breadcrumb */}
       <div className="mb-6">
         <Breadcrumb items={breadcrumbItems} />
-        <h1 className="text-2xl md:text-3xl font-bold text-neutral-900 mt-4 mb-2">
+        <h1 className="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mt-4 mb-2">
           All Rules
         </h1>
-        <p className="text-neutral-600">
+        <p className="text-neutral-700 dark:text-neutral-300">
           Browse all {allRules.length} rules in a flat list view.
         </p>
       </div>
@@ -90,7 +90,7 @@ export function RulesListPage() {
       {displayedRules.length > 0 ? (
         <>
           {searchQuery && (
-            <p className="text-sm text-neutral-600 mb-4">
+            <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4">
               {displayedRules.length}{" "}
               {displayedRules.length === 1 ? "result" : "results"} for "
               {searchQuery}"

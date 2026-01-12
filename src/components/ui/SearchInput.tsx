@@ -28,7 +28,7 @@ export function SearchInput({
 }: SearchInputProps) {
   return (
     <div className={cn("relative", className)}>
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500">
         <svg
           className="h-5 w-5"
           fill="none"
@@ -46,7 +46,7 @@ export function SearchInput({
 
       <input
         type="search"
-        className="w-full h-12 pl-12 pr-12 rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/50 focus:outline-none transition-all"
+        className="w-full h-12 pl-12 pr-12 rounded-lg border border-neutral-300 dark:border-primary-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:border-primary-500 dark:focus:border-accent-500 focus:ring-4 focus:ring-primary-500/50 dark:focus:ring-accent-500/50 focus:outline-none transition-all"
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -57,7 +57,7 @@ export function SearchInput({
 
       {value && (
         <button
-          className="absolute right-4 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full hover:bg-neutral-100 focus:ring-2 focus:ring-primary-500/50 focus:outline-none flex items-center justify-center"
+          className="absolute right-4 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:ring-2 focus:ring-primary-500/50 dark:focus:ring-accent-500/50 focus:outline-none flex items-center justify-center text-neutral-600 dark:text-neutral-300"
           onClick={onClear}
           aria-label="Clear search"
           type="button"

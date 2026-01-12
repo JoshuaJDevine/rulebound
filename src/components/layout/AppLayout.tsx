@@ -13,7 +13,7 @@ export interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col bg-neutral-50">
+    <div className="min-h-screen flex flex-col bg-neutral-50 dark:bg-neutral-900">
       <SkipLink targetId="main-content" />
       <Header />
       <main

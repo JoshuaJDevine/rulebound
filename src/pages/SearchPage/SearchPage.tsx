@@ -110,11 +110,11 @@ export function SearchPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Search Header */}
-      <div className="bg-white border-b border-neutral-200 py-4">
+      <div className="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-primary-700 py-4">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4">
             <button
-              className="h-10 w-10 flex items-center justify-center text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500/50 rounded"
+              className="h-10 w-10 flex items-center justify-center text-neutral-800 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500/50 rounded"
               onClick={() => navigate(-1)}
               aria-label="Go back"
             >
@@ -149,17 +149,17 @@ export function SearchPage() {
         {!debouncedQuery ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🔍</div>
-            <h2 className="text-xl font-semibold text-neutral-900 mb-2">
+            <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
               Search for rules
             </h2>
-            <p className="text-neutral-600">
+            <p className="text-neutral-700 dark:text-neutral-300">
               Enter a search term to find rules by number, title, or content.
             </p>
           </div>
         ) : results.length > 0 ? (
           <>
             <p
-              className="text-sm text-neutral-600 mb-4"
+              className="text-sm text-neutral-700 dark:text-neutral-300 mb-4"
               role="status"
               aria-live="polite"
               aria-atomic="true"
@@ -178,7 +178,7 @@ export function SearchPage() {
                   <li key={rule.id}>
                     <button
                       className={cn(
-                        "block w-full bg-white rounded-lg border border-neutral-200 p-4 text-left",
+                        "block w-full bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-primary-700 p-4 text-left",
                         "hover:shadow-md hover:border-primary-300 transition-all cursor-pointer",
                         "focus:ring-4 focus:ring-primary-500 focus:ring-offset-2 focus:outline-none",
                       )}
@@ -192,26 +192,26 @@ export function SearchPage() {
                             <span className="text-lg font-mono font-bold text-primary-600">
                               {rule.number}
                             </span>
-                            <h3 className="text-lg font-semibold text-neutral-900">
+                            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
                               {rule.title}
                             </h3>
                           </div>
 
                           {/* Level badge */}
-                          <span className="inline-block px-2 py-0.5 text-xs font-medium bg-primary-100 text-primary-700 rounded">
+                          <span className="inline-block px-2 py-0.5 text-xs font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded">
                             {getLevelLabel(rule.level)}
                           </span>
                         </div>
                       </div>
 
                       {/* Breadcrumb path - shows where result lives in hierarchy */}
-                      <p className="text-sm text-neutral-500 mb-3">
+                      <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-3">
                         {breadcrumbPath}
                       </p>
 
                       {/* Content excerpt with highlighted query */}
                       <p
-                        className="text-sm text-neutral-700 line-clamp-2"
+                        className="text-sm text-neutral-800 dark:text-neutral-200 line-clamp-2"
                         dangerouslySetInnerHTML={{
                           __html: highlightQuery(excerpt, debouncedQuery),
                         }}
@@ -219,7 +219,7 @@ export function SearchPage() {
 
                       {/* Metadata */}
                       {rule.crossRefs.length > 0 && (
-                        <div className="flex items-center gap-2 mt-3 text-xs text-neutral-600">
+                        <div className="flex items-center gap-2 mt-3 text-xs text-neutral-700 dark:text-neutral-400">
                           <svg
                             className="w-4 h-4"
                             fill="none"
