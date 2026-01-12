@@ -66,6 +66,14 @@ export function SearchPage() {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [debouncedQuery, setDebouncedQuery] = useState(initialQuery);
 
+  // Sync search query with URL parameter (when navigating from Header)
+  useEffect(() => {
+    const urlQuery = searchParams.get("q") || "";
+    if (urlQuery !== searchQuery) {
+      setSearchQuery(urlQuery);
+    }
+  }, [searchParams]);
+
   // Debounce search query
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -109,8 +117,8 @@ export function SearchPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Search Header */}
-      <div className="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-primary-700 py-4">
+      {/* Search Header - Mobile only (Header has search on desktop) */}
+      <div className="md:hidden bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-primary-700 py-4">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4">
             <button
