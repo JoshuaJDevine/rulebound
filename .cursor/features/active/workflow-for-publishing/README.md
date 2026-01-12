@@ -15,23 +15,23 @@
 
 ## Agent Documents
 
-| Agent | Document | Status |
-|-------|----------|--------|
-| Architect | [architect.md](./architect.md) | ✅ Complete |
-| Designer | [designer.md](./designer.md) | Pending |
-| Coder | [coder.md](./coder.md) | Pending |
-| Tester | [tester.md](./tester.md) | Pending |
-| Documentor | [documentor.md](./documentor.md) | Pending |
-| Closer | [closer.md](./closer.md) | Pending |
+| Agent      | Document                         | Status      |
+| ---------- | -------------------------------- | ----------- |
+| Architect  | [architect.md](./architect.md)   | ✅ Complete |
+| Designer   | [designer.md](./designer.md)     | Pending     |
+| Coder      | [coder.md](./coder.md)           | Pending     |
+| Tester     | [tester.md](./tester.md)         | Pending     |
+| Documentor | [documentor.md](./documentor.md) | Pending     |
+| Closer     | [closer.md](./closer.md)         | Pending     |
 
 ## Architecture Decisions
 
-| ADR | Title |
-|-----|-------|
-| [ADR-001](./adr/ADR-001-hosting-platform.md) | Hosting Platform Selection (Netlify) |
-| [ADR-002](./adr/ADR-002-ci-cd-pipeline.md) | CI/CD Pipeline Architecture |
-| [ADR-003](./adr/ADR-003-environment-strategy.md) | Environment Strategy |
-| [ADR-004](./adr/ADR-004-spa-routing-configuration.md) | SPA Routing Configuration |
+| ADR                                                   | Title                                |
+| ----------------------------------------------------- | ------------------------------------ |
+| [ADR-001](./adr/ADR-001-hosting-platform.md)          | Hosting Platform Selection (Netlify) |
+| [ADR-002](./adr/ADR-002-ci-cd-pipeline.md)            | CI/CD Pipeline Architecture          |
+| [ADR-003](./adr/ADR-003-environment-strategy.md)      | Environment Strategy                 |
+| [ADR-004](./adr/ADR-004-spa-routing-configuration.md) | SPA Routing Configuration            |
 
 ## Notes
 

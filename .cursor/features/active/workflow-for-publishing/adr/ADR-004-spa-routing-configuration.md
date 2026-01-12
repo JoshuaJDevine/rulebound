@@ -22,10 +22,12 @@ The challenge: when users directly navigate to these URLs (or refresh), the web 
 ### 1. Switch to HashRouter
 
 **Pros:**
+
 - Works without server configuration
 - URLs like `/#/rules` always work
 
 **Cons:**
+
 - Ugly URLs with `#`
 - Poor SEO (if needed in future)
 - Worse user experience
@@ -34,21 +36,25 @@ The challenge: when users directly navigate to these URLs (or refresh), the web 
 ### 2. Netlify `_redirects` File
 
 **Pros:**
+
 - Simple single-line configuration
 - No code changes needed
 - Standard Netlify approach
 
 **Cons:**
+
 - Netlify-specific
 
 ### 3. Netlify `netlify.toml` Redirects
 
 **Pros:**
+
 - All Netlify config in one file
 - More powerful redirect options
 - Can combine with other settings
 
 **Cons:**
+
 - Slightly more verbose
 
 ## Decision

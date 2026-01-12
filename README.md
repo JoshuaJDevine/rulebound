@@ -131,19 +131,19 @@ All checks must pass before merging to `main`.
 
 ### Deployment (Netlify)
 
-| Environment | URL | Trigger |
-|-------------|-----|---------|
-| Development | `localhost:5173` | `npm run dev` |
-| Preview | `deploy-preview-{num}--rulebound.netlify.app` | PR opened/updated |
-| Production | `rulebound.netlify.app` | Merge to main |
+| Environment | URL                                           | Trigger           |
+| ----------- | --------------------------------------------- | ----------------- |
+| Development | `localhost:5173`                              | `npm run dev`     |
+| Preview     | `deploy-preview-{num}--rulebound.netlify.app` | PR opened/updated |
+| Production  | `rulebound.netlify.app`                       | Merge to main     |
 
 ### Environment Variables
 
 Environment variables are injected at build time by Vite. Variables must be prefixed with `VITE_` to be exposed to the client.
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_APP_NAME` | Application name | `Rule Bound` |
+| Variable              | Description            | Default        |
+| --------------------- | ---------------------- | -------------- |
+| `VITE_APP_NAME`       | Application name       | `Rule Bound`   |
 | `VITE_DEPLOY_CONTEXT` | Deployment environment | Set by Netlify |
 
 To set up local environment variables:

@@ -5,6 +5,7 @@
 This document defines the architecture for Rule Bound's publishing workflow—enabling the team to deploy the application to live environments for testing and eventually production use.
 
 The architecture provides:
+
 - **Automated CI/CD pipeline** via GitHub Actions
 - **Preview deployments** for every PR via Netlify
 - **Production deployments** on merge to main
@@ -12,12 +13,12 @@ The architecture provides:
 
 ## Architecture Decisions
 
-| ADR | Title | Status |
-|-----|-------|--------|
-| [ADR-001](./adr/ADR-001-hosting-platform.md) | Hosting Platform Selection | Accepted |
-| [ADR-002](./adr/ADR-002-ci-cd-pipeline.md) | CI/CD Pipeline Architecture | Accepted |
-| [ADR-003](./adr/ADR-003-environment-strategy.md) | Environment Strategy | Accepted |
-| [ADR-004](./adr/ADR-004-spa-routing-configuration.md) | SPA Routing Configuration | Accepted |
+| ADR                                                   | Title                       | Status   |
+| ----------------------------------------------------- | --------------------------- | -------- |
+| [ADR-001](./adr/ADR-001-hosting-platform.md)          | Hosting Platform Selection  | Accepted |
+| [ADR-002](./adr/ADR-002-ci-cd-pipeline.md)            | CI/CD Pipeline Architecture | Accepted |
+| [ADR-003](./adr/ADR-003-environment-strategy.md)      | Environment Strategy        | Accepted |
+| [ADR-004](./adr/ADR-004-spa-routing-configuration.md) | SPA Routing Configuration   | Accepted |
 
 ## System Design
 
@@ -64,11 +65,11 @@ The architecture provides:
 
 ### Environments
 
-| Environment | Purpose | URL | Trigger |
-|-------------|---------|-----|---------|
-| Development | Local dev | `localhost:5173` | `npm run dev` |
-| Preview | PR testing | `deploy-preview-{num}--rulebound.netlify.app` | PR opened/updated |
-| Production | Live site | `rulebound.netlify.app` | Merge to main |
+| Environment | Purpose    | URL                                           | Trigger           |
+| ----------- | ---------- | --------------------------------------------- | ----------------- |
+| Development | Local dev  | `localhost:5173`                              | `npm run dev`     |
+| Preview     | PR testing | `deploy-preview-{num}--rulebound.netlify.app` | PR opened/updated |
+| Production  | Live site  | `rulebound.netlify.app`                       | Merge to main     |
 
 ## Configuration Files
 
@@ -78,7 +79,7 @@ The architecture provides:
 [build]
   command = "npm run build"
   publish = "dist"
-  
+
 [build.environment]
   NODE_VERSION = "20"
 
@@ -125,29 +126,29 @@ jobs:
   quality:
     name: Quality Checks
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-          
+          node-version: "20"
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Lint
         run: npm run lint
-        
+
       - name: Type Check
         run: npm run type-check
-        
+
       - name: Test
         run: npm run test:run
-        
+
       - name: Build
         run: npm run build
 ```
@@ -155,11 +156,13 @@ jobs:
 ### 3. Environment Files
 
 **`.env`** (committed - shared defaults):
+
 ```env
 VITE_APP_NAME=Rule Bound
 ```
 
 **`.env.production`** (committed - production overrides):
+
 ```env
 # Production-specific settings (future use)
 # VITE_ENABLE_ANALYTICS=true
@@ -181,11 +184,11 @@ rulebound/
 
 ## Technology Choices
 
-| Technology | Purpose | Rationale |
-|------------|---------|-----------|
-| **Netlify** | Hosting & Deployment | Free tier, automatic preview deploys, great DX, SPA support |
-| **GitHub Actions** | CI Pipeline | GitHub-native, free tier sufficient, excellent caching |
-| **Vite Build** | Production Build | Already in project, fast, optimized output |
+| Technology         | Purpose              | Rationale                                                   |
+| ------------------ | -------------------- | ----------------------------------------------------------- |
+| **Netlify**        | Hosting & Deployment | Free tier, automatic preview deploys, great DX, SPA support |
+| **GitHub Actions** | CI Pipeline          | GitHub-native, free tier sufficient, excellent caching      |
+| **Vite Build**     | Production Build     | Already in project, fast, optimized output                  |
 
 ## Security Considerations
 

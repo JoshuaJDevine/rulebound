@@ -11,12 +11,14 @@ This feature is **infrastructure-focused** (CI/CD configuration files) with mini
 **Decision**: Add a CI status badge to the README
 
 **Rationale**:
+
 - Standard practice for open-source projects
 - Provides immediate visibility into build health
 - Zero runtime cost (static markdown)
 - Builds confidence for contributors
 
 **Specification**:
+
 ```markdown
 ![CI](https://github.com/[owner]/rulebound/actions/workflows/ci.yml/badge.svg)
 ```
@@ -28,6 +30,7 @@ Place at the top of README.md, below the title.
 **Decision**: Do not add an environment indicator at this time
 
 **Rationale**:
+
 - **URL is sufficient**: Preview deployments have obvious URLs (`deploy-preview-123--rulebound.netlify.app`)
 - **Minimal user confusion risk**: Target users (playtesters, stakeholders reviewing PRs) will access via PR links
 - **Avoid UI clutter**: The app is focused on rules reference; visual noise detracts from that purpose
@@ -46,6 +49,7 @@ Place at the top of README.md, below the title.
 **No new React components required.**
 
 This feature adds only configuration files:
+
 - `.github/workflows/ci.yml` - GitHub Actions CI pipeline
 - `netlify.toml` - Netlify deployment configuration
 - `.env` - Shared environment variables
@@ -56,6 +60,7 @@ This feature adds only configuration files:
 **Not applicable** - No UI components being added.
 
 If an environment indicator is added in the future:
+
 - Must meet WCAG 2.1 AA color contrast requirements
 - Should not rely on color alone to convey meaning
 - Should be announced by screen readers (use `role="status"` or similar)
@@ -70,11 +75,11 @@ If an environment indicator is added in the future:
 
 ## Design Decisions Summary
 
-| Consideration | Decision | Rationale |
-|---------------|----------|-----------|
-| CI Badge in README | ✅ Add | Standard practice, zero cost |
-| Environment Indicator | ❌ Skip | URLs are sufficient, avoid clutter |
-| Documentation | ➡️ Defer | Documentor phase responsibility |
+| Consideration         | Decision | Rationale                          |
+| --------------------- | -------- | ---------------------------------- |
+| CI Badge in README    | ✅ Add   | Standard practice, zero cost       |
+| Environment Indicator | ❌ Skip  | URLs are sufficient, avoid clutter |
+| Documentation         | ➡️ Defer | Documentor phase responsibility    |
 
 ---
 
@@ -91,7 +96,6 @@ If an environment indicator is added in the future:
 1. **`.github/workflows/ci.yml`** - GitHub Actions CI pipeline
    - See `architect.md` for exact configuration
    - Jobs: lint, type-check, test, build
-   
 2. **`netlify.toml`** - Netlify deployment configuration
    - See `architect.md` for exact configuration
    - Includes SPA routing redirect and security headers
@@ -116,10 +120,12 @@ If an environment indicator is added in the future:
 ### Verification
 
 After implementation:
+
 1. CI workflow should be valid YAML
 2. `netlify.toml` should be valid TOML
 3. Local build should still work: `npm run build`
 
 Please implement according to:
+
 - Architecture from `architect.md`
 - ADRs in `adr/` directory

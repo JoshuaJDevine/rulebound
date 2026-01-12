@@ -13,6 +13,7 @@ Rule Bound needs clear environment separation for:
 - **Production**: Live site for end users
 
 Considerations:
+
 - Environment-specific configuration (API URLs if added later, analytics, feature flags)
 - Build-time vs runtime configuration
 - Vite's environment variable handling
@@ -23,43 +24,49 @@ Considerations:
 ### 1. Single Environment (Production Only)
 
 **Pros:**
+
 - Simplest setup
 - No configuration complexity
 
 **Cons:**
+
 - No way to test changes before production
 - Risky deployments
 
 ### 2. Two Environments (Preview + Production)
 
 **Pros:**
+
 - Preview deployments for testing
 - Production for stable releases
 - Matches Netlify's natural model
 
 **Cons:**
+
 - Limited flexibility for staged rollouts
 
 ### 3. Three Environments (Development + Preview + Production)
 
 **Pros:**
+
 - Clear separation of concerns
 - Local development isolated
 - Preview for PR testing
 - Production for releases
 
 **Cons:**
+
 - More configuration to maintain
 
 ## Decision
 
 We will use a **Three Environment Strategy** with Vite's built-in environment variable support:
 
-| Environment | Purpose | URL Pattern | Build Mode |
-|-------------|---------|-------------|------------|
-| Development | Local dev | `localhost:5173` | `development` |
-| Preview | PR testing | `deploy-preview-*.netlify.app` | `production` |
-| Production | Live site | `rulebound.netlify.app` or custom domain | `production` |
+| Environment | Purpose    | URL Pattern                              | Build Mode    |
+| ----------- | ---------- | ---------------------------------------- | ------------- |
+| Development | Local dev  | `localhost:5173`                         | `development` |
+| Preview     | PR testing | `deploy-preview-*.netlify.app`           | `production`  |
+| Production  | Live site  | `rulebound.netlify.app` or custom domain | `production`  |
 
 ### Environment Variables
 

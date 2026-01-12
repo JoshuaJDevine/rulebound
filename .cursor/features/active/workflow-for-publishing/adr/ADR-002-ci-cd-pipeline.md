@@ -15,6 +15,7 @@ Rule Bound needs a continuous integration and deployment pipeline that:
 - Integrates with the chosen hosting platform (Netlify)
 
 The project already has quality scripts:
+
 - `npm run test:run` - Run tests
 - `npm run lint` - ESLint checks
 - `npm run type-check` - TypeScript validation
@@ -25,11 +26,13 @@ The project already has quality scripts:
 ### 1. Netlify-Only CI/CD
 
 **Pros:**
+
 - Single platform for everything
 - Simpler configuration
 - No GitHub Actions required
 
 **Cons:**
+
 - Limited CI capabilities (mainly just build)
 - Cannot run comprehensive test suite before deploy
 - Less control over pipeline stages
@@ -37,6 +40,7 @@ The project already has quality scripts:
 ### 2. GitHub Actions + Netlify Deploy
 
 **Pros:**
+
 - Full CI capabilities (tests, lint, type-check, build)
 - GitHub-native, visible in PR checks
 - Can run quality gates before Netlify deploys
@@ -44,16 +48,19 @@ The project already has quality scripts:
 - Caching for faster builds
 
 **Cons:**
+
 - Two systems to maintain
 - More configuration files
 
 ### 3. GitHub Actions with Manual Netlify Deploy
 
 **Pros:**
+
 - Complete control over deployment trigger
 - Can add manual approval gates
 
 **Cons:**
+
 - More complex setup
 - Loses automatic preview deployments
 
